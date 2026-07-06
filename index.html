@@ -3,144 +3,496 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f2a3f">
+<meta name="theme-color" content="#3d7cc9">
 <title>성분별 급여 주사제</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root{
-    --ink:#122430; --ink2:#4a5b66; --line:#e2e6e4; --bg:#f4f5f2;
-    --card:#ffffff; --accent:#127a6b; --accent-d:#0c5a4f; --price:#0f4c3a;
-    --chip:#eef2f0; --shadow:0 1px 2px rgba(18,36,48,.06),0 2px 8px rgba(18,36,48,.05);
+    /* 밝고 청량한 화이트/블루 톤 - 정진약품 브랜드 매치 (강화된 채도) */
+    --ink:#0f2540; --ink2:#3f5b7a; --ink3:#7a8fa8;
+    --line:#d5e2f0; --line-soft:#e5eef8;
+    --bg:#e8f2fc; --bg-soft:#dce9f7;
+    --card:#ffffff; --card-hover:#fbfdff;
+    --accent:#1856a6; --accent-d:#0f4285; --accent-l:#2e6cbe;
+    --accent-soft:#c9dcf1; --accent-mist:#e3edf9;
+    --price:#0f4285; --gold:#c9922a;
+    --chip:#e3edf9; --chip-b:#c9dcf1;
+    --shadow-sm:0 1px 2px rgba(15,66,133,.06);
+    --shadow:0 2px 6px rgba(15,66,133,.08),0 8px 20px rgba(15,66,133,.10);
+    --shadow-lg:0 4px 12px rgba(15,66,133,.12),0 20px 40px rgba(15,66,133,.16);
+    --sky:linear-gradient(180deg,#dbebf9 0%,#e8f2fc 60%,#eef5fc 100%);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,
+      "Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
     background:var(--bg); color:var(--ink); line-height:1.5;
     -webkit-font-smoothing:antialiased; overscroll-behavior-y:none;
+    font-feature-settings:"tnum","kern";
+    letter-spacing:-.011em;
   }
-  /* ---- Header ---- */
+  /* ---- 히어로 섹션 (스크롤 시 사라짐) ---- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(180deg,#c9deef 0%,#dbeaf7 60%,#e8f2fc 100%);
+    padding:calc(env(safe-area-inset-top) + 22px) 20px 26px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(600px 220px at 90% 0%, rgba(24,86,166,.14), transparent 70%),
+      radial-gradient(500px 180px at 10% 100%, rgba(15,66,133,.10), transparent 70%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'><path d='M0,180 Q200,100 400,180 T800,180' stroke='%231856a6' stroke-width='1.2' fill='none' opacity='0.20'/><path d='M0,240 Q200,160 400,240 T800,240' stroke='%231856a6' stroke-width='1.2' fill='none' opacity='0.16'/><path d='M0,300 Q200,220 400,300 T800,300' stroke='%231856a6' stroke-width='1.2' fill='none' opacity='0.13'/><path d='M0,120 Q200,40 400,120 T800,120' stroke='%231856a6' stroke-width='1' fill='none' opacity='0.10'/></svg>") right center/cover no-repeat;
+    pointer-events:none;
+  }
+  .hero-wave{
+    position:absolute;left:0;right:0;bottom:-1px;width:100%;height:36px;
+    display:block;pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+  .hero-top{
+    display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  }
+  .brand-mini{
+    display:flex;align-items:center;gap:8px;
+    font-size:11.5px;font-weight:700;color:var(--accent-d);letter-spacing:.02em;
+  }
+  .brand-mini img{
+    width:22px;height:22px;object-fit:contain;
+    background:#fff;border-radius:6px;padding:2px;
+    box-shadow:0 2px 6px rgba(30,90,168,.12);
+  }
+  .brand-mini .plus{color:var(--ink3);font-weight:600;margin:0 -2px}
+  .pro-badge{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:9.5px;font-weight:800;
+    background:#fff;color:var(--accent-d);
+    padding:5px 10px;border-radius:20px;letter-spacing:.06em;
+    border:1px solid var(--chip-b);text-transform:uppercase;
+    box-shadow:0 2px 6px rgba(30,90,168,.08);
+  }
+  .pro-badge::before{
+    content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 2px rgba(38,104,184,.2);
+  }
+  .hero h1{
+    font-size:28px;font-weight:800;letter-spacing:-.033em;margin:0 0 6px;
+    line-height:1.18;color:var(--ink);
+  }
+  .hero h1 .accent{
+    background:linear-gradient(90deg,var(--accent) 0%,var(--accent-l) 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero-sub{
+    font-size:13px;color:var(--ink2);font-weight:500;letter-spacing:-.015em;
+    margin-bottom:18px;line-height:1.55;
+  }
+  .hero-info{
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;
+    font-size:12.5px;font-weight:700;color:var(--ink2);
+    letter-spacing:-.01em;
+  }
+  .hero-info .co{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:var(--ink)}
+  .hero-info .co img{
+    width:20px;height:20px;object-fit:contain;
+    background:#fff;border-radius:6px;padding:2px;
+    box-shadow:0 2px 5px rgba(30,90,168,.12),0 0 0 1px rgba(30,90,168,.06);
+  }
+  .hero-info .sep{color:var(--chip-b)}
+  .hero-info .tel{
+    color:var(--accent-d);font-weight:800;font-variant-numeric:tabular-nums;
+    padding:4px 10px;background:#fff;border-radius:14px;border:1px solid var(--accent-soft);
+    box-shadow:0 2px 5px rgba(30,90,168,.08);
+  }
+  @media(min-width:560px){
+    .hero{padding-top:calc(env(safe-area-inset-top) + 28px);padding-bottom:32px}
+    .hero h1{font-size:32px}
+  }
+  /* ---- Sticky 검색 헤더 (히어로 아래에 붙음) ---- */
   header{
     position:sticky; top:0; z-index:20;
-    background:linear-gradient(180deg,#0f2a3f 0%,#123b47 100%);
-    color:#fff; padding:calc(env(safe-area-inset-top) + 14px) 16px 12px;
-    box-shadow:0 2px 10px rgba(15,42,63,.22);
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    padding:12px 16px 10px;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 1px 0 rgba(30,90,168,.03);
   }
-  .brand{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
-  .brand-title{min-width:0}
-  .brand h1{font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.25}
-  .brand-info{margin-top:4px;font-size:11.5px;color:#c8d8d6;font-weight:600;line-height:1.35;letter-spacing:-.02em}
-  .brand .sub{flex:0 0 auto;font-size:11px;color:#9fc7c0;font-weight:600;letter-spacing:.04em;margin-top:3px}
   .search{position:relative;display:flex;align-items:center}
-  .search svg{position:absolute;left:12px;width:18px;height:18px;fill:#8aa3ab}
+  .search svg{position:absolute;left:14px;width:18px;height:18px;fill:var(--accent-l)}
   #q{
-    width:100%; border:0; border-radius:12px; padding:12px 40px 12px 38px;
-    font-size:16px; background:#ffffff; color:#122430; outline:none;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);
+    width:100%; border:0; border-radius:14px; padding:13px 40px 13px 42px;
+    font-size:15px; background:var(--chip); color:var(--ink); outline:none;
+    box-shadow:inset 0 0 0 1px transparent;
+    font-family:inherit; letter-spacing:-.011em;
+    transition:box-shadow .18s,background .18s;
   }
-  #q::placeholder{color:#9aa9ad}
+  #q:focus{background:#fff;box-shadow:inset 0 0 0 2px var(--accent),0 4px 14px rgba(30,90,168,.15)}
+  #q::placeholder{color:var(--ink3)}
   .clear{
-    position:absolute;right:8px;width:26px;height:26px;border:0;border-radius:50%;
-    background:#e6ebe9;color:#5a6b70;font-size:15px;display:none;align-items:center;
-    justify-content:center;cursor:pointer
+    position:absolute;right:8px;width:28px;height:28px;border:0;border-radius:50%;
+    background:#fff;color:var(--ink2);font-size:14px;display:none;align-items:center;
+    justify-content:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.1)
   }
   .clear.show{display:flex}
-  .stat{display:flex;gap:14px;margin-top:10px;font-size:11px;color:#a9cbc5;font-weight:600}
-  .stat b{color:#fff;font-weight:800}
+  .stat{
+    display:flex;gap:14px;margin-top:10px;font-size:11.5px;color:var(--ink3);font-weight:600;letter-spacing:-.01em;
+    padding:0 2px;
+  }
+  .stat b{color:var(--accent-d);font-weight:800;font-variant-numeric:tabular-nums;font-size:12.5px}
   /* ---- Category filter row ---- */
   .catbar{
-    display:flex;gap:7px;overflow-x:auto;padding:10px 12px;background:var(--bg);
-    position:sticky;top:0;z-index:10;-webkit-overflow-scrolling:touch;
-    border-bottom:1px solid var(--line); scrollbar-width:none;
+    display:flex;gap:8px;overflow-x:auto;padding:12px 12px 12px 12px;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    position:sticky;top:106px;z-index:9;-webkit-overflow-scrolling:touch;
+    border-bottom:1px solid var(--line-soft); scrollbar-width:none;
   }
   .catbar::-webkit-scrollbar{display:none}
+  /* 좌측 고정 "전체 목록" 버튼 */
+  .catall-btn{
+    flex:0 0 auto;position:sticky;left:0;z-index:3;
+    display:flex;align-items:center;gap:6px;
+    padding:9px 14px 9px 12px;border-radius:22px;
+    background:linear-gradient(180deg,var(--accent-l) 0%,var(--accent) 100%);
+    color:#fff;font-size:13px;font-weight:800;letter-spacing:-.015em;
+    border:0;cursor:pointer;font-family:inherit;white-space:nowrap;
+    box-shadow:0 4px 14px rgba(15,66,133,.32),4px 0 12px 6px rgba(255,255,255,.94);
+  }
+  .catall-btn:active{transform:scale(.97)}
+  .catall-btn svg{width:16px;height:16px;fill:currentColor;flex:0 0 auto}
+  .catall-btn .n{
+    background:rgba(255,255,255,.22);padding:1px 7px;border-radius:12px;
+    font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;
+  }
   .catchip{
-    flex:0 0 auto;padding:7px 13px;border-radius:20px;background:var(--chip);
-    color:var(--ink2);font-size:12.5px;font-weight:700;border:1px solid transparent;
-    cursor:pointer;white-space:nowrap
+    flex:0 0 auto;padding:9px 16px;border-radius:22px;background:#fff;
+    color:var(--accent);font-size:13px;font-weight:800;border:1.5px solid var(--chip-b);
+    cursor:pointer;white-space:nowrap;letter-spacing:-.015em;
+    transition:all .15s;font-family:inherit;
   }
-  .catchip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .catchip:hover{background:var(--accent-mist);border-color:var(--accent-l);color:var(--accent-d)}
+  .catchip.on{
+    background:linear-gradient(180deg,var(--accent-l) 0%,var(--accent) 100%);
+    color:#fff;border-color:var(--accent);
+    box-shadow:0 6px 16px rgba(15,66,133,.35),inset 0 1px 0 rgba(255,255,255,.15);
+    font-weight:900;
+  }
+  /* ---- 약효분류 전체 선택 모달 ---- */
+  .catmodal-bg{
+    position:fixed;inset:0;background:rgba(15,42,63,.6);z-index:55;
+    display:none;align-items:flex-end;justify-content:center;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  }
+  .catmodal-bg.show{display:flex;animation:fadeIn .18s ease-out}
+  .catmodal{
+    background:#fff;width:100%;max-width:520px;max-height:88vh;
+    display:flex;flex-direction:column;
+    border-radius:24px 24px 0 0;
+    animation:slideUp .28s cubic-bezier(.22,.9,.26,1);
+    box-shadow:0 -10px 40px rgba(0,0,0,.2);
+  }
+  @media(min-width:560px){
+    .catmodal-bg{align-items:center;padding:20px}
+    .catmodal{border-radius:20px;max-height:82vh}
+  }
+  .catmodal-head{
+    padding:16px 18px 12px;border-bottom:1px solid var(--line-soft);
+    display:flex;align-items:center;gap:10px;
+  }
+  .catmodal-head h3{
+    margin:0;flex:1;font-size:16px;font-weight:800;letter-spacing:-.02em;color:var(--ink);
+  }
+  .catmodal-close{
+    flex:0 0 auto;width:32px;height:32px;border:0;border-radius:50%;background:var(--chip);
+    color:var(--ink2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .catmodal-search{
+    padding:8px 16px 10px;border-bottom:1px solid var(--line-soft);
+    position:relative;
+  }
+  .catmodal-search svg{
+    position:absolute;left:28px;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;fill:var(--accent-l);pointer-events:none;
+  }
+  .catmodal-search input{
+    width:100%;border:0;background:var(--chip);border-radius:12px;
+    padding:11px 12px 11px 38px;font-size:14px;color:var(--ink);outline:none;
+    font-family:inherit;letter-spacing:-.011em;
+  }
+  .catmodal-search input:focus{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
+  .catmodal-list{
+    flex:1;overflow-y:auto;padding:8px 8px calc(env(safe-area-inset-bottom) + 12px);
+    -webkit-overflow-scrolling:touch;
+  }
+  .cat-item{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 12px;border-radius:12px;cursor:pointer;
+    transition:background .12s;
+  }
+  .cat-item:hover{background:var(--accent-mist)}
+  .cat-item.on{background:var(--accent-mist);}
+  .cat-item .cat-name{
+    flex:1;font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-.015em;
+    line-height:1.35;word-break:break-word;
+  }
+  .cat-item.on .cat-name{color:var(--accent-d);font-weight:800}
+  .cat-item .cat-num{
+    flex:0 0 auto;font-size:11.5px;font-weight:800;color:var(--accent);
+    background:#fff;padding:3px 9px;border-radius:12px;
+    border:1px solid var(--accent-soft);font-variant-numeric:tabular-nums;
+  }
+  .cat-item.on .cat-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .cat-item .cat-check{
+    flex:0 0 auto;width:20px;height:20px;color:var(--accent);
+  }
+  .cat-item:not(.on) .cat-check{visibility:hidden}
+  .catmodal-empty{text-align:center;padding:40px 20px;color:var(--ink3);font-size:13px}
   /* ---- List ---- */
-  main{padding:10px 12px calc(env(safe-area-inset-bottom) + 40px)}
+  main{padding:14px 12px calc(env(safe-area-inset-bottom) + 40px);max-width:640px;margin:0 auto}
   .grp-cat{
-    font-size:12px;font-weight:800;color:var(--accent-d);letter-spacing:.02em;
-    margin:16px 4px 8px;text-transform:none;display:flex;align-items:center;gap:8px
+    font-size:11px;font-weight:900;color:var(--accent);letter-spacing:.1em;
+    margin:24px 6px 14px;text-transform:uppercase;display:flex;align-items:center;gap:12px
   }
-  .grp-cat::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grp-cat > span{
+    flex:0 0 auto;text-transform:none;letter-spacing:-.02em;font-size:14px;color:#fff;
+    background:linear-gradient(135deg,var(--accent-l) 0%,var(--accent) 100%);
+    padding:7px 16px;border-radius:22px;
+    font-weight:800;
+    box-shadow:0 4px 12px rgba(15,66,133,.28);
+  }
+  .grp-cat::before,.grp-cat::after{
+    content:"";flex:1;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent)
+  }
   .ing{
-    background:var(--card);border-radius:14px;margin-bottom:9px;overflow:hidden;
-    box-shadow:var(--shadow);border:1px solid #edf0ee
+    background:var(--card);border-radius:20px;margin-bottom:12px;overflow:hidden;
+    box-shadow:var(--shadow-sm);border:1.5px solid var(--line-soft);
+    transition:box-shadow .2s,border-color .2s,transform .2s;
   }
+  .ing:hover{box-shadow:var(--shadow);border-color:var(--accent-soft);transform:translateY(-1px)}
   .ing-head{
-    display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;
+    display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;
     user-select:none
   }
-  .ing-head:active{background:#f7f9f8}
+  .ing-head:active{background:var(--accent-mist)}
+  .ing-icon{
+    flex:0 0 auto;width:44px;height:44px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent-l) 0%,var(--accent) 100%);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px rgba(15,66,133,.35);
+    font-weight:900;font-size:14px;letter-spacing:-.02em;
+  }
   .ing-main{flex:1;min-width:0}
   .ing-name{
-    font-size:15.5px;font-weight:800;letter-spacing:-.01em;color:var(--ink);
+    font-size:16px;font-weight:800;letter-spacing:-.022em;color:var(--ink);
     word-break:break-word;line-height:1.3
   }
-  .ing-meta{font-size:11.5px;color:var(--ink2);margin-top:2px;font-weight:600}
+  .ing-meta{font-size:12px;color:var(--accent);margin-top:3px;font-weight:700;letter-spacing:-.01em}
   .ing-count{
-    flex:0 0 auto;background:var(--chip);color:var(--accent-d);font-size:11px;
-    font-weight:800;padding:4px 9px;border-radius:20px
+    flex:0 0 auto;background:var(--accent);color:#fff;font-size:11.5px;
+    font-weight:800;padding:5px 11px;border-radius:20px;font-variant-numeric:tabular-nums;
+    box-shadow:0 2px 6px rgba(15,66,133,.25);
   }
-  .chev{flex:0 0 auto;width:18px;height:18px;fill:#9aabb0;transition:transform .22s}
-  .ing.open .chev{transform:rotate(90deg)}
-  .prods{display:none;padding:0 10px 8px;border-top:1px solid var(--line)}
+  .chev{flex:0 0 auto;width:18px;height:18px;fill:var(--accent-l);transition:transform .22s}
+  .ing.open .chev{transform:rotate(90deg);fill:var(--accent-d)}
+  .prods{display:none;padding:4px 12px 8px;border-top:1px solid var(--line-soft);background:var(--accent-mist)}
   .ing.open .prods{display:block}
   .prod{
-    display:flex;gap:11px;align-items:flex-start;
-    padding:11px 8px 12px;border-bottom:1px solid #f0f2f0
+    display:flex;gap:12px;align-items:flex-start;
+    padding:14px;border-bottom:1px solid rgba(213,226,240,.5);
+    transition:background .12s;border-radius:12px;margin:6px 0;
+    cursor:pointer;background:#fff;
+    box-shadow:0 1px 2px rgba(30,90,168,.04);
   }
+  .prod:hover{background:#fbfdff;box-shadow:0 3px 8px rgba(30,90,168,.08)}
+  .prod:active{background:var(--accent-mist)}
   .prod-thumb{
-    flex:0 0 auto;width:70px;height:70px;border-radius:12px;overflow:hidden;
-    background:#f3f6f5;border:1px solid #e2e6e4;display:flex;align-items:center;justify-content:center
+    flex:0 0 auto;width:70px;height:70px;border-radius:14px;overflow:hidden;
+    background:var(--chip);border:1px solid var(--line-soft);display:flex;align-items:center;justify-content:center
   }
   .prod-thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .prod-thumb.noimg{display:none}
   .prod-body{flex:1;min-width:0}
   .prod:last-child{border-bottom:0}
   .prod-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-  .prod-nm{font-size:14px;font-weight:700;color:var(--ink);line-height:1.32;word-break:break-word}
+  .prod-nm{font-size:14px;font-weight:700;color:var(--ink);line-height:1.35;word-break:break-word;letter-spacing:-.015em}
   .prod-pr{
     flex:0 0 auto;font-size:14.5px;font-weight:800;color:var(--price);
-    white-space:nowrap;font-variant-numeric:tabular-nums
+    white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:-.01em
   }
-  .prod-pr small{font-size:11px;font-weight:700;color:#6a8a80}
-  .prod-sub{font-size:12px;color:var(--ink2);margin-top:4px;line-height:1.5}
-  .prod-sub .lbl{color:#96a5a9;font-weight:600}
+  .prod-pr small{font-size:10.5px;font-weight:700;color:#6a8a80;margin-left:1px}
+  .prod-sub{font-size:12px;color:var(--ink2);margin-top:5px;line-height:1.5;letter-spacing:-.01em}
+  .prod-sub .lbl{color:var(--ink3);font-weight:600;margin-right:2px}
   .prod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center}
   .tag{
-    font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;
-    background:#eef2f0;color:#3d5259
+    font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:6px;
+    background:#eef2f0;color:#3d5259;letter-spacing:-.005em
   }
-  .tag.maker{background:#e8f1ef;color:var(--accent-d)}
-  .tag.note{background:#fff3e6;color:#a15b12}
-  .tag.soldout{background:#fdeaea;color:#b23b3b}
+  .tag.maker{background:var(--accent-mist);color:var(--accent-d)}
+  .tag.note{background:#fef3e2;color:#a06a17}
+  .tag.soldout{background:#fde8e8;color:#b83737}
   .tag.code{background:#eef1f4;color:#5a6b7a;font-variant-numeric:tabular-nums}
-  mark{background:#ffe89e;color:inherit;border-radius:2px;padding:0 1px}
-  .empty{text-align:center;padding:60px 20px;color:var(--ink2)}
-  .empty .big{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+  mark{background:#fef2a8;color:inherit;border-radius:2px;padding:0 1px}
+  .empty{text-align:center;padding:80px 20px;color:var(--ink2)}
+  .empty .big{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:6px;letter-spacing:-.015em}
   .top{
-    position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom) + 16px);
-    width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;
-    border:0;box-shadow:0 4px 14px rgba(18,122,107,.4);font-size:20px;display:none;
-    align-items:center;justify-content:center;z-index:15;cursor:pointer
+    position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 20px);
+    width:48px;height:48px;border-radius:50%;
+    background:linear-gradient(180deg,var(--accent-l) 0%,var(--accent) 100%);
+    color:#fff;
+    border:0;box-shadow:0 8px 24px rgba(30,90,168,.4);font-size:20px;display:none;
+    align-items:center;justify-content:center;z-index:15;cursor:pointer;
+    transition:transform .15s
   }
+  .top:hover{transform:translateY(-3px)}
   .top.show{display:flex}
-  .foot{text-align:center;font-size:10.5px;color:#9aa9ad;padding:24px 12px 8px}
+  .foot{text-align:center;font-size:11px;color:var(--ink3);padding:32px 16px 16px;line-height:1.6;letter-spacing:-.005em;max-width:640px;margin:0 auto}
+  /* ---- Product detail modal ---- */
+  .prod{cursor:pointer}
+  .prod:active{background:#f7f9f8}
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(10,25,35,.55);z-index:50;
+    display:none;align-items:flex-end;justify-content:center;
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  }
+  .modal-bg.show{display:flex;animation:fadeIn .18s ease-out}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:#fff;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;
+    border-radius:22px 22px 0 0;padding:0 0 calc(env(safe-area-inset-bottom) + 20px);
+    animation:slideUp .28s cubic-bezier(.22,.9,.26,1);
+    box-shadow:0 -8px 40px rgba(0,0,0,.15);
+  }
+  @media(min-width:560px){
+    .modal-bg{align-items:center;padding:20px}
+    .modal{border-radius:22px;max-height:85vh;box-shadow:0 12px 60px rgba(0,0,0,.25)}
+  }
+  @keyframes slideUp{from{transform:translateY(50px);opacity:.5}to{transform:translateY(0);opacity:1}}
+  .modal-head{
+    position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    display:flex;align-items:flex-start;gap:10px;
+    padding:18px 18px 12px;border-bottom:1px solid var(--line-soft);z-index:2;
+  }
+  .modal-title{
+    flex:1;font-size:17px;font-weight:800;line-height:1.3;color:var(--ink);
+    word-break:break-word;letter-spacing:-.02em
+  }
+  .modal-close{
+    flex:0 0 auto;width:34px;height:34px;border:0;border-radius:50%;background:var(--chip);
+    color:var(--ink2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .15s;
+  }
+  .modal-close:hover{background:#dfe6e2;color:var(--ink)}
+  .modal-body{padding:14px 18px 4px}
+  .modal-img{
+    width:100%;max-height:280px;border-radius:14px;border:1px solid var(--line-soft);
+    background:#f3f6f5;object-fit:contain;display:block;margin-bottom:16px;
+  }
+  .modal-img.noimg{display:none}
+  .m-row{display:flex;gap:8px;font-size:13.5px;line-height:1.55;margin-bottom:8px;letter-spacing:-.01em}
+  .m-row .k{flex:0 0 66px;color:var(--ink3);font-weight:700;font-size:12px;padding-top:2px;letter-spacing:0}
+  .m-row .v{flex:1;color:var(--ink);word-break:break-word}
+  .m-row .v.price{font-weight:800;color:var(--price);font-variant-numeric:tabular-nums}
+  .m-info-box{
+    margin-top:16px;
+    background:linear-gradient(135deg,var(--accent-mist) 0%,#e5eefa 100%);
+    border:1px solid var(--accent-soft);border-radius:14px;
+    padding:14px 15px;
+  }
+  .m-info-t{font-size:11.5px;font-weight:800;color:var(--accent-d);margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase}
+  .m-info-d{font-size:13px;line-height:1.6;color:var(--ink);letter-spacing:-.01em}
+  .m-links{display:flex;gap:8px;margin:14px 0 4px}
+  .m-links a{
+    flex:1;text-align:center;text-decoration:none;font-size:13.5px;font-weight:800;
+    padding:13px 8px;border-radius:12px;
+    background:linear-gradient(180deg,var(--accent-l) 0%,var(--accent) 100%);color:#fff;
+    letter-spacing:-.01em;transition:transform .12s,box-shadow .12s;
+    box-shadow:0 4px 12px rgba(30,90,168,.28);
+  }
+  .m-links a:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(30,90,168,.35)}
+  .m-links a:active{background:var(--accent-d);transform:translateY(0)}
+  .m-links a.ghost{
+    background:var(--chip);color:var(--accent-d);flex:0 0 42%;box-shadow:none;
+    border:1px solid var(--chip-b);
+  }
+  .m-links a.ghost:hover{background:var(--accent-mist);transform:translateY(-1px);box-shadow:0 2px 6px rgba(30,90,168,.1)}
+  .m-note{
+    margin-top:16px;font-size:11.5px;line-height:1.6;color:var(--ink3);
+    padding:11px 13px;background:var(--bg-soft);border-radius:10px;border:1px solid var(--line-soft);
+    letter-spacing:-.005em;
+  }
+  /* ---- 전문가용 안내(첫 방문) ---- */
+  .notice-bg{
+    position:fixed;inset:0;background:rgba(10,25,35,.75);z-index:60;
+    display:none;align-items:center;justify-content:center;padding:20px;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  }
+  .notice-bg.show{display:flex;animation:fadeIn .2s}
+  .notice{
+    background:#fff;max-width:440px;width:100%;border-radius:20px;
+    padding:26px 24px 20px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+    animation:slideUp .3s cubic-bezier(.22,.9,.26,1);
+  }
+  .notice-icon{
+    width:48px;height:48px;border-radius:14px;
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-d) 100%);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:24px;margin-bottom:14px;box-shadow:0 6px 16px rgba(15,118,110,.3);
+  }
+  .notice-title{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px;letter-spacing:-.02em}
+  .notice-body{
+    font-size:13.5px;line-height:1.7;color:#3d5259;margin-bottom:18px;letter-spacing:-.01em;
+  }
+  .notice-body b{color:var(--accent-d);font-weight:800}
+  .notice-btn{
+    width:100%;border:0;background:linear-gradient(180deg,var(--accent) 0%,var(--accent-d) 100%);
+    color:#fff;font-size:14.5px;font-weight:800;
+    padding:14px;border-radius:12px;cursor:pointer;font-family:inherit;letter-spacing:-.01em;
+    box-shadow:0 4px 12px rgba(15,118,110,.3);
+    transition:transform .12s;
+  }
+  .notice-btn:hover{transform:translateY(-1px)}
+  .notice-btn:active{transform:translateY(0)}
+  /* ---- 헤더 전문가용 배지 ---- */
+  .pro-badge{
+    display:inline-flex;align-items:center;gap:3px;
+    font-size:9.5px;font-weight:800;
+    background:linear-gradient(135deg,rgba(212,175,74,.2) 0%,rgba(212,175,74,.1) 100%);
+    color:#e5c17a;padding:3px 8px;border-radius:5px;letter-spacing:.06em;
+    border:1px solid rgba(212,175,74,.25);
+    vertical-align:2px;text-transform:uppercase;
+  }
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">
-    <div class="brand-title">
-      <h1>성분별 급여 주사제</h1>
-      <div class="brand-info">(주)정진약품 · (주)우리메디텍 · 043-223-1571</div>
+<section class="hero">
+  <svg class="hero-wave" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,20 C300,4 600,32 900,16 C1050,8 1150,20 1200,14 L1200,36 L0,36 Z" fill="#ffffff" opacity="0.6"/>
+    <path d="M0,24 C300,12 600,36 900,22 C1050,16 1150,26 1200,22 L1200,36 L0,36 Z" fill="#ffffff"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="brand-mini">
+        <img src="data:image/png;base64,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" alt="정진약품">
+        <span class="plus">+</span>
+        <img src="data:image/png;base64,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" alt="우리메디텍">
+      </div>
+      <span class="pro-badge">의약 전문가용</span>
     </div>
-    <span class="sub">MOBILE</span>
+    <h1>성분별 <span class="accent">급여 주사제</span></h1>
+    <div class="hero-sub">동일성분 주사제를 성분·약효분류별로 정리한 참고자료</div>
+    <div class="hero-info">
+      <span class="co"><img src="data:image/png;base64,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" alt=""> (주)정진약품</span>
+      <span class="sep">·</span>
+      <span class="co"><img src="data:image/png;base64,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" alt=""> (주)우리메디텍</span>
+      <span class="sep">·</span>
+      <span class="tel">043-223-1571</span>
+    </div>
   </div>
+</section>
+<header>
   <div class="search">
     <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14"/></svg>
     <input id="q" type="search" inputmode="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="성분·제품·제약사·보험코드 검색">
@@ -149,9 +501,59 @@
   <div class="stat"><span><b id="sc">202</b> 성분</span><span><b id="pc">698</b> 제품</span><span><b>89</b> 약효분류</span></div>
 </header>
 <nav class="catbar" id="catbar"></nav>
+<div class="catmodal-bg" id="catmodalBg">
+  <div class="catmodal">
+    <div class="catmodal-head">
+      <h3>약효분류 선택</h3>
+      <button class="catmodal-close" id="catmodalClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="catmodal-search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14"/></svg>
+      <input id="catq" type="search" placeholder="약효분류 검색 (예: 진통제, 항생제)" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="catmodal-list" id="catlist"></div>
+  </div>
+</div>
 <main id="list"></main>
 <button class="top" id="top" aria-label="맨 위로">↑</button>
-<div class="foot">동일성분 주사제 · 성분별 정리 · (주)정진약품 · (주)우리메디텍 · 043-223-1571</div>
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="mTitle"></div>
+      <button class="modal-close" id="mClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+<div class="notice-bg" id="noticeBg">
+  <div class="notice">
+    <div class="notice-icon">⚕</div>
+    <div class="notice-title">의약 전문가용 참고자료</div>
+    <div class="notice-body">
+      본 사이트는 약국·의료기관 종사자를 위한 <b>급여 주사제 참고자료</b>입니다.
+      전문의약품에 관한 정보를 포함하고 있으며 일반 소비자를 대상으로 한
+      광고가 아닙니다.<br><br>
+      게시된 정보는 참고용이며, 정확한 허가사항은 식품의약품안전처
+      <b>의약품안전나라</b>에서 확인하시기 바랍니다.
+    </div>
+    <button class="notice-btn" id="noticeAck">확인하고 계속</button>
+  </div>
+</div>
+<div class="foot">
+  <div style="font-weight:800;color:var(--ink2);letter-spacing:-.015em;font-size:12px;margin-bottom:8px">
+    동일성분 주사제 · 성분별 정리
+  </div>
+  (주)정진약품 · (주)우리메디텍 · <b style="color:var(--ink2);font-weight:700">043-223-1571</b>
+  <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);color:#a4b1b3;font-size:10.5px">
+    본 정보는 식품의약품안전처 공공데이터를 참고하여 제작되었습니다.<br>
+    효능·효과 등 정확한 허가사항은
+    <a href="https://nedrug.mfds.go.kr" target="_blank" rel="noopener noreferrer"
+       style="color:var(--accent);text-decoration:none;font-weight:700;border-bottom:1px solid var(--accent-soft)">의약품안전나라</a>
+    에서 확인하시기 바랍니다.<br>
+    본 사이트는 <b style="color:#8a9aa2">전문의약품에 관한 의약 전문가용 참고자료</b>이며,
+    일반 소비자 대상 광고가 아닙니다.
+  </div>
+</div>
 
 <script>
 /*
@@ -164,22 +566,14 @@
 const IMAGE_BASE = 'images/';
 const IMAGE_EXTS = ['jpg','jpeg','png','webp'];
 const IMAGE_MAP = {
-  // 골다공증/골대사 관련 제품 사진 일부 적용
-  // 프롤리아 프리필드시린지 60mg
-  '052300041': 'https://www.ckdpharm.com/upload/images/2019/08/28/150598117727676060.jpg',
-
-  // 이베니티주 프리필드시린지
-  '052300111': 'https://common.health.kr/shared/images/ext_images/pack_img/P_2019060400003_02.jpg',
-
-  // 포스테오주 0.6mg
-  '670800291': 'https://common.health.kr/shared/images/ext_images/pack_img/P_A11AKP08G0658_02.jpg',
-
-  // 동광졸레드론산주 5mg/100mL
-  '645907211': 'https://common.health.kr/shared/images/ext_images/pack_img/P_2021032900035_00.jpg',
-
-  // 원스본주 5mg/100mL
-  '670105221': 'https://common.health.kr/shared/images/ext_images/pack_img/P_2021032900031_00.jpg'
+  // 예시: '648100181': 'images/648100181.jpg'
 };
+
+/*
+  효능·효과 정보는 저작권 및 실시간 정확성을 위해
+  식품의약품안전처 '의약품안전나라(nedrug.mfds.go.kr)'로 직접 연결합니다.
+  제품 팝업에서 "식약처 허가사항 조회" 버튼을 누르면 새 창이 열립니다.
+*/
 const DATA = [{"i":1,"n":"fremanezumab","c":"편두통 치료제","p":[{"nm":"아조비프리필드시린지주225mg 1.5ml","sp":"1.5ml / 1관","pr":"295,520","ig":"fremanezumab 0.225g(0.15g/mL)","mk":"종근당","cd":"626900941","nt":""},{"nm":"아조비오토인젝터주225mg 1.5ml","sp":"1.5ml / 1펜","pr":"295,250","ig":"fremanezumab 0.225g(0.15g/mL)","mk":"종근당","cd":"626900951","nt":""}]},{"i":2,"n":"etomidate","c":"전신마취제","p":[{"nm":"에토미데이트-리푸로주사","sp":"10ml / 10A","pr":"41,610","ig":"etomidate 20mg(2mg/mL)","mk":"한올바이오","cd":"667400511","nt":""}]},{"i":3,"n":"ketamine hydrochloride","c":"전신마취제","p":[{"nm":"케타민염산염 주사(케타민염산염)","sp":"10ml / 10V","pr":"33,120","ig":"ketamine hydrochloride (as ketamine 0.5g","mk":"휴온스","cd":"670603583","nt":""},{"nm":"휴온스 케타민염산염주사 50밀리그램 / 밀리리터","sp":"5ml / 10A","pr":"22,080","ig":"ketamine hydrochloride (as ketamine 0.25g","mk":"휴온스","cd":"670604343","nt":""}]},{"i":4,"n":"propofol","c":"전신마취제","p":[{"nm":"(향정)포폴주사 12mL","sp":"12mL / 5A","pr":"9,060","ig":"propofol 0.12g(10mg/mL)","mk":"동국제약","cd":"653402351","nt":""},{"nm":"(향정)포폴주사 20mL","sp":"20mL / 5A","pr":"20,295","ig":"propofol 0.2g(10mg/mL)","mk":"동국제약","cd":"653402371","nt":""},{"nm":"(향정)포폴주사 8mL","sp":"8mL / 10A","pr":"14,930","ig":"propofol 80mg(10mg/mL)","mk":"동국제약","cd":"653403541","nt":""},{"nm":"(향정)아네폴주사 12ml","sp":"12ml / 5A","pr":"9,840","ig":"propofol 0.12g(10mg/mL)","mk":"하나제약","cd":"657804591","nt":""},{"nm":"(향정)아네폴주사 5ml","sp":"5ml / 10A","pr":"11,520","ig":"propofol 50mg(10mg/mL)","mk":"하나제약","cd":"657804561","nt":""},{"nm":"프레조폴엠시티주사 1% / 15ml","sp":"15ml / 5A","pr":"17,145","ig":"propofol 0.15g(10mg/mL)","mk":"휴온스","cd":"650902071","nt":""},{"nm":"프레조폴엠시티주사 1% / 20ml","sp":"20ml / 10V","pr":"44,760","ig":"propofol 0.2g(10mg/mL)","mk":"휴온스","cd":"650902041","nt":""},{"nm":"프레조폴엠시티주사 1% / 50ml","sp":"50ml / 10V","pr":"113,460","ig":"propofol 0.5g(10mg/mL)","mk":"휴온스","cd":"650901861","nt":""}]},{"i":5,"n":"midazolam","c":"수면진정제 및 신경안정제","p":[{"nm":"미다컴주15㎎","sp":"5A","pr":"4,200","ig":"midazolam 15mg(5mg/mL)","mk":"명문바이오","cd":"649801721","nt":""},{"nm":"미다컴주5㎎","sp":"10A","pr":"7,000","ig":"midazolam 5mg(1mg/mL)","mk":"명문바이오","cd":"649801741","nt":""},{"nm":"미졸람 주사 1mg","sp":"5ml / 10A","pr":"7,000","ig":"midazolam 5mg(1mg/mL)","mk":"휴온스","cd":"670605401","nt":""}]},{"i":6,"n":"phenobarbital sodium","c":"수면진정제 및 신경안정제","p":[{"nm":"제일페노바르비탈주사액","sp":"1ml / 50A","pr":"12,500","ig":"phenobarbital sodium 0.1g(0.1g/mL)","mk":"제일제약","cd":"650500841","nt":""}]},{"i":7,"n":"propacetamol hydrochloride","c":"기타 진통제","p":[{"nm":"파세타주1g","sp":"30V","pr":"41,310","ig":"propacetamol hydrochloride 1g","mk":"신풍제약","cd":"648506591","nt":""}]},{"i":8,"n":"tramadol hydrochloride","c":"기타 진통제","p":[{"nm":"경동캄펙스주50mg","sp":"1ml / 50A","pr":"14,850","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"경동제약","cd":"648100181","nt":"CSO 포함 마진 20~30%"},{"nm":"트롤주(트라마돌)","sp":"1ml / 50A","pr":"15,000","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"대한약품공업","cd":"645102391","nt":""},{"nm":"타마돌주사","sp":"1ml / 50A","pr":"14,650","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"동광제약","cd":"645902851","nt":""},{"nm":"신풍트라마돌염산염주","sp":"1ml / 50A","pr":"13,300","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"신풍제약","cd":"648502283","nt":""},{"nm":"트로돈주사","sp":"50A","pr":"12,800","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"아주약품공업","cd":"654001721","nt":""},{"nm":"라트롤주50mg","sp":"1ml / 50A","pr":"10,350","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"유니온제약","cd":"665500671","nt":""},{"nm":"페니마돌주50mg","sp":"1ml / 50A","pr":"13,900","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"유영제약","cd":"648201961","nt":""},{"nm":"트리돌주사100mg","sp":"2ml / 50A","pr":"25,000","ig":"tramadol hydrochloride 0.1g(50mg/mL)","mk":"유한양행","cd":"642102511","nt":""},{"nm":"지트라돌주50mg","sp":"50A","pr":"15,000","ig":"tramadol hydrochloride 50mg/mL","mk":"일화","cd":"640903941","nt":""},{"nm":"도란찐주50mg","sp":"1ml / 50A","pr":"13,500","ig":"tramadol hydrochloride 50mg/mL","mk":"일화","cd":"642300341","nt":""},{"nm":"도란찐주100mg","sp":"2ml / 50A","pr":"15,000","ig":"tramadol hydrochloride 100mg/mL","mk":"일화","cd":"642300331","nt":""},{"nm":"마리트롤주","sp":"1ml / 50A","pr":"10,350","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"제일제약","cd":"650500061","nt":""},{"nm":"한올트라마돌염산염주50mg","sp":"50A","pr":"14,850","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"한올바이오","cd":"655602984","nt":""},{"nm":"화이트트라마주","sp":"1ml / 50A","pr":"15,000","ig":"Tramadol hydrochloride 50mg/ml","mk":"화이트생명과학","cd":"625201731","nt":""},{"nm":"휴메딕스 트라마돌염삼염 주사","sp":"1ml / 50A","pr":"15,000","ig":"tramadol hydrochloride 50mg(50mg/mL)","mk":"휴온스","cd":"683100411","nt":""}]},{"i":9,"n":"butorphanol tartrate","c":"마약성 진통제","p":[{"nm":"부토판주사1㎎/㎖","sp":"1ml / 50A","pr":"35,000","ig":"butorphanol tartrate 1mg(1mg/mL)","mk":"명문바이오","cd":"649801911","nt":""},{"nm":"부토판주사2㎎/㎖","sp":"1ml / 50A","pr":"54,850","ig":"butorphanol tartrate 2mg(2mg/mL)","mk":"명문바이오","cd":"649801921","nt":""}]},{"i":10,"n":"nalbuphine hydrochloride","c":"마약성 진통제","p":[{"nm":"날페인주사10mg","sp":"1ml / 50A","pr":"34,600","ig":"nalbuphine hydrochloride 10mg(10mg/mL)","mk":"명문바이오","cd":"649800051","nt":""}]},{"i":11,"n":"pethidine hydrochloride","c":"마약성 진통제","p":[{"nm":"제일페티딘염산염주사액 / 0.5ml","sp":"0.5ml / 25A","pr":"7,850","ig":"pethidine hydrochloride 25mg(50mg/mL)","mk":"제일제약","cd":"650500481","nt":""},{"nm":"제일페티딘염산염주사액 / 1ml","sp":"1ml / 25A","pr":"9,825","ig":"pethidine hydrochloride 50mg(50mg/mL)","mk":"제일제약","cd":"650500491","nt":""}]},{"i":12,"n":"dexketoprofen trometamol","c":"비스테로이드성 소염진통제","p":[{"nm":"케랄주 50mg","sp":"20A","pr":"15,520","ig":"dexketoprofen trometamol 73.8mg","mk":"쥴릭파마코리아","cd":"674900451","nt":""},{"nm":"케랄주","sp":"2ml / 20A","pr":"15,520","ig":"dexketoprofen trometamol (as dexketoprofen","mk":"한올바이오","cd":"674900451","nt":""}]},{"i":13,"n":"diclofenac sodium","c":"비스테로이드성 소염진통제","p":[{"nm":"구주디클로페낙주사액2ML","sp":"2ml / 50A","pr":"28,250","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"구주제약","cd":"669800081","nt":""},{"nm":"디클로페낙주(디클로페낙)","sp":"2ml / 50A","pr":"25,450","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"대한약품공업","cd":"645100491","nt":""},{"nm":"디페인주사","sp":"2 mL / 50A","pr":"15,000","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"동광제약","cd":"645901111","nt":""},{"nm":"토라렌주","sp":"100A","pr":"56,500","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"명문바이오","cd":"649803111","nt":""},{"nm":"소페낙주사","sp":"2ml / 50A","pr":"28,250","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"아주약품공업","cd":"654000481","nt":""},{"nm":"유니페낙주","sp":"2ml / 50A","pr":"28,250","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"유니온제약","cd":"665503621","nt":""},{"nm":"에스페낙주","sp":"2ml / 50A","pr":"28,250","ig":"diclofenac sodium 37.5mg","mk":"일화","cd":"642302861","nt":""},{"nm":"제일제약디클로페낙나트륨주사액","sp":"2ml / 50A","pr":"28,250","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"제일제약","cd":"650500521","nt":""},{"nm":"카페낙주사","sp":"2ml / 50A","pr":"28,250","ig":"diclofenac sodium 75mg(37.5mg/mL)","mk":"하나제약","cd":"657801731","nt":""},{"nm":"세로페낙주","sp":"2ml / 50A","pr":"28,250","ig":"Diclofenac Sodium 75mg/2ml","mk":"화이트생명과학","cd":"625201541","nt":""}]},{"i":14,"n":"diclofenac-β-dimethyl-aminoetha","c":"비스테로이드성 소염진통제","p":[{"nm":"디크놀주사","sp":"2ml / 100A","pr":"92,200","ig":"diclofenac-β-dimethyl-aminoethanol 90mg","mk":"명문바이오","cd":"649800311","nt":""},{"nm":"뉴페낙주","sp":"2ML / 50A","pr":"44,350","ig":"diclofenac-β-dimethyl-aminoethanol 90mg(","mk":"아주약품공업","cd":"654000071","nt":""},{"nm":"유니페낙에프주","sp":"2ml / 50A","pr":"44,350","ig":"diclofenac-β-dimethyl-aminoethanol 90mg","mk":"유니온제약","cd":"665503611","nt":""}]},{"i":15,"n":"nol ketoprofen","c":"비스테로이드성 소염진통제","p":[{"nm":"부광케토프로펜주100mg","sp":"2ml / 10A","pr":"6,520","ig":"ketoprofen 0.1g(50mg/mL)","mk":"부광약품","cd":"642201001","nt":""}]},{"i":16,"n":"ketorolac tromethamine","c":"비스테로이드성 소염진통제","p":[{"nm":"케토란주","sp":"1ml / 50A","pr":"25,850","ig":"ketorolac tromethamine 30mg(30mg/mL)","mk":"경동제약","cd":"648102001","nt":"CSO 포함 마진 20~30%"},{"nm":"케로라주","sp":"1ml / 50A","pr":"42,350","ig":"ketorolac tromethamine 30mg(30mg/mL)","mk":"동광제약","cd":"645902651","nt":""},{"nm":"케토신주사","sp":"1ml / 50A","pr":"30,100","ig":"ketorolac tromethamine 30mg(30mg/mL)","mk":"명문바이오","cd":"649802851","nt":""},{"nm":"유니온케토롤락주","sp":"1ml / 50A","pr":"43,150","ig":"ketorolac tromethamine 30mg(30mg/mL)","mk":"유니온제약","cd":"665507731","nt":""}]},{"i":17,"n":"piroxicam","c":"비스테로이드성 소염진통제","p":[{"nm":"로시덴주","sp":"1ml / 50A","pr":"35,000","ig":"piroxicam 20mg(20mg/mL)","mk":"신풍제약","cd":"648500531","nt":""},{"nm":"유니온피록시캄주","sp":"1ml / 50A","pr":"35,000","ig":"piroxicam 20mg(20mg/mL)","mk":"유니온제약","cd":"665503221","nt":""},{"nm":"피록시캄 주사(피록시캄)","sp":"1ml / 50A","pr":"25,000","ig":"piroxicam 20mg(20mg/mL)","mk":"휴온스","cd":"670603871","nt":""}]},{"i":18,"n":"hydroxocobalamin","c":"비타민B군/비타민C를 포함하는 비타민B군","p":[{"nm":"타루펜주","sp":"1ml / 50A","pr":"41,800","ig":"hydroxocobalamin 2.5㎎/㎖","mk":"프라임제약","cd":"663601951","nt":""}]},{"i":19,"n":"choline alfoscerate","c":"정신부활약","p":[{"nm":"글리아타민주","sp":"4ml / 50A","pr":"59,500","ig":"choline alfoscerate 1g(0.25g/mL)","mk":"대웅바이오","cd":"694001211","nt":""},{"nm":"종근당글리아티린주1g","sp":"4ml / 50A","pr":"59,500","ig":"choline alfoscerate 1g(0.25g/mL)","mk":"종근당","cd":"643307411","nt":""}]},{"i":20,"n":"proteolytic peptide from porcine","c":"정신부활약","p":[{"nm":"세레브레인주 10ml","sp":"10ml / 10V","pr":"90,600","ig":"proteolytic peptide from porcine brain 2.152g(0.2152g/mL)","mk":"대웅바이오","cd":"694003301","nt":""},{"nm":"세레브레인주 20ml","sp":"20ml / 10V","pr":"132,450","ig":"proteolytic peptide from porcine brain 4.304","mk":"대웅바이오","cd":"694003311","nt":""},{"nm":"뉴로리진주(돼지뇌펩티드) / 10ml","sp":"10ml / 10V","pr":"89,800","ig":"proteolytic peptide from porcine brain 2.152g","mk":"휴온스","cd":"670608571","nt":""},{"nm":"뉴로리진주(돼지뇌펩티드) / 20ml","sp":"20ml / 10V","pr":"129,890","ig":"proteolytic peptide from porcine brain 4.304g","mk":"휴온스","cd":"670608581","nt":""}]},{"i":21,"n":"brain protirelin tartrate","c":"정신부활약","p":[{"nm":"세레브렌주","sp":"1ml / 50A","pr":"150,100","ig":"protirelin tartrate (as protirelin 0.5mg(0.5mg)","mk":"신풍제약","cd":"648501541","nt":""}]},{"i":22,"n":"돼지뇌펩티드","c":"정신부활약","p":[{"nm":"뉴로베라주 10ml","sp":"10ml / 10A","pr":"89,620","ig":"돼지뇌펩티드","mk":"현대약품","cd":"642004681","nt":""},{"nm":"뉴로베라주 20ml","sp":"20ml / 10A","pr":"129,770","ig":"돼지뇌펩티드","mk":"현대약품","cd":"642004691","nt":""}]},{"i":23,"n":"bupivacaine hydrochloride","c":"국소마취제","p":[{"nm":"명문염산부피바카인주0.25%","sp":"20ml / 10V","pr":"17,110","ig":"bupivacaine hydrochloride 50mg(2.5mg/mL)","mk":"명문바이오","cd":"649801321","nt":""},{"nm":"염산부피바카인헤비주사0.5%","sp":"4ml / 50A","pr":"96,450","ig":"bupivacaine hydrochloride 20mg(5mg/mL)","mk":"명문바이오","cd":"649801341","nt":""},{"nm":"마케인헤비주사20mg","sp":"4ml / 5A","pr":"13,185","ig":"bupivacaine hydrochloride 20mg(5mg/mL)","mk":"미쓰비시다나베파마코리아주식회","cd":"653301151","nt":""},{"nm":"하나부피바카인염산염주0.5%","sp":"20ml / 5V","pr":"10,030","ig":"bupivacaine hydrochloride 0.1g(5mg/mL)","mk":"하나제약","cd":"657802651","nt":""}]},{"i":24,"n":"epinephrine bitartrate","c":"국소마취제","p":[{"nm":"아티카인 1:10만","sp":"1.7ml / 50Ctg","pr":"18,650","ig":"epinephrine bitartrate (as epinephrine 17μg(10μg/mL))","mk":"휴온스","cd":"670603310","nt":""}]},{"i":25,"n":"lidocaine hydrochloride","c":"국소마취제","p":[{"nm":"대한리도카인염산염수화물1%주","sp":"20ml / 10V","pr":"5,070","ig":"lidocaine hydrochloride 0.2g(10mg/mL)","mk":"대한약품공업","cd":"645100751","nt":""},{"nm":"대한리도카인염산염수화물2%주","sp":"20ml / 10V","pr":"5,190","ig":"lidocaine hydrochloride 0.4g(20mg/mL)","mk":"대한약품공업","cd":"645100761","nt":""},{"nm":"대한리도카인염산염수화물2%주","sp":"5ml / 10V","pr":"4,320","ig":"lidocaine hydrochloride 0.1g(20mg/mL)","mk":"대한약품공업","cd":"645104361","nt":""},{"nm":"제일리도카인주사액","sp":"20ml / 10V","pr":"5,780","ig":"lidocaine hydrochloride 0.4g(20mg/mL)","mk":"제일제약","cd":"650500341","nt":""},{"nm":"리도카인염산염수화물 주사 1%","sp":"20ml / 10V","pr":"5,070","ig":"lidocaine hydrochloride 0.2g(10mg/mL)","mk":"휴온스","cd":"670603464","nt":""},{"nm":"휴온스 리도카인염산염수화물주 2%","sp":"5ml / 25A","pr":"10,800","ig":"lidocaine hydrochloride 0.1g(20mg/mL)","mk":"휴온스","cd":"670607491","nt":""},{"nm":"리도카인염산염수화물주 2%","sp":"20ml / 10V","pr":"6,420","ig":"lidocaine hydrochloride 0.4g(20mg/mL)","mk":"휴온스","cd":"670603485","nt":""}]},{"i":26,"n":"phenylephrine hydrochloride","c":"국소마취제","p":[{"nm":"하나페닐레프린염산염주사1%","sp":"10V","pr":"8,760","ig":"phenylephrine hydrochloride 10mg(10mg)","mk":"하나제약","cd":"657802731","nt":""}]},{"i":27,"n":"ropivacaine hydrochloride","c":"국소마취제","p":[{"nm":"나로핀주사7.5mg","sp":"20ml / 5A","pr":"25,605","ig":"ropivacaine hydrochloride 0.15g(7.5mg/mL)","mk":"미쓰비시다나베파마코리아주식회","cd":"653301131","nt":""},{"nm":"나카인 주사 7.9mg(염산로피바카인수화물)","sp":"20ml / 10Btl","pr":"51,540","ig":"ropivacaine hydrochloride 0.15g(7.5mg/mL)","mk":"휴온스","cd":"670600151","nt":""}]},{"i":28,"n":"epinephrine bitartrate","c":"치과용 국소마취제","p":[{"nm":"유니온리도카인·에피네프린주(1:10만)","sp":"100A","pr":"35,600","ig":"epinephrine bitartrate (as epinephrine 18μg(10μg/mL))","mk":"유니온제약","cd":"665506310","nt":""},{"nm":"유한2%염산리도카인주사1:8만(녹색)","sp":"50A","pr":"25,550","ig":"epinephrine bitartrate (as epinephrine 22.5μg(12.5μg/mL))","mk":"유한양행","cd":"642101410","nt":""},{"nm":"유한2%염산리도카인주사1:10만(적색)","sp":"50A","pr":"17,950","ig":"epinephrine bitartrate (as epinephrine 18μg(10μg/mL))","mk":"유한양행","cd":"642101400","nt":""},{"nm":"리도카인 에피네프린1:8만","sp":"1.8ml / 50Ctg","pr":"21,000","ig":"epinephrine bitartrate (as epinephrine 22.5μg","mk":"휴온스","cd":"670603450","nt":""},{"nm":"리도카인 에피네프린1:10만","sp":"1.8ml / 50Ctg","pr":"17,800","ig":"epinephrine bitartrate (as epinephrine 18μg(10μg/mL))","mk":"휴온스","cd":"670603440","nt":""}]},{"i":29,"n":"methocarbamol","c":"근이완제","p":[{"nm":"명문메토카르바몰1g","sp":"10V","pr":"9,540","ig":"methocarbamol 1g(0.1g/mL)","mk":"명문바이오","cd":"649800951","nt":""},{"nm":"비씨 메토카르바몰주사 500mg","sp":"5ml / 25A","pr":"17,500","ig":"methocarbamol 0.5g(0.1g/mL)","mk":"비씨월드제약","cd":"653100381","nt":""},{"nm":"메박신주","sp":"5ml / 10A","pr":"7,000","ig":"methocarbamol 0.5g(0.1g/mL)","mk":"아주약품공업","cd":"654000311","nt":""},{"nm":"유니온메토카르바몰주","sp":"5ml / 25A","pr":"18,000","ig":"methocarbamol 0.5g(0.1g/mL)","mk":"유니온제약","cd":"665502531","nt":""}]},{"i":30,"n":"rocuronium bromide","c":"근이완제","p":[{"nm":"로큐론주","sp":"5ml / 10V","pr":"35,650","ig":"rocuronium bromide 50mg(10mg/mL)","mk":"명문바이오","cd":"649805331","nt":""}]},{"i":31,"n":"naloxone hydrochloride","c":"기타 신경근계 약물","p":[{"nm":"삼진날록염산염주사0.4mg","sp":"1ml / 50A","pr":"35,000","ig":"naloxone hydrochloride 0.4mg(0.4mg/mL)","mk":"삼진제약","cd":"647800961","nt":""},{"nm":"삼진날록염산염주사2mg","sp":"2ml / 50A","pr":"105,550","ig":"naloxone hydrochloride 2mg(1mg/mL)","mk":"삼진제약","cd":"647800971","nt":""}]},{"i":32,"n":"neostigmine methylsulfate","c":"기타 신경근계 약물","p":[{"nm":"대한메칠황산네오스티그민주사액","sp":"1ml / 50A","pr":"15,000","ig":"neostigmine methylsulfate 0.5mg(0.5mg/mL)","mk":"대한약품공업","cd":"645100551","nt":""}]},{"i":33,"n":"pyridostigmine bromide","c":"신경근계이상 관련약물","p":[{"nm":"피리놀주사","sp":"50A","pr":"34,100","ig":"pyridostigmine bromide 5mg(5mg/mL)","mk":"명문바이오","cd":"649803671","nt":""}]},{"i":34,"n":"atropine sulfate","c":"위장운동조절 및 진경제","p":[{"nm":"아트로핀","sp":"1ml / 50A","pr":"14,750","ig":"atropine sulfate 0.5mg(0.5mg/mL)","mk":"대한약품공업","cd":"645101113","nt":""}]},{"i":35,"n":"cimetropium bromide","c":"위장운동조절 및 진경제","p":[{"nm":"알피트주사","sp":"1ml / 50A","pr":"25,000","ig":"cimetropium bromide 5mg(5mg/mL)","mk":"하나제약","cd":"657801331","nt":""}]},{"i":36,"n":"glycopyrrolate","c":"위장운동조절 및 진경제","p":[{"nm":"명문모비눌주사","sp":"1ml / 50A","pr":"38,500","ig":"glycopyrrolate 0.2mg(0.2mg/mL)","mk":"명문바이오","cd":"649800971","nt":""}]},{"i":37,"n":"hyoscine butylbromide","c":"위장운동조절 및 진경제","p":[{"nm":"프리판주(부틸스코폴라민브롬화물)","sp":"1ml / 50A","pr":"19,800","ig":"hyoscine butylbromide 20mg(20mg/mL)","mk":"제일제약","cd":"650500991","nt":""},{"nm":"히스판주사","sp":"1ml / 50A","pr":"19,800","ig":"hyoscine butylbromide 20mg(20mg/mL)","mk":"휴온스","cd":"670604055","nt":""}]},{"i":38,"n":"metoclopramide hydrochloride","c":"위장운동조절 및 진경제","p":[{"nm":"맥페란주사액","sp":"2ml / 50A","pr":"22,350","ig":"metoclopramide hydrochloride 10mg(5mg)","mk":"동화약품","cd":"642701341","nt":""},{"nm":"멕쿨주(메토클로프라미드염산염)","sp":"2ml / 50A","pr":"10,100","ig":"metoclopramide hydrochloride 10mg(5mg)","mk":"제일제약","cd":"650500091","nt":""}]},{"i":39,"n":"tiropramide hydrochloride","c":"위장운동조절 및 진경제","p":[{"nm":"티램주","sp":"3ml / 50A","pr":"21,450","ig":"tiropramide hydrochloride 50mg(16.667mg/","mk":"신풍제약","cd":"648503791","nt":""},{"nm":"안티모딕주50mg","sp":"3ml / 50A","pr":"16,950","ig":"tiropramide hydrochloride 50mg(16.667mg/m","mk":"종근당","cd":"643301771","nt":""}]},{"i":40,"n":"magnesium sulfate","c":"평형관련약물","p":[{"nm":"대한황산마그네슘주사액50%","sp":"20ml / 50A","pr":"188,500","ig":"magnesium sulfate 10g(0.5g/mL)","mk":"대한약품공업","cd":"645101101","nt":""},{"nm":"제일제약황산마그네슘주사액50%","sp":"20ml / 5A","pr":"18,850","ig":"magnesium sulfate 10g(0.5g/mL)","mk":"제일제약","cd":"650500741","nt":""},{"nm":"제일제약황산마그네슘주사액50%","sp":"20ml / 50A","pr":"188,500","ig":"magnesium sulfate 10g(0.5g/mL)","mk":"제일제약","cd":"650500743","nt":""}]},{"i":41,"n":"potassium chloride","c":"평형관련약물","p":[{"nm":"제일제약염화칼륨주사액","sp":"20ml / 50A","pr":"16,900","ig":"potassium chloride 3g(0.15g/mL)","mk":"제일제약","cd":"650500681","nt":""},{"nm":"대한염화칼륨-40","sp":"20ml / 50A(PP)","pr":"13,800","ig":"potassium chloride 3g(0.15g/mL)","mk":"대한약품공업","cd":"645100863","nt":""},{"nm":"대한염화칼륨-20","sp":"20ml / 50A(PP)","pr":"13,800","ig":"potassium chloride 1.491g(74.55mg/mL)","mk":"대한약품공업","cd":"645103831","nt":""}]},{"i":42,"n":"potassium phosphate monobasic","c":"평형관련약물","p":[{"nm":"포스텐주(PP)-20mL","sp":"20ml / 50A","pr":"35,000","ig":"potassium phosphate monobasic 2.722g","mk":"중외제약","cd":"644904253","nt":""}]},{"i":43,"n":"magnesium sulfate","c":"항전간제","p":[{"nm":"대한황산마그네슘주사액10%","sp":"20ml / 50A","pr":"69,250","ig":"magnesium sulfate 2g(0.1g/mL)","mk":"대한약품공업","cd":"645101091","nt":""},{"nm":"마시주사 10%(황산마그네슘수화물)","sp":"20ml / 50Btl","pr":"78,900","ig":"magnesium sulfate 2g(0.1g/mL)","mk":"휴온스","cd":"670600671","nt":""}]},{"i":44,"n":"brolucizumab","c":"기타 안과용약","p":[{"nm":"비오뷰프리필드시린지주(냉장,생물학) 6mg","sp":"0.6165ml / 1V","pr":"772,104","ig":"brolucizumab 19.8mg(0.12g/mL)","mk":"쥴릭파마코리아","cd":"653603301","nt":""}]},{"i":45,"n":"ranibizumab","c":"기타 안과용약","p":[{"nm":"루센티스주 10mg/0.23 mL (냉장,생물학)","sp":"0.23ml / 1V","pr":"579,716","ig":"ranibizumab 2.3mg(10mg/mL)","mk":"쥴릭파마코리아","cd":"653602561","nt":""}]},{"i":46,"n":"sodium hyaluronate","c":"기타 안과용약","p":[{"nm":"히알프로텍주","sp":"0.85ml / 1syr","pr":"28,600","ig":"sodium hyaluronate 12.75mg(15mg/mL)","mk":"한국비엠아이","cd":"654801851","nt":""}]},{"i":47,"n":"chlorpheniramine maleate","c":"항히스타민 & 항알러지약","p":[{"nm":"클로르페니라민말레인산염 주사","sp":"2ml / 50A","pr":"7,350","ig":"chlorpheniramine maleate 4mg(2mg/mL)","mk":"휴온스","cd":"670603013","nt":""}]},{"i":48,"n":"antilymphocyte","c":"면역억제제","p":[{"nm":"치모글로부린주(냉장) 25mg","sp":"1V","pr":"301,800","ig":"antilymphocyte immunoglobuline 25mg","mk":"쥴릭파마코리아","cd":"652001281","nt":""}]},{"i":49,"n":"immunoglobuline cyclosporine","c":"면역억제제","p":[{"nm":"사이폴주250mg","sp":"5ml / 10A","pr":"92,220","ig":"cyclosporine 0.25g(50mg/mL)","mk":"종근당","cd":"643301131","nt":""},{"nm":"산디문주사 250mg","sp":"5ML / 10A","pr":"97,660","ig":"cyclosporine 0.25g(50mg/mL)","mk":"쥴릭파마코리아","cd":"653600561","nt":""}]},{"i":50,"n":"natalizumab","c":"면역억제제","p":[{"nm":"티사브리주(냉장,생물학) 300mg","sp":"15ML / 1S","pr":"1,301,500","ig":"natalizumab 0.3g(20mg/mL)","mk":"쥴릭파마코리아","cd":"621100201","nt":""}]},{"i":51,"n":"tacrolimus hydrate","c":"면역억제제","p":[{"nm":"타크로벨주5mg","sp":"1ml / 10A","pr":"294,000","ig":"tacrolimus hydrate (as tacrolimus 5mg(5mg)","mk":"종근당","cd":"643304631","nt":""}]},{"i":52,"n":"omalizumab","c":"항히스타민&항알러지약","p":[{"nm":"졸레어프리필드시린지주(냉장,생물학) 150mg","sp":"1V","pr":"216,755","ig":"omalizumab 0.15g(0.15g/mL)","mk":"쥴릭파마코리아","cd":"653602891","nt":""}]},{"i":53,"n":"dobutamine hydrochloride","c":"심부전치료제","p":[{"nm":"명문도부타민염산염주사","sp":"5ml / 10A","pr":"37,280","ig":"dobutamine hydrochloride (as dobutamine","mk":"명문바이오","cd":"649801271","nt":""}]},{"i":54,"n":"furosemide","c":"루프계","p":[{"nm":"라식스주사 Inj 20mg","sp":"50A","pr":"17,450","ig":"furosemide 20mg(10mg/mL)","mk":"쥴릭파마코리아","cd":"652100211","nt":""},{"nm":"라식스주사 2ML","sp":"2ml / 50A","pr":"17,450","ig":"furosemide 20mg(10mg/mL)","mk":"한독약품","cd":"652100211","nt":""}]},{"i":55,"n":"labetalol hydrochloride","c":"비선택성 α, β 차단제","p":[{"nm":"라베신주사20㎎","sp":"4mll / 50A","pr":"31,200","ig":"labetalol hydrochloride 20mg(5mg/mL)","mk":"명문바이오","cd":"649800351","nt":""}]},{"i":56,"n":"nicardipine hydrochloride","c":"칼슘채널길항제","p":[{"nm":"비니카핀주10ml","sp":"10ml / 10A","pr":"18,220","ig":"nicardipine hydrochloride 10mg(1mg/mL)","mk":"비씨월드제약","cd":"653102531","nt":""},{"nm":"비니카핀주20ml","sp":"20ml / 10A","pr":"30,080","ig":"nicardipine hydrochloride 20mg(1mg/mL)","mk":"비씨월드제약","cd":"653102581","nt":""}]},{"i":57,"n":"dopamine hydrochloride","c":"기타 심혈관계 약물","p":[{"nm":"명문이노판주","sp":"5ml / 50A","pr":"84,050","ig":"dopamine hydrochloride 0.2g(40mg/mL)","mk":"명문바이오","cd":"649801421","nt":""},{"nm":"도파민 주사200mg(염산도파민)","sp":"5ml / 10A","pr":"17,760","ig":"dopamine hydrochloride 0.2g(40mg/mL)","mk":"휴온스","cd":"670602921","nt":""}]},{"i":58,"n":"adenosine","c":"항부정맥제","p":[{"nm":"아데노코주사 6g","sp":"2ml / 6V","pr":"34,908","ig":"adenosine 6mg(3mg/mL)","mk":"사노피-아벤티스코리아","cd":"652000271","nt":""}]},{"i":59,"n":"recombinant human tissue-type","c":"혈전용해제","p":[{"nm":"액티라제주 20mg","sp":"1V","pr":"282,200","ig":"recombinant human tissue-type plasminogen activator 20mg","mk":"유한양행","cd":"653500661","nt":""},{"nm":"액티라제주 50mg","sp":"1V","pr":"698,100","ig":"recombinant human tissue-type plasminogen activator 50mg","mk":"유한양행","cd":"653500671","nt":""}]},{"i":60,"n":"ephedrine hydrochloride","c":"기관지확장제","p":[{"nm":"대원염산에페드린주사액","sp":"1ml / 50A","pr":"18,850","ig":"ephedrine hydrochloride 40mg(40mg/mL)","mk":"대원제약","cd":"671800731","nt":""},{"nm":"제일에페드린염산염주사액4%","sp":"1ml / 50A","pr":"12,350","ig":"ephedrine hydrochloride 40mg(40mg/mL)","mk":"제일제약","cd":"650500461","nt":""}]},{"i":61,"n":"ambroxol hydrochloride","c":"진해거담제 & 기침감기약","p":[{"nm":"명문암브록솔염산염주사","sp":"1ml / 100A","pr":"27,400","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"명문바이오","cd":"649801361","nt":""},{"nm":"아록솔주","sp":"2ml / 50A","pr":"15,000","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"비씨월드제약","cd":"653101191","nt":""},{"nm":"로이솔주","sp":"2ml / 50A","pr":"15,000","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"신풍제약","cd":"648500581","nt":""},{"nm":"앰브로주사","sp":"50A","pr":"15,000","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"아주약품공업","cd":"654001341","nt":""},{"nm":"유니온암브록솔주","sp":"2ml / 100A","pr":"28,500","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"유니온제약","cd":"665503021","nt":""},{"nm":"암브록솔염산염 주사(염산암브록솔)","sp":"2ml / 50A","pr":"15,000","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"휴온스","cd":"670603576","nt":""},{"nm":"오코솔주","sp":"2ml / 100A","pr":"34,200","ig":"ambroxol hydrochloride 15mg(7.5mg/mL)","mk":"오스코리아","cd":"629701141","nt":""}]},{"i":62,"n":"famotidine","c":"H2 차단제","p":[{"nm":"가스터주사액20mg","sp":"10ml / 10V","pr":"13,870","ig":"famotidine 20mg","mk":"동아제약","cd":"642507651","nt":""},{"nm":"모틴주20mg","sp":"10V","pr":"13,860","ig":"famotidine 20mg","mk":"명인제약(주)","cd":"651901101","nt":""}]},{"i":63,"n":"esomeprazol sodium","c":"프로톤 펌프 저해제","p":[{"nm":"오엠피에스주40mg","sp":"10V","pr":"38,940","ig":"esomeprazol sodium (as esomeprazol) 40mg","mk":"종근당","cd":"643307731","nt":""}]},{"i":64,"n":"pantoprazol sodium","c":"프로톤 펌프 저해제","p":[{"nm":"판토시드주사","sp":"46.1mg / 1V","pr":"4,111","ig":"pantoprazol sodium (as pantoprazol 40mg)","mk":"명문바이오","cd":"649806561","nt":""}]},{"i":65,"n":"ondansetron hydrochloride","c":"진토제","p":[{"nm":"오트론주 2㎖","sp":"2ml / 50A","pr":"231,300","ig":"ondansetron hydrochloride dihydrate","mk":"명문바이오","cd":"649804381","nt":""},{"nm":"오트론주 4㎖","sp":"4ml / 50A","pr":"274,350","ig":"ondansetron hydrochloride dihydrate","mk":"명문바이오","cd":"649804391","nt":""},{"nm":"온세란주4mg","sp":"2ml / 10A","pr":"38,220","ig":"ondansetron hydrochloride dihydrate","mk":"유한양행","cd":"642101301","nt":""},{"nm":"온세란주8mg","sp":"4ml / 10A","pr":"65,780","ig":"ondansetron hydrochloride dihydrate","mk":"유한양행","cd":"642101311","nt":""}]},{"i":66,"n":"dihydrate palonosetron hydrochloride","c":"진토제","p":[{"nm":"팔로논주 1.5ml","sp":"1.5ml / 5P","pr":"63,245","ig":"palonosetron hydrochloride (as palonosetro)","mk":"명문바이오","cd":"649807301","nt":""},{"nm":"팔로논주 5ml","sp":"5ml / 1P","pr":"26,000","ig":"palonosetron hydrochloride (as palonosetro)","mk":"명문바이오","cd":"649807311","nt":""}]},{"i":67,"n":"octreotide acetate","c":"기타 호르몬제","p":[{"nm":"산도스타틴라르주사10mg","sp":"1V","pr":"1,017,240","ig":"octreotide acetate (as octreotide 10mg)","mk":"유한양행","cd":"653600491","nt":""},{"nm":"산도스타틴라르주사20mg","sp":"1V","pr":"1,494,671","ig":"octreotide acetate (as octreotide 20mg)","mk":"유한양행","cd":"653600501","nt":""},{"nm":"산도스타틴라르주사30mg","sp":"1V","pr":"1,942,720","ig":"octreotide acetate (as octreotide 30mg)","mk":"유한양행","cd":"653600511","nt":""}]},{"i":68,"n":"somatropin","c":"기타 호르몬제","p":[{"nm":"(생물)지노트로핀주 12mg/5관","sp":"5관","pr":"900,330","ig":"somatropin 36I.U","mk":"한국화이자제약","cd":"648902141","nt":""}]},{"i":69,"n":"denosumab","c":"골대사관련약물","p":[{"nm":"(생물)프롤리아프리필드시린지 60mg","sp":"1ml / 1관","pr":"123,760","ig":"denosumab 60mg(60mg/mL)","mk":"암젠코리아유한회사","cd":"052300041","nt":""},{"nm":"프롤리아 프리필드 시린지60mg","sp":"1ml / 1관","pr":"123,760","ig":"denosumab 60mg(60mg/mL)","mk":"종근당","cd":"052300041","nt":""}]},{"i":70,"n":"elcatonin","c":"골대사관련약물","p":[{"nm":"엘카닌주 10IU","sp":"10A","pr":"13,870","ig":"elcatonin 10I.U(10I.U/mL)","mk":"하나제약","cd":"657801411","nt":""},{"nm":"엘카닌주 20IU","sp":"10A","pr":"24,720","ig":"elcatonin 20I.U(20I.U/mL)","mk":"하나제약","cd":"657801421","nt":""}]},{"i":71,"n":"ibandronate sodium","c":"골대사관련약물","p":[{"nm":"본드론프리필드주사3ML","sp":"3ml / 5관","pr":"270,995","ig":"ibandronate sodium monohydrate 3.375mg (3mg as","mk":"동국제약","cd":"653402881","nt":""},{"nm":"반드론주","sp":"3ml / 1관","pr":"54,246","ig":"ibandronate sodium monohydrate 3.375mg","mk":"진양제약","cd":"650303071","nt":""},{"nm":"보네조아주","sp":"3ml / 1관","pr":"54,246","ig":"Ibandronate sodium monohydrate 3.375mg","mk":"화이트생명과학","cd":"625201711","nt":""}]},{"i":72,"n":"ibandronatesodium","c":"골대사관련약물","p":[{"nm":"이반본주","sp":"3ml / 1SY","pr":"54,246","ig":"ibandronatesodium monohydrate 3.375mg/3mL","mk":"일화","cd":"640906371","nt":""},{"nm":"삼성이반드론산주","sp":"3ml / 1SY","pr":"54,232","ig":"ibandronatesodium monohydrate 3.375mg/3mL","mk":"일화","cd":"642306871","nt":""}]},{"i":73,"n":"ibandronic acid monosodium salt","c":"골대사관련약물","p":[{"nm":"본비론주","sp":"3ml / 1SY","pr":"53,548","ig":"ibandronic acid monosodium salt monohydr","mk":"경동제약","cd":"648103561","nt":"CSO 포함 마진 60~80%"},{"nm":"이바넬주(이반드론산나트륨일수화물)","sp":"3ml / 1Pfs","pr":"53,929","ig":"ibandronic acid monosodium salt monohyd","mk":"구주제약","cd":"669804231","nt":""},{"nm":"지씨웰빙본헬스주 3ml","sp":"1pfy(프리필드시린지)","pr":"33,314","ig":"ibandronic acid monosodium salt monohydr","mk":"녹십자웰빙","cd":"681100431","nt":""},{"nm":"엔피본주","sp":"3ml / 1관","pr":"53,864","ig":"ibandronic acid monosodium salt monohydr","mk":"대한뉴팜","cd":"669906741","nt":""},{"nm":"보니엠주","sp":"3ml / 1관","pr":"53,809","ig":"ibandronic acid monosodium salt monohyd","mk":"신풍제약","cd":"648506911","nt":""},{"nm":"아나본주","sp":"3ml / 1SY","pr":"53,880","ig":"ibandronic acid monosodium salt monohydrate","mk":"아주약품공업","cd":"654004271","nt":""},{"nm":"유드론주","sp":"3ml / 1관","pr":"54,202","ig":"ibandronic acid monosodium salt monohydr","mk":"유영제약","cd":"648204431","nt":""},{"nm":"마빌큐주","sp":"3mL / 1관","pr":"53,918","ig":"ibandronic acid monosodium salt monohyd","mk":"유유제약","cd":"644501971","nt":""},{"nm":"본비바주","sp":"3ml / 1관","pr":"49,501","ig":"ibandronic acid monosodium salt monohyd","mk":"제일약품","cd":"645406251","nt":""},{"nm":"본비스주","sp":"3ml / 1관","pr":"54,246","ig":"ibandronic acid monosodium salt monohyd","mk":"팜젠사이언스","cd":"670104201","nt":""},{"nm":"본에바주","sp":"3ml / 1관","pr":"51,751","ig":"ibandronic acid monosodium salt monohy","mk":"한올바이오","cd":"655604831","nt":""},{"nm":"아미카본 주사(이반드론산나트륨일수화물)","sp":"3ml / 1Syr","pr":"54,245","ig":"ibandronic acid monosodium salt monohy","mk":"휴온스","cd":"670606941","nt":""}]},{"i":74,"n":"monohydrate pamidronate disodium","c":"골대사관련약물","p":[{"nm":"파미론주사15mg","sp":"1ml / 10A","pr":"78,650","ig":"pamidronate disodium (as pamidronate 15mg)","mk":"비씨월드제약","cd":"653102031","nt":""},{"nm":"파노린주사15mg","sp":"1ml / 10A","pr":"91,000","ig":"pamidronate disodium (as pamidronate 15","mk":"한림제약","cd":"645301971","nt":""}]},{"i":75,"n":"romosozumab","c":"골대사관련약물","p":[{"nm":"이베니티주 프리필드 시린지210mg","sp":"1.17ml / 2관","pr":"247,096","ig":"romosozumab 0.105g(89.7436mg/mL)","mk":"종근당","cd":"052300111","nt":""}]},{"i":76,"n":"teriparatide","c":"골대사관련약물","p":[{"nm":"(생물)포스테오주 0.6mg","sp":"2.4ml / 1PEN","pr":"228,339","ig":"teriparatide 0.6mg(0.25mg/mL)","mk":"한국릴리","cd":"670800291","nt":""}]},{"i":77,"n":"zoledronic acid monohydrate","c":"골대사관련약물","p":[{"nm":"대웅졸레드론산주사제5mg","sp":"100ml","pr":"163,749","ig":"zoledronic acid 5mg(50μg/mL)","mk":"대웅제약","cd":"641607231","nt":""},{"nm":"졸레드론산주 5mg/100mL (1년에 한번 골다공증주사)","sp":"1V","pr":"164,163","ig":"zoledronic acid monohydrate 5.33mg( 5mg as zoledronic acid anhydrous)","mk":"대한뉴팜","cd":"677100811","nt":""},{"nm":"동광졸레드론산주 5mg/100mL(1EA PTP병)","sp":"100mL (1EA PTP병)","pr":"164,163","ig":"zoledronic acid 5mg(50μg/mL)","mk":"동광제약","cd":"645907211","nt":""},{"nm":"씨엠지졸레드론산주","sp":"1V","pr":"164,163","ig":"zoledronic acid monohydrate 5.33㎎/100㎖","mk":"씨엠지제약","cd":"648604421","nt":""},{"nm":"유니온졸레드론산주5mg(100ml/백)-1GB","sp":"100ml","pr":"164,163","ig":"zoledronic acid 5mg(50μg/mL)","mk":"유니온제약","cd":"665508381","nt":""},{"nm":"원스본주 5mg","sp":"1관","pr":"164,163","ig":"zoledronic acid 5mg(50μg/mL)","mk":"팜젠사이언스","cd":"670105221","nt":""}]},{"i":78,"n":"betamethasone sodium","c":"부산피질호르몬","p":[{"nm":"제일제약베타메타손주사액","sp":"1ml / 50A","pr":"25,000","ig":"betamethasone sodium phosphate (as beta)","mk":"제일제약","cd":"650500571","nt":""},{"nm":"베타메타손포스페이트나트륨 주사","sp":"1ml / 50A","pr":"23,700","ig":"betamethasone sodium phosphate (as beta","mk":"휴온스","cd":"670603694","nt":""}]},{"i":79,"n":"dexamethasone disodium","c":"부산피질호르몬","p":[{"nm":"제일덱사메타손주사액","sp":"1ml / 50A","pr":"8,500","ig":"dexamethasone disodium phosphate 5mg(5","mk":"제일제약","cd":"650500301","nt":""},{"nm":"휴메딕스 덱사메타손포스페이트나트륨 주사","sp":"1ml / 50A","pr":"11,100","ig":"dexamethasone disodium phosphate 5mg","mk":"휴온스","cd":"683100393","nt":""},{"nm":"유한디나트륨인산덱사메타손주사액","sp":"50A","pr":"10,200","ig":"dexamethasone disodium phosphate 5mg","mk":"유한양행","cd":"642101421","nt":""}]},{"i":80,"n":"phosphate epinephrine hydrochloride","c":"부산피질호르몬","p":[{"nm":"제일에피네프린주사액","sp":"1ml / 50A","pr":"16,900","ig":"epinephrine hydrochloride (as epinephrine","mk":"제일제약","cd":"650500421","nt":""},{"nm":"대한에피네프린주사액","sp":"1ml / 50A","pr":"16,500","ig":"epinephrine hydrochloride (as epinephrine)","mk":"대한약품공업","cd":"645100741","nt":""}]},{"i":81,"n":"triamcinolone acetonide","c":"부산피질호르몬","p":[{"nm":"삼성트리암시놀론주40mg","sp":"1ml / 50V","pr":"35,000","ig":"triamcinolone acetonide40mg/mL","mk":"일화","cd":"642306741","nt":""},{"nm":"트리암시놀론주사 40mg","sp":"1mL / 30V","pr":"21,000","ig":"triamcinolone acetonide 40mg(40mg/mL)","mk":"동광제약","cd":"645903001","nt":""},{"nm":"트리암주40mg","sp":"1ml / 30V","pr":"21,000","ig":"triamcinolone acetonide 40mg(40mg/mL)","mk":"신풍제약","cd":"648503771","nt":""}]},{"i":82,"n":"norepinephrine bitartrate","c":"저혈압 관련약물","p":[{"nm":"노르에피린 주사(주석산수소노르에피네프린)","sp":"4ml / 10A","pr":"22,520","ig":"norepinephrine bitartrate (as norepinephrine 4mg)","mk":"휴온스","cd":"670600181","nt":""}]},{"i":83,"n":"human chorionic gonadotrophin","c":"생식선자극호르몬","p":[{"nm":"(냉장)아이브이에프씨주 5000IU","sp":"5V","pr":"52,360","ig":"human chorionic gonadotrophin 5KI.U","mk":"엘지생명과학","cd":"668900231","nt":""}]},{"i":84,"n":"leuprolide acetate","c":"생식선자극호르몬","p":[{"nm":"루피어데포 프리필드실린지주 3.75mg","sp":"1V","pr":"93,282","ig":"leuprolide acetate 3.75mg","mk":"대웅제약","cd":"641601192","nt":""},{"nm":"로렐린데포주사 3.75mg","sp":"1V","pr":"93,282","ig":"leuprolide acetate 3.75mg","mk":"동국제약","cd":"653400451","nt":""}]},{"i":85,"n":"menotrophin HP","c":"생식선자극호르몬","p":[{"nm":"아이브이에프엠에이치피주75IU","sp":"1V","pr":"7,060","ig":"menotrophin HP 75I.U","mk":"엘지생명과학","cd":"668902191","nt":""}]},{"i":86,"n":"darbepoetin α","c":"조혈제","p":[{"nm":"네스벨프리필드시린지주20","sp":"0.5ml / 1관","pr":"15,626","ig":"darbepoetin α 20μg(40μg/mL)","mk":"종근당","cd":"643308231","nt":""},{"nm":"네스벨프리필드시린지주30","sp":"0.5ml / 1관","pr":"19,565","ig":"darbepoetin α 30μg(60μg/mL)","mk":"종근당","cd":"643308241","nt":""},{"nm":"네스벨프리필드시린지주40","sp":"0.5ml / 1관","pr":"22,892","ig":"darbepoetin α 40μg(80μg/mL)","mk":"종근당","cd":"643308251","nt":""},{"nm":"네스벨프리필드시린지주60","sp":"0.5ml / 1관","pr":"28,527","ig":"darbepoetin α 60μg(0.12mg/mL)","mk":"종근당","cd":"643308261","nt":""},{"nm":"네스벨프리필드시린지주120","sp":"0.5ml / 1관","pr":"43,006","ig":"darbepoetin α 0.12mg(0.24mg/mL)","mk":"종근당","cd":"643308271","nt":""}]},{"i":87,"n":"methoxy polyethylene","c":"조혈제","p":[{"nm":"미쎄라프리필드주100mcg(냉장,생물학)","sp":"0.3 ml / 1V","pr":"106,663","ig":"methoxy polyethylene glycol-epoetin β","mk":"쥴릭파마코리아","cd":"645000751","nt":""},{"nm":"미쎄라프리필드주120mcg(냉장,생물학)","sp":"0.3 ml / 1V","pr":"116,203","ig":"methoxy polyethylene glycol-epoetin β","mk":"쥴릭파마코리아","cd":"645000821","nt":""},{"nm":"미쎄라프리필드주150mcg(냉장,생물학)","sp":"0.3 ml / 1V","pr":"130,864","ig":"methoxy polyethylene glycol-epoetin β","mk":"쥴릭파마코리아","cd":"645000761","nt":""},{"nm":"미쎄라프리필드주200mcg(냉장,생물학)","sp":"0.3 ml / 1V","pr":"155,761","ig":"methoxy polyethylene glycol-epoetin β","mk":"쥴릭파마코리아","cd":"645000771","nt":""},{"nm":"미쎄라프리필드주50mcg(냉장,생물학)","sp":"0.3 ml / 1V","pr":"67,947","ig":"methoxy polyethylene glycol-epoetin β","mk":"쥴릭파마코리아","cd":"645000781","nt":""},{"nm":"미쎄라프리필드주75mcg(냉장,생물학)","sp":"0.3 ml / 1V","pr":"89,772","ig":"methoxy polyethylene glycol-epoetin β","mk":"쥴릭파마코리아","cd":"645000791","nt":""},{"nm":"미쎄라프리필드주50μ","sp":"0.3ml / 1관","pr":"67,947","ig":"methoxy polyethylene glycol-epoetin β 50μ","mk":"한국로슈","cd":"645000781","nt":""}]},{"i":88,"n":"methylergonovine maleate","c":"자궁수축제","p":[{"nm":"(냉장)에르빈주사액","sp":"1ml / 50A","pr":"20,900","ig":"methylergonovine maleate 0.2mg(0.2mg)","mk":"대원제약","cd":"671802221","nt":""}]},{"i":89,"n":"Atosiban","c":"기타 비뇨생식기계 관련 약물","p":[{"nm":"트랙토실주 0.9ml","sp":"0.9ml / 1V","pr":"15,986","ig":"Atosiban 6.75mg(7.5mg/mL)","mk":"현대약품","cd":"652500181","nt":""},{"nm":"트랙토실주 5ml","sp":"5ml / 1V","pr":"48,099","ig":"Atosiban 37.5mg(7.5mg/mL)","mk":"현대약품","cd":"652500191","nt":""}]},{"i":90,"n":"calcitriol","c":"비타민 A,D,E","p":[{"nm":"본키주1µg","sp":"1ml / 10A","pr":"34,830","ig":"calcitriol 1μg(1μg/mL)","mk":"유유제약","cd":"644500401","nt":""}]},{"i":91,"n":"paricalcitol","c":"비타민 A,D,E","p":[{"nm":"칼시톨주(파리칼시톨)","sp":"1ml / 10A","pr":"10,000","ig":"paricalcitol 5μg(5μg/mL)","mk":"대한약품공업","cd":"645104851","nt":""},{"nm":"에이플라주","sp":"1ml / 10A","pr":"98,910","ig":"paricalcitol 5μg(5μg/mL)","mk":"유유제약","cd":"644503211","nt":""}]},{"i":92,"n":"cyanocobalamin","c":"비타민 B군 / 비타민 C를 포함하는 비타민 B군","p":[{"nm":"삐콤헥사주","sp":"2ml / 50A","pr":"11,800","ig":"cyanocobalamin 10μg(5μg/mL)","mk":"유한양행","cd":"642100710","nt":""}]},{"i":93,"n":"thiamine hydrochloride","c":"비타민 B군 / 비타민 C를 포함하는 비타민 B군","p":[{"nm":"제일티아민염산염주사액","sp":"2ml / 50A","pr":"15,000","ig":"thiamine hydrochloride 50mg(25mg/mL)","mk":"제일제약","cd":"650500471","nt":""}]},{"i":94,"n":"ascorbic acid","c":"비타민C 제제","p":[{"nm":"대한아스코르브산주사액","sp":"2ml / 50A","pr":"9,950","ig":"ascorbic acid 0.1g(50mg/mL)","mk":"대한약품공업","cd":"645100733","nt":""},{"nm":"제일제약아스코르브산주사액500밀리그람","sp":"2ml / 50A","pr":"13,350","ig":"ascorbic acid 0.5g(0.25g/mL)","mk":"제일제약","cd":"650500631","nt":""},{"nm":"제일제약아스코르브산주사액5%","sp":"2ml / 50A","pr":"9,950","ig":"ascorbic acid 0.1g(50mg/mL)","mk":"제일제약","cd":"650500621","nt":""},{"nm":"아스코르브산 주사(아스코르브산)","sp":"2ml / 50A","pr":"17,100","ig":"ascorbic acid 0.5g(0.25g/mL)","mk":"휴온스","cd":"670603303","nt":""}]},{"i":95,"n":"hemocoagulase","c":"지혈제, 혈액응고제","p":[{"nm":"보트로파제주 2mL","sp":"2ml / 10A","pr":"15,660","ig":"hemocoagulase 2nihu(1nihu/mL)","mk":"한림제약","cd":"645300761","nt":""}]},{"i":96,"n":"tranexamic acid","c":"지혈제, 혈액응고제","p":[{"nm":"신풍트라넥삼산주사500mg","sp":"50A","pr":"24,000","ig":"tranexamic acid 0.5g(0.1g/mL)","mk":"신풍제약","cd":"648502361","nt":""}]},{"i":97,"n":"vitamin-K","c":"지혈제, 혈액응고제","p":[{"nm":"비타민케이1주사액","sp":"1ml / 50A","pr":"11,800","ig":"vitamin-K1 10mg(10mg/mL)","mk":"대한약품공업","cd":"645101681","nt":""}]},{"i":98,"n":"calcium chloride","c":"비타민을 포함하는 칼슘제제","p":[{"nm":"염카루주3% (염화칼슘수화물)","sp":"20ml / 50A","pr":"15,000","ig":"calcium chloride(3%) 0.6g(30mg/mL)","mk":"제일제약","cd":"650500243","nt":""}]},{"i":99,"n":"calcium gluconate","c":"칼슘 제제/비타민을 포함하는 칼슘 제제","p":[{"nm":"제이더블유중외제약글루콘산칼슘주사액(PP )-20ML","sp":"20ml / 50A","pr":"29,150","ig":"calcium gluconate 2g(0.1g/mL)","mk":"중외제약","cd":"644902341","nt":""}]},{"i":100,"n":"Ferric hydroxide sucrose complex","c":"철분제제 & 빈혈치료제","p":[{"nm":"훼모럼주","sp":"5ml / 10A","pr":"50,080","ig":"iron hydoxide sucrose complex","mk":"명문바이오","cd":"649805171","nt":""},{"nm":"아네럼주","sp":"5ml / 5A","pr":"28,870","ig":"Ferric hydroxide sucrose complex 540mg","mk":"한국비엠아이","cd":"654800971","nt":""}]},{"i":101,"n":"d-mannitol","c":"이뇨제","p":[{"nm":"대한 D-15%만니톨주","sp":"100ml / 20EA(병)","pr":"1,008","ig":"d-mannitol(15%) 15g(150mg/mL)","mk":"대한약품공업","cd":"645100401","nt":""},{"nm":"대한 D-15%만니톨주","sp":"250ml / 20EA(병)","pr":"1,486","ig":"d-mannitol(15%) 37.5g(0.15g/mL)","mk":"대한약품공업","cd":"645100411","nt":""},{"nm":"대한 D-20%만니톨","sp":"100ml / 20EA(병)","pr":"950","ig":"d-mannitol(20%) 20g(0.2g/mL)","mk":"대한약품공업","cd":"645100461","nt":""},{"nm":"대한 D-20%만니톨","sp":"100ml / 20EA(bag)","pr":"950","ig":"d-mannitol(20%) 20g(0.2g/mL)","mk":"대한약품공업","cd":"645100462","nt":""},{"nm":"대한 D-20%만니톨","sp":"250ml / 20EA(병)","pr":"1,673","ig":"d-mannitol(20%) 50g(0.2g/mL)","mk":"대한약품공업","cd":"645100471","nt":""},{"nm":"15%만니톨주-100ML","sp":"100ml / 50EA(BAG)","pr":"1,056","ig":"d-mannitol(15%) 15g(150mg/mL)","mk":"중외제약","cd":"644913061","nt":""},{"nm":"15%만니톨주-500ML","sp":"500ml / 20EA(BAG)","pr":"2,504","ig":"d-mannitol(15%) 75g(0.15g/mL)","mk":"중외제약","cd":"644901911","nt":""},{"nm":"20%만니톨주-100ML","sp":"100ml / 20EA(BAG)","pr":"1,055","ig":"d-mannitol(20%) 20g(0.2g/mL)","mk":"중외제약","cd":"644901973","nt":""}]},{"i":102,"n":"d-mannitol","c":"탄수화물 수액제","p":[{"nm":"대한 D-25%만니톨주","sp":"100ml / 20EA(병)","pr":"1,238","ig":"d-mannitol(25%) 25g(0.25g/mL)","mk":"대한약품공업","cd":"645100431","nt":""}]},{"i":103,"n":"dextrose","c":"탄수화물 수액제","p":[{"nm":"대한포도당주사액(20%) / 20ml","sp":"20ml / 50A","pr":"14,050","ig":"dextrose(20%) 4g(0.2g/mL)","mk":"대한약품공업","cd":"645100954","nt":""},{"nm":"대한포도당주사액(20%) / 20ml","sp":"20ml / 50A(PP)","pr":"14,050","ig":"dextrose(20%) 4g(0.2g/mL)","mk":"대한약품공업","cd":"645100954","nt":""},{"nm":"대한포도당주사액(5%) / 50ml","sp":"50ml / 50EA(bag)","pr":"1,023","ig":"dextrose(5%) 2.5g(50mg/mL)","mk":"대한약품공업","cd":"645100962","nt":""},{"nm":"대한포도당주사액(5%) / 50ml","sp":"50ml / 20EA(병)","pr":"1,023","ig":"dextrose(5%) 2.5g(50mg/mL)","mk":"대한약품공업","cd":"645100961","nt":""},{"nm":"대한포도당주사액(5%) / 100ml","sp":"100ml / 20EA(병)","pr":"1,188","ig":"dextrose(5%) 5g(50mg/mL)","mk":"대한약품공업","cd":"645100971","nt":""},{"nm":"대한포도당주사액(5%) / 100ml","sp":"100ml / 50EA(bag)","pr":"1,188","ig":"dextrose(5%) 5g(50mg/mL)","mk":"대한약품공업","cd":"645100972","nt":""},{"nm":"대한포도당주사액(5%) / 100ml","sp":"100ml / 20EA 병(PP)","pr":"1,188","ig":"dextrose(5%) 5g(50mg/mL)","mk":"대한약품공업","cd":"645100973","nt":""},{"nm":"대한포도당주사액(5%) / 200ml","sp":"200ml / 10EA(병)","pr":"1,385","ig":"dextrose(5%) 10g(50mg/mL)","mk":"대한약품공업","cd":"645100981","nt":""},{"nm":"대한포도당주사액(5%) / 200ml","sp":"200ml / 20EA(bag)","pr":"1,385","ig":"dextrose(5%) 10g(50mg/mL)","mk":"대한약품공업","cd":"645100982","nt":""},{"nm":"대한포도당주사액(5%) / 500ml","sp":"500ml / 20EA(bag)","pr":"1,385","ig":"dextrose(5%) 25g(50mg/mL)","mk":"대한약품공업","cd":"645100992","nt":""},{"nm":"대한포도당주사액(5%) / 500ml","sp":"500ml / 10EA(병)","pr":"1,385","ig":"dextrose(5%) 25g(50mg/mL)","mk":"대한약품공업","cd":"645100991","nt":""},{"nm":"대한포도당주사액(5%) / 100ml","sp":"1000ml / 10EA(bag)","pr":"1,619","ig":"dextrose(5%) 50g(50mg/mL)","mk":"대한약품공업","cd":"645101002","nt":""},{"nm":"대한포도당주사액(5%) / 100ml","sp":"1000ml / 10EA(병)","pr":"1,619","ig":"dextrose(5%) 50g(50mg/mL)","mk":"대한약품공업","cd":"645101001","nt":""},{"nm":"대한포도당주사액(10%) / 500ml","sp":"500ml / 20EA(bag)","pr":"1,431","ig":"dextrose(10%) 50g(0.1g/mL)","mk":"대한약품공업","cd":"645100922","nt":""},{"nm":"대한포도당주사액(10%) / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,666","ig":"dextrose(10%) 100g(0.1g/mL)","mk":"대한약품공업","cd":"645100932","nt":""},{"nm":"대한20%포도당주사액","sp":"300ml / 10EA(병)","pr":"1,285","ig":"dextrose(20%) 60g(0.2g/mL)","mk":"대한약품공업","cd":"645100151","nt":""},{"nm":"대한50%포도당주 / 100ml","sp":"100ml / 20EA 병(PP)","pr":"1,327","ig":"dextrose(50%) 50g(0.5g/mL)","mk":"대한약품공업","cd":"645100302","nt":""},{"nm":"대한50%포도당주 / 500ml","sp":"500ml / 20EA(bag)","pr":"2,273","ig":"dextrose(50%) 250g(0.5g/mL)","mk":"대한약품공업","cd":"645100312","nt":""},{"nm":"제일포도당주사액","sp":"20ml / 50A","pr":"14,050","ig":"dextrose(20%) 4g(0.2g/mL)","mk":"제일제약","cd":"650500861","nt":""},{"nm":"(PP)5%포도당주-100ML","sp":"100ml / 20EA(PP)","pr":"1,188","ig":"dextrose(5%) 5g(50mg/mL)","mk":"중외제약","cd":"644902243","nt":""},{"nm":"(PP)5%포도당주-50ML","sp":"50ml / 20EA(PP)","pr":"1,074","ig":"dextrose(5%) 2.5g(50mg/mL)","mk":"중외제약","cd":"644902233","nt":""},{"nm":"(PP)50%포도당주-100ML","sp":"100ml / 20EA(PP)","pr":"1,327","ig":"dextrose(50%) 50g(0.5g/mL)","mk":"중외제약","cd":"644902282","nt":""},{"nm":"(PP)50%포도당주-50ML","sp":"50ml / 20EA(PP)","pr":"1,326","ig":"dextrose(50%) 25g(0.5g/mL)","mk":"중외제약","cd":"644914991","nt":""},{"nm":"(가압)5%포도당주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,632","ig":"dextrose(5%) 50g(50mg/mL)","mk":"중외제약","cd":"644902272","nt":""},{"nm":"10%포도당주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,666","ig":"dextrose(10%) 100g(0.1g/mL)","mk":"중외제약","cd":"644901881","nt":""},{"nm":"10%포도당주-500ML","sp":"500ml / 20EA(BAG)","pr":"1,326","ig":"dextrose(10%) 50g(0.1g/mL)","mk":"중외제약","cd":"644901872","nt":""},{"nm":"20%포도당주(PP)-20ML","sp":"20ml / 50A","pr":"14,050","ig":"dextrose(20%) 4g(0.2g/mL)","mk":"중외제약","cd":"644902021","nt":""},{"nm":"5%포도당주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,632","ig":"dextrose(5%) 50g(50mg/mL)","mk":"중외제약","cd":"644902272","nt":""},{"nm":"5%포도당주-100ML","sp":"100ml / 50EA(BAG)","pr":"1,188","ig":"dextrose(5%) 5g(50mg/mL)","mk":"중외제약","cd":"644902241","nt":""},{"nm":"5%포도당주-200ML","sp":"200ml / 20EA(BAG)","pr":"1,301","ig":"dextrose(5%) 10g(50mg/mL)","mk":"중외제약","cd":"644902252","nt":""},{"nm":"5%포도당주-500ML","sp":"500ml / 20EA(BAG)","pr":"1,288","ig":"dextrose(5%) 25g(50mg/mL)","mk":"중외제약","cd":"644902262","nt":""},{"nm":"5%포도당주-50ML","sp":"50ml / 50EA(BAG)","pr":"1,051","ig":"dextrose(5%) 2.5g(50mg/mL)","mk":"중외제약","cd":"644902232","nt":""},{"nm":"50%포도당주-500ML","sp":"500ml / 15EA(BAG)","pr":"3,370","ig":"dextrose(50%) 250g(0.5g/mL)","mk":"중외제약","cd":"644902292","nt":""}]},{"i":104,"n":"fructose","c":"탄수화물 수액제","p":[{"nm":"대한5%레브로즈(과당주사액)","sp":"500ml / 10EA(병)","pr":"1,408","ig":"fructose(5%) 25g(50mg/mL)","mk":"대한약품공업","cd":"645100211","nt":""},{"nm":"글리푸롤주","sp":"200ml / 20EA(병)","pr":"1,416","ig":"fructose 10g(50mg/mL)","mk":"대한약품공업","cd":"645100050","nt":""}]},{"i":105,"n":"sorbitol","c":"탄수화물 수액제","p":[{"nm":"대한5%쏠비톨주사액","sp":"500ml / 20EA(bag)","pr":"1,370","ig":"sorbitol(5%) 25g(50mg/mL)","mk":"대한약품공업","cd":"645100222","nt":""}]},{"i":106,"n":"aminoacetic acid(glycine","c":"비경구영양제","p":[{"nm":"멀티플렉스페리주","sp":"1100ml / 4EA(bag)","pr":"9,638","ig":"aminoacetic aicd 2980mg(A액600ml중)","mk":"대한약품공업","cd":"645101370","nt":""},{"nm":"와이즈티엔에이페리주 960ml","sp":"960ml / 10EA","pr":"19,766","ig":"aminoacetic acid(glycine) 1.536g(B액199.68mL중)","mk":"유한양행","cd":"668600574","nt":""}]},{"i":107,"n":"calcium chloride dihydrate","c":"비경구영양제","p":[{"nm":"폼스티엔에이주 986ml","sp":"986ml / 5EA","pr":"21,799","ig":"calcium chloride dihydrate 0.37g(A액500mL중)","mk":"유한양행","cd":"668600370","nt":""},{"nm":"폼스티엔에이주 1477ml","sp":"1477ml / 5EA","pr":"27,067","ig":"calcium chloride dihydrate 0.555g(A액750mL중)","mk":"유한양행","cd":"668600380","nt":""},{"nm":"유한3챔버폼스페리주 952ml","sp":"952ml / 10EA","pr":"22,747","ig":"calcium chloride dihydrate 0.22g(A액300ml중)","mk":"유한양행","cd":"642105612","nt":""},{"nm":"유한3챔버폼스페리주 1206ml","sp":"1206ml / 10EA","pr":"25,747","ig":"calcium chloride dihydrate 0.28g(A액380mL중)","mk":"유한양행","cd":"642105613","nt":""},{"nm":"유한3챔버폼스페리주 1448ml","sp":"1448ml / 10EA","pr":"27,966","ig":"calcium chloride dihydrate 0.34g(A액456mL중)","mk":"유한양행","cd":"642105614","nt":""},{"nm":"대한하트만덱스주사액 / 500ml","sp":"500ml / 20EA(bag)","pr":"1,388","ig":"calcium chloride 0.1g(0.2mg/mL)","mk":"대한약품공업","cd":"645101062","nt":""},{"nm":"(HP)하트만덱스-500mL","sp":"500ml / 20EA(BAG)","pr":"1,338","ig":"calcium chloride 0.1g(0.2mg/mL)","mk":"중외제약","cd":"644911931","nt":""}]},{"i":108,"n":"sodium lactate","c":"비경구영양제","p":[{"nm":"대한하트만덱스주사액 / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,666","ig":"sodium lactate 6.1g(6.1mg/mL)","mk":"대한약품공업","cd":"645101072","nt":""},{"nm":"(HP)하트만덱스주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,586","ig":"sodium lactate 6.1g(6.1mg/mL)","mk":"중외제약","cd":"644904471","nt":""}]},{"i":109,"n":"amino acids","c":"아미노산수액제","p":[{"nm":"네프리솔주","sp":"250ml / 10EA(병)","pr":"5,712","ig":"amino acids(5.5%) 13.75g(55mg/mL)","mk":"대한약품공업","cd":"645100081","nt":""},{"nm":"네프리솔주","sp":"250ml / 20EA(bag)","pr":"5,712","ig":"amino acids(5.5%) 13.75g(55mg/mL)","mk":"대한약품공업","cd":"645100082","nt":""},{"nm":"헤파비아주 / 250ml","sp":"250ml / 10EA(병)","pr":"8,598","ig":"amino acids(8%) 20g(80mg/mL)","mk":"대한약품공업","cd":"645102691","nt":""},{"nm":"헤파비아주 / 500ml","sp":"500ml / 10EA(병)","pr":"12,472","ig":"amino acids(8%) 40g(80mg/mL)","mk":"대한약품공업","cd":"645102701","nt":""},{"nm":"리브솔주 500ML","sp":"500ml","pr":"14,766","ig":"amino acids(8%) 40g(80mg/mL)","mk":"신풍제약","cd":"648500731","nt":""},{"nm":"카프솔주250ml","sp":"250ml / 10EA(병)","pr":"7,023","ig":"amino acids(10%) 25g(0.1g/mL)","mk":"종근당","cd":"643303441","nt":""},{"nm":"카프솔주500ml","sp":"500ml / 10EA(병)","pr":"10,465","ig":"amino acids(10%) 50g(0.1g/mL)","mk":"종근당","cd":"643303451","nt":""},{"nm":"파미솔주250ml","sp":"250ml / 10EA(병)","pr":"4,579","ig":"amino acids(6%) 15g(60mg/mL)","mk":"종근당","cd":"643303841","nt":""},{"nm":"파미솔주500ml","sp":"500ml / 10EA(병)","pr":"6,483","ig":"amino acids(6%) 30g(60mg/mL)","mk":"종근당","cd":"643303851","nt":""},{"nm":"모리헤파민주 200ml","sp":"200ml / 20EA","pr":"5,906","ig":"amino acids(8%) 16g(80mg/mL)","mk":"한올바이오","cd":"655602561","nt":""},{"nm":"모리헤파민주 500ml","sp":"500ml","pr":"12,920","ig":"amino acids(8%) 40g(80mg/mL)","mk":"한올바이오","cd":"655602581","nt":"품절"}]},{"i":110,"n":"N","c":"아미노산수액제","p":[{"nm":"디펩티벤주100ml / 1V","sp":"100ml / 1V","pr":"14,638","ig":"N(2)-L-alanyl-L-glutamine 20g(0.2g/mL)","mk":"프레지니우스카비코리아","cd":"650900131","nt":""}]},{"i":111,"n":"Purified soybean oil","c":"지방유제","p":[{"nm":"리피션10%주-500ML","sp":"500ml / 10EA(BAG)","pr":"11,898","ig":"Purified soybean oil 10g","mk":"중외제약","cd":"678900081","nt":""},{"nm":"리피션20%주-250ML","sp":"250ml / 10EA(BAG)","pr":"9,478","ig":"Purified soybean oil 20g","mk":"중외제약","cd":"678900091","nt":""}]},{"i":112,"n":"dextrose","c":"전해질 수액","p":[{"nm":"대한5%포도당가생리식염액 / 500ml","sp":"500ml / 20EA(bag)","pr":"1,345","ig":"dextrose 25g(50mg/mL)","mk":"대한약품공업","cd":"645100242","nt":""},{"nm":"대한5%포도당가생리식염액 / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,585","ig":"dextrose 50g(50mg/mL)","mk":"대한약품공업","cd":"645100252","nt":""},{"nm":"대한10%포도당가생리식염액","sp":"1000ml / 10EA(bag)","pr":"1,709","ig":"dextrose 100g(0.1g/mL)","mk":"대한약품공업","cd":"645100142","nt":""},{"nm":"대한염화나트륨포도당주사액(1:2)","sp":"500ml / 20EA(bag)","pr":"1,315","ig":"dextrose 16.65g(33.3mg/mL)","mk":"대한약품공업","cd":"645100832","nt":""},{"nm":"대한염화나트륨포도당주사액(1:4) / 500ml","sp":"500ml / 20EA(bag)","pr":"1,411","ig":"dextrose 20g(40mg/mL)","mk":"대한약품공업","cd":"645100822","nt":""},{"nm":"대한염화나트륨포도당주사액(1:4) / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,752","ig":"dextrose 20g(40mg/mL)","mk":"대한약품공업","cd":"645100812","nt":""},{"nm":"대한젖산나트륨염화나트륨포도당주사액(1:2 :3)","sp":"500ml / 20EA(bag)","pr":"1,173","ig":"dextrose 12.5g(25mg/mL)","mk":"대한약품공업","cd":"645100892","nt":""},{"nm":"대한5%포도당가칼륨나트륨주2호 / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,755","ig":"dextrose 50g(50mg/mL)","mk":"대한약품공업","cd":"645100272","nt":""},{"nm":"대한5%포도당가칼륨나트륨주2호 / 500ml","sp":"500ml / 20EA(bag)","pr":"1,117","ig":"dextrose 25g(50mg/mL)","mk":"대한약품공업","cd":"645104351","nt":""},{"nm":"대한5%포도당가칼륨나트륨주3호 / 500ml","sp":"500ml / 20EA(bag)","pr":"1,117","ig":"dextrose 25g(50mg/mL)","mk":"대한약품공업","cd":"645100282","nt":""},{"nm":"하푸솔주","sp":"1000ml / 10EA(bag)","pr":"1,695","ig":"dextrose 25g(25mg/mL)","mk":"대한약품공업","cd":"645102682","nt":""},{"nm":"(HP)5%포도당생리식염주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,495","ig":"dextrose 50g(50mg/mL)","mk":"중외제약","cd":"644902220","nt":""},{"nm":"(HP)5%포도당생리식염주-500mL","sp":"500ml / 20EA(BAG)","pr":"1,264","ig":"dextrose 25g(50mg/mL)","mk":"중외제약","cd":"644902212","nt":""},{"nm":"(HP)5%포도당엔에이.케이주2-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,648","ig":"dextrose 50g(50mg/mL)","mk":"중외제약","cd":"644900061","nt":""},{"nm":"(HP)에스디1:4주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,341","ig":"dextrose 40g(40mg/mL)","mk":"중외제약","cd":"644901530","nt":""},{"nm":"5%포도당생리식염액(TF2)-1000mL","sp":"1000ml / 10EA(BAG)","pr":"1,495","ig":"dextrose 50g(50mg/mL)","mk":"중외제약","cd":"644902220","nt":""},{"nm":"에스디1:2주-500ML","sp":"500ml / 20EA(BAG)","pr":"1,315","ig":"dextrose 16.65g(33.3mg/mL)","mk":"중외제약","cd":"644901481","nt":""},{"nm":"에스디1:3주-500ML","sp":"500ml / 20EA(BAG)","pr":"1,263","ig":"dextrose 18.75g(37.5mg/mL)","mk":"중외제약","cd":"644901501","nt":""}]},{"i":113,"n":"hydroxyethyl starch","c":"전해질 수액","p":[{"nm":"볼루벤주500ML","sp":"500ml / 20EA(bag)","pr":"14,309","ig":"hydroxyethyl starch 30g(60mg/mL)","mk":"프레지니우스카비코리아","cd":"650900300","nt":""}]},{"i":114,"n":"potassium chloride","c":"전해질 수액","p":[{"nm":"대한플라스콘주 / 1000ml","sp":"1000ml / 10EA(bag)","pr":"5,144","ig":"potassium chloride 0.37g/1ℓ magnesium chloride 0.3g/1ℓ","mk":"대한약품공업","cd":"645100120","nt":""},{"nm":"대한플라스콘주 / 500ml","sp":"500ml / 10EA(bag)","pr":"4,086","ig":"potassium chloride 0.185g/500ml magnesium chloride 0.15g","mk":"대한약품공업","cd":"645104521","nt":""},{"nm":"(PP)엔에이.케이주200-100ML","sp":"100ml / 20EA(PP)","pr":"1,162","ig":"potassium chloride 1.5g / Sodium Chloride 0.9g","mk":"중외제약","cd":"678900860","nt":""},{"nm":"엔에이.케이주20-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,457","ig":"potassium chloride 1.5g(1.5mg/mL)","mk":"중외제약","cd":"644913480","nt":""}]},{"i":115,"n":"sodium chloride","c":"전해질 수액","p":[{"nm":"대한생리식염주사액 / 30ml","sp":"30ml / 40A(병PP)","pr":"16,520","ig":"sodium chloride(0.9%) 0.27g(9mg/mL)","mk":"대한약품공업","cd":"645102783","nt":""},{"nm":"대한생리식염주사액 / 20ml","sp":"20ml / 50A(PP)","pr":"13,750","ig":"sodium chloride(0.9%) 0.18g(9mg/mL)","mk":"대한약품공업","cd":"645100663","nt":""},{"nm":"대한염화나트륨-40주사액","sp":"20ml / 50A(PP)","pr":"12,700","ig":"sodium chloride(11.7%) 2.34g(0.117g/mL)","mk":"대한약품공업","cd":"645100773","nt":""},{"nm":"대한3%염화나트륨액","sp":"500ml / 10EA(병)","pr":"1,534","ig":"sodium chloride(3%) 15g(30mg/mL)","mk":"대한약품공업","cd":"645100191","nt":""},{"nm":"대한염화나트륨주0.45% / 500ml","sp":"500ml / 20EA(bag)","pr":"1,377","ig":"sodium chloride(0.45%) 2.25g(4.5mg/mL)","mk":"대한약품공업","cd":"645102941","nt":""},{"nm":"대한염화나트륨주0.45% / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,647","ig":"sodium chloride(0.45%) 4.5g(4.5mg/mL)","mk":"대한약품공업","cd":"645100792","nt":""},{"nm":"대한멸균생리식염수 / 50ml","sp":"50ml / 20EA(병)","pr":"984","ig":"sodium chloride(0.9%) 0.45g(9mg/mL)","mk":"대한약품공업","cd":"645100621","nt":""},{"nm":"대한멸균생리식염수 / 50ml","sp":"50ml / 50EA(bag)","pr":"984","ig":"sodium chloride(0.9%) 0.45g(9mg/mL)","mk":"대한약품공업","cd":"645100622","nt":""},{"nm":"대한멸균생리식염수 / 50ml","sp":"50ml / 20EA 병(PP)","pr":"984","ig":"sodium chloride(0.9%) 0.45g(9mg/mL)","mk":"대한약품공업","cd":"645100623","nt":""},{"nm":"대한멸균생리식염수 / 100ml","sp":"100ml / 50EA(병)","pr":"1,110","ig":"sodium chloride(0.9%) 0.9g(9mg/mL)","mk":"대한약품공업","cd":"645100561","nt":""},{"nm":"대한멸균생리식염수 / 100ml","sp":"100ml / 20EA(bag)","pr":"1,110","ig":"sodium chloride(0.9%) 0.9g(9mg/mL)","mk":"대한약품공업","cd":"645100562","nt":""},{"nm":"대한멸균생리식염수 / 100ml","sp":"100ml / 20EA 병(PP)","pr":"1,110","ig":"sodium chloride(0.9%) 0.9g(9mg/mL)","mk":"대한약품공업","cd":"645100563","nt":""},{"nm":"대한멸균생리식염수 / 150ml","sp":"150ml / 10EA(병)","pr":"1,300","ig":"sodium chloride(0.9%) 1.35g(9mg/mL)","mk":"대한약품공업","cd":"645100591","nt":""},{"nm":"대한멸균생리식염수 / 200ml","sp":"200ml / 10EA(병)","pr":"1,300","ig":"sodium chloride(0.9%) 1.8g(9mg/mL)","mk":"대한약품공업","cd":"645100611","nt":""},{"nm":"대한멸균생리식염수 / 200ml","sp":"200(500)ml / 20EA(병)","pr":"1,300","ig":"sodium chloride(0.9%) 1.8g(9mg/mL)","mk":"대한약품공업","cd":"-","nt":""},{"nm":"대한멸균생리식염수 / 250ml","sp":"250ml / 20EA(bag)","pr":"1,300","ig":"sodium chloride(0.9%) 2.25g(9mg/mL)","mk":"대한약품공업","cd":"645103821","nt":""},{"nm":"대한멸균생리식염수 / 500ml","sp":"500ml / 20EA(병)","pr":"1,300","ig":"sodium chloride(0.9%) 4.5g(9mg/mL)","mk":"대한약품공업","cd":"645100571","nt":""},{"nm":"대한멸균생리식염수 / 500ml","sp":"500ml / 20EA(bag)","pr":"1,300","ig":"sodium chloride(0.9%) 4.5g(9mg/mL)","mk":"대한약품공업","cd":"645100572","nt":""},{"nm":"대한멸균생리식염수 / 1000ml","sp":"1000ml / 10EA(병)","pr":"1,595","ig":"sodium chloride(0.9%) 9g(9mg/mL)","mk":"대한약품공업","cd":"645100581","nt":""},{"nm":"대한멸균생리식염수 / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,595","ig":"sodium chloride(0.9%) 9g(9mg/mL)","mk":"대한약품공업","cd":"645100582","nt":""},{"nm":"대한멸균생리식염수 / 3000ml","sp":"3000ml / 4EA(bag)","pr":"4,785","ig":"sodium chloride(0.9%) 27g(9mg/mL)","mk":"대한약품공업","cd":"645100601","nt":""},{"nm":"제일생리식염주사액","sp":"20ml / 50A","pr":"15,300","ig":"sodium chloride(0.9%) 0.18g(9mg/mL)","mk":"제일제약","cd":"650500403","nt":""},{"nm":"제일제약염화나트륨주사액","sp":"20ml / 50A","pr":"12,850","ig":"sodium chloride(11.7%) 2.34g(0.117g/mL)","mk":"제일제약","cd":"650500671","nt":""},{"nm":"(HP)0.45%염화나트륨-500mL","sp":"500ml / 20EA(BAG)","pr":"1,289","ig":"sodium chloride(0.45%) 2.25g(4.5mg/mL)","mk":"중외제약","cd":"644901811","nt":""},{"nm":"(HP)0.45%염화나트륨주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,505","ig":"sodium chloride(0.45%) 4.5g(4.5mg/mL)","mk":"중외제약","cd":"644901822","nt":""},{"nm":"(HP)엔에스주-1000ML","sp":"1000ml / 50EA(BAG)","pr":"1,458","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900231","nt":""},{"nm":"(HP)엔에스주-100ML","sp":"100ml / 50EA(BAG)","pr":"1,065","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900701","nt":""},{"nm":"(PP)엔에스주-100ML","sp":"100ml / 20EA(PP)","pr":"1,083","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900702","nt":""},{"nm":"(PP)엔에스주-50ML","sp":"50ml / 20EA(PP)","pr":"1,047","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900692","nt":""},{"nm":"(가압)엔에스주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,458","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900231","nt":""},{"nm":"(가압)엔에스주-500ML","sp":"500ml / 20EA(BAG)","pr":"1,227","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900721","nt":""},{"nm":"생리식염주(PP)-20ML","sp":"20ml / 50A","pr":"16,050","ig":"sodium chloride(0.9%) 0.18g(9mg/mL)","mk":"중외제약","cd":"644902691","nt":""},{"nm":"생리식염주(PP)-세척용-20ML","sp":"20ml / 50A","pr":"16,050","ig":"sodium chloride(0.9%) 0.18g(9mg/mL)","mk":"중외제약","cd":"644902691","nt":""},{"nm":"엔에스주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,458","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900231","nt":""},{"nm":"엔에스주-100ML","sp":"100ml / 50EA(BAG)","pr":"1,065","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900701","nt":""},{"nm":"엔에스주-500ML","sp":"500ml / 20EA(BAG)","pr":"1,227","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900721","nt":""},{"nm":"엔에스주-50ML","sp":"50ml / 50EA(BAG)","pr":"1,035","ig":"Sodium Chloride 900mg","mk":"중외제약","cd":"678900691","nt":""},{"nm":"생리식염 주사(염화나트륨)","sp":"20ml / 50Btl","pr":"13,600","ig":"sodium chloride(0.9%) 0.18g(9mg/mL)","mk":"휴온스","cd":"670601151","nt":""}]},{"i":116,"n":"calcium gluconate","c":"칼슘 제제","p":[{"nm":"대한글루콘산칼슘주","sp":"20ml / 50A(PP)","pr":"25,850","ig":"calcium gluconate 2g(0.1g/mL)","mk":"대한약품공업","cd":"645100383","nt":""}]},{"i":117,"n":"calcium chloride","c":"혈장대용액","p":[{"nm":"하트만액","sp":"500ml / 20EA(bag)","pr":"1,339","ig":"calcium chloride 0.1g(0.2mg/mL)","mk":"대한약품공업","cd":"645102662","nt":""},{"nm":"하트만액","sp":"1000ml / 10EA(bag)","pr":"1,544","ig":"calcium chloride 0.2g(0.2mg/mL)","mk":"대한약품공업","cd":"645102672","nt":""},{"nm":"(HP)하트만-500mL","sp":"500ml / 20EA(BAG)","pr":"1,374","ig":"calcium chloride 0.1g(0.2mg/mL)","mk":"중외제약","cd":"644904482","nt":""},{"nm":"(HP)하트만주-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,544","ig":"calcium chloride 0.2g(0.2mg/mL)","mk":"중외제약","cd":"644904491","nt":""}]},{"i":118,"n":"Dalteparin sodium","c":"항응고제","p":[{"nm":"아그라스타트주사 50ml","sp":"50ml / 1V","pr":"6,220","ig":"Dalteparin sodium 25000I.U","mk":"쥴릭파마코리아","cd":"648901802","nt":""},{"nm":"프라그민주 10000iu","sp":"0.4ml / 5V","pr":"31,100","ig":"dalteparin sodium 10KI.U(25KI.U/mL)","mk":"쥴릭파마코리아","cd":"648901802","nt":""},{"nm":"프라그민주 2500iu","sp":"0.2ml / 10P","pr":"35,750","ig":"dalteparin sodium 2.5KI.U(12.5KI.U/mL)","mk":"쥴릭파마코리아","cd":"648901162","nt":""},{"nm":"프라그민주 2500iu","sp":"4ml / 10P","pr":"66,570","ig":"dalteparin sodium 10KI.U(2.5KI.U/mL)","mk":"쥴릭파마코리아","cd":"648901192","nt":""},{"nm":"프라그민주 7500iu","sp":"0.3ml / 10P","pr":"5,096","ig":"dalteparin sodium 7.5KI.U(25KI.U/mL)","mk":"쥴릭파마코리아","cd":"648901182","nt":""}]},{"i":119,"n":"enoxaparin sodium","c":"항응고제","p":[{"nm":"크녹산주40mg","sp":"10P","pr":"48,750","ig":"enoxaparin sodium 40mg(0.1g/mL)","mk":"유영제약","cd":"648202101","nt":""}]},{"i":120,"n":"fondaparinux sodium","c":"항응고제","p":[{"nm":"아릭스트라주사 2.5mg","sp":"10V","pr":"85,350","ig":"fondaparinux sodium 2.5mg(5mg/mL)","mk":"쥴릭파마코리아","cd":"652105361","nt":""}]},{"i":121,"n":"Nadroparin Calcium","c":"항응고제","p":[{"nm":"후락시파린주사2850IU","sp":"10V","pr":"35,900","ig":"Nadroparin Calcium 2850 iu AXa","mk":"쥴릭파마코리아","cd":"652105371","nt":""},{"nm":"후락시파린주사5700IU","sp":"10V","pr":"62,490","ig":"naarin calcium 5.7KI.U Axa(9.5KI.U Axa/mL)","mk":"쥴릭파마코리아","cd":"652105391","nt":""}]},{"i":122,"n":"nafamostat mesilate","c":"항응고제","p":[{"nm":"나팜주10","sp":"10V","pr":"41,540","ig":"nafamostat mesilate 10mg","mk":"명문바이오","cd":"649807761","nt":""},{"nm":"나팜주50","sp":"10V","pr":"118,920","ig":"nafamostat mesilate 50mg","mk":"명문바이오","cd":"649807751","nt":""},{"nm":"나파벨탄주50mg","sp":"10V","pr":"92,660","ig":"nafamostat mesilate 50mg","mk":"종근당","cd":"643307141","nt":""}]},{"i":123,"n":"chromic chloride","c":"미네랄제제","p":[{"nm":"후루트만주 2mL","sp":"2ml / 10V","pr":"769","ig":"chromic chloride 0.102mg/2ml","mk":"중외제약","cd":"644904680","nt":""}]},{"i":124,"n":"sodium chloride","c":"관류액 및 투석액","p":[{"nm":"대한관류용멸균생리식염수","sp":"1000ml / 10EA","pr":"1,000","ig":"sodium chloride 9g(9mg/mL)","mk":"대한약품공업","cd":"645100341","nt":""},{"nm":"크린조-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,000","ig":"sodium chloride 9g(9mg/mL)","mk":"중외제약","cd":"644903991","nt":""}]},{"i":125,"n":"water for injection","c":"관류액 및 투석액","p":[{"nm":"대한관류용멸균증류수","sp":"1000ml / 10EA","pr":"990","ig":"water for injection","mk":"대한약품공업","cd":"645100361","nt":""},{"nm":"중외관류용멸균증류수-1000ML","sp":"1000ml / 10EA(BAG)","pr":"990","ig":"water for injection","mk":"중외제약","cd":"644902331","nt":""}]},{"i":126,"n":"L-ornithine-L-aspartate","c":"담즙산분비촉진제 & 간보호제","p":[{"nm":"리브락인퓨전주","sp":"30A","pr":"47,940","ig":"L-ornithine-L-aspartate 5g(0.5g/mL)","mk":"신풍제약","cd":"648500701","nt":""}]},{"i":127,"n":"flumazenil","c":"해독제","p":[{"nm":"루제닐주사 3mL","sp":"5A","pr":"47,915","ig":"flumazenil 0.3mg(0.1mg/mL)","mk":"동국제약","cd":"653402941","nt":""},{"nm":"루제닐주사0.5mg/ 5mL","sp":"5ML / 5A","pr":"79,350","ig":"flumazenil 0.5mg(0.1mg/mL)","mk":"동국제약","cd":"653402921","nt":""},{"nm":"명문플루마제닐주 3mL","sp":"3ml / 5A","pr":"47,915","ig":"flumazenil 0.3mg(0.1mg/mL)","mk":"명문바이오","cd":"649807781","nt":""},{"nm":"명문플루마제닐주 5mL","sp":"5ml / 5A","pr":"74,690","ig":"flumazenil 0.5mg(0.1mg/mL)","mk":"명문바이오","cd":"649805471","nt":""},{"nm":"플루닐주사","sp":"3ml / 10A","pr":"82,310","ig":"flumazenil 0.3mg(0.1mg/mL)","mk":"부광약품","cd":"642202351","nt":""},{"nm":"아넥세이트주0.5mg 5ml","sp":"5ml / 5A","pr":"77,065","ig":"flumazenil 0.5mg(0.1mg/mL)","mk":"종근당","cd":"643307621","nt":""}]},{"i":128,"n":"sodium bicarbonate","c":"해독제","p":[{"nm":"대한탄산수소나트륨8.4%주","sp":"20ml / 50A","pr":"23,800","ig":"sodium bicarbonate 1.68g(84mg/mL)","mk":"대한약품공업","cd":"645100901","nt":""},{"nm":"제일탄산수소나트륨주사액 8.4% / 20ml","sp":"20ml / 10A","pr":"4,750","ig":"sodium bicarbonate 1.68g(84mg/mL)","mk":"제일제약","cd":"650500831","nt":""},{"nm":"탄산수소나트륨 주사 8.4%","sp":"20ml / 50Btl","pr":"24,100","ig":"sodium bicarbonate 1.68g(84mg/mL)","mk":"휴온스","cd":"670603751","nt":""}]},{"i":129,"n":"human insulin(N","c":"인슐린제제","p":[{"nm":"믹스타드30HM주(냉장,생물학) 100iu","sp":"10ML / 1V","pr":"13,467","ig":"human insulin(N70/R30) 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400221","nt":""},{"nm":"인슈라타드HM주(냉장,생물학) 100iu","sp":"10ML / 1V","pr":"14,880","ig":"human insulin 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400281","nt":""},{"nm":"휴물린70/30주(냉장,생물학) 100iu","sp":"1'S","pr":"13,482","ig":"human insulin(N70/R30) 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800411","nt":""},{"nm":"휴물린70/30퀵펜주(냉장,생물학) 100iu/m","sp":"3ML / 5'S","pr":"39,840","ig":"human insulin(N70/R30) 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800463","nt":""},{"nm":"휴물린알주(냉장,생물학) 100iu/m","sp":"10ML / 1S","pr":"12,787","ig":"human insulin 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800431","nt":""},{"nm":"휴물린엔주(냉장,생물학) 100iu/m","sp":"10ML / 1S","pr":"12,787","ig":"human insulin 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800441","nt":""},{"nm":"휴물린엔퀵펜주(냉장,생물학) 100iu/m","sp":"3ML / 5'S","pr":"41,750","ig":"human insulin 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800453","nt":""}]},{"i":130,"n":"insulin aspart","c":"인슐린제제","p":[{"nm":"노보래피드주(냉장,생물학) 100iu 10mlX1V","sp":"10ML / 1V","pr":"21,559","ig":"insulin aspart 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400071","nt":""},{"nm":"노보래피드플렉스펜주(냉장,생물학) 100iu","sp":"3ML / 5V","pr":"53,080","ig":"insulin aspart 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400091","nt":""},{"nm":"노보믹스30플렉스펜주(냉장,생물학) 100iu","sp":"3ML / 5V","pr":"56,785","ig":"Insulin aspart 100 IU","mk":"쥴릭파마코리아","cd":"654400161","nt":""},{"nm":"리조덱플렉스터치주(냉장,생물학)","sp":"3ML / 5V","pr":"81,500","ig":"insulin aspart 90I.U(30I.U/mL)","mk":"쥴릭파마코리아","cd":"654400541","nt":""},{"nm":"피아스프플렉스터치주 100U/ml (냉장,생물학)","sp":"3ml / 5V","pr":"53,285","ig":"insulin aspart 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400581","nt":""}]},{"i":131,"n":"Insulin degludec","c":"인슐린제제","p":[{"nm":"줄토피플렉스터치주(냉장,생물학)","sp":"3ml / 3V","pr":"38,500","ig":"insuln degludec 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400601","nt":""},{"nm":"트레시바플렉스터치주(냉장,생물학) 100u/3 5V","sp":"5V","pr":"78,750","ig":"Insulin degludec 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"654400551","nt":""}]},{"i":132,"n":"insulin detemir","c":"인슐린제제","p":[{"nm":"레버미어플렉스펜주(냉장,생물학)","sp":"3ML / 5V","pr":"70,005","ig":"insulin detemir 42.6mg(14.2mg/mL)","mk":"쥴릭파마코리아","cd":"654400201","nt":""}]},{"i":133,"n":"Insulin glargine","c":"인슐린제제","p":[{"nm":"란투스주바이알(냉장,생물학) (NEW)","sp":"10ml / 1V","pr":"27,614","ig":"Insulin glargine 36.378mg","mk":"쥴릭파마코리아","cd":"652000111","nt":""},{"nm":"란투스주솔로스타(냉장,생물학)","sp":"3ml / 5P","pr":"53,490","ig":"Insulin glargine 3.6378mg","mk":"쥴릭파마코리아","cd":"652000581","nt":""}]},{"i":134,"n":"insulin lispro(insulin lispro","c":"인슐린제제","p":[{"nm":"휴마로그믹스25퀵펜주(냉장,생물학) 100u/ml","sp":"3ML/ 5'S","pr":"58,985","ig":"insulin lispro(insulin lispro 25%/insulin lispro protamine 75%) 300IU","mk":"쥴릭파마코리아","cd":"670800343","nt":""},{"nm":"휴마로그믹스50퀵펜주(냉장,생물학) 100u/ml","sp":"3ML/ 5'S","pr":"58,980","ig":"insulin lispro(insulin lispro 50%/insulin lispro protamine 50%)","mk":"쥴릭파마코리아","cd":"670800524","nt":""},{"nm":"휴마로그주(냉장,생물학)100iu","sp":"1'S","pr":"22,407","ig":"insulin lispro 1KI.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800351","nt":""},{"nm":"휴마로그퀵펜주(냉장,생물학) 100u/ml","sp":"3ML / 5'S","pr":"58,525","ig":"insulin lispro 300I.U(100I.U/mL)","mk":"쥴릭파마코리아","cd":"670800384","nt":""},{"nm":"(생물)휴마로그주100단위","sp":"10ml","pr":"22,407","ig":"insulin lispro 1KI.U(100I.U/mL)","mk":"한국릴리","cd":"670800351","nt":""}]},{"i":135,"n":"adalimumab","c":"관절염 및 류마티스 포함 근골격계약물","p":[{"nm":"젤렌카오토인젝터주40mg","sp":"0.4ml / 1프리필드시린지","pr":"220,390","ig":"adalimumab 40mg(100mg/mL) 엘지호학","mk":"대웅제약","cd":"668903351","nt":""}]},{"i":136,"n":"BDDE bridged sodium","c":"관절염 및 류마티스 포함 근골격계약물","p":[{"nm":"하이알원샷주 3ml","sp":"3ml / 1관","pr":"35,965","ig":"BDDE bridged sodium hyaluronate gel (as buranediol diglycidy","mk":"신풍제약","cd":"648507821","nt":""},{"nm":"시노비안주 3ml / 1관","sp":"3ml / 1관","pr":"65,136","ig":"BDDE bridged sodium hyaluronate gel (as buranediol diglycidy","mk":"엘지생명과학","cd":"668902701","nt":""},{"nm":"하이히알원스","sp":"3ml / 1Syr","pr":"35,911","ig":"BDDE bridged sodium hyaluronate gel (as buranediol diglycidy","mk":"휴온스","cd":"670608141","nt":""}]},{"i":137,"n":"hyaluronate gel sodium hyaluronate","c":"관절염 및 류마티스 포함 근골격계약물","p":[{"nm":"대웅히알루론산주","sp":"2ml / 3관","pr":"45,897","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"대웅바이오","cd":"694002431","nt":""},{"nm":"아라간플러스","sp":"2mL / 3관","pr":"45,888","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"동광제약","cd":"645902041","nt":""},{"nm":"히야론주사(프리필드)2.5mL","sp":"2.5ml / 10관","pr":"100,300","ig":"sodium hyaluronate 25mg(10mg/mL)","mk":"동국제약","cd":"653401281","nt":""},{"nm":"히야론퍼스트주사 2ML","sp":"2 mL / 9관","pr":"127,242","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"동국제약","cd":"653401271","nt":""},{"nm":"류마플러스주","sp":"2ml / 3관","pr":"45,594","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"명문바이오","cd":"649800621","nt":""},{"nm":"하이알주 2.5ml","sp":"2.5ml / 5관","pr":"42,640","ig":"sodium hyaluronate 25mg(10mg/mL)","mk":"신풍제약","cd":"648504231","nt":""},{"nm":"하이알포르테주 2ml","sp":"2ml / 3관","pr":"45,051","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"신풍제약","cd":"648504241","nt":""},{"nm":"히아루플러스주","sp":"2mLx3관","pr":"39,012","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"씨엠지제약","cd":"648602981","nt":""},{"nm":"히루안플러스","sp":"2ML / 3S","pr":"41,070","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"엘지생명과학","cd":"668901291","nt":""},{"nm":"오스히알주 2ml","sp":"3A","pr":"45,897","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"오스코리아","cd":"629701431","nt":""},{"nm":"유니히알주 (3K)","sp":"2ml / 3관","pr":"45,600","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"유니온제약","cd":"665506551","nt":""},{"nm":"아트리플러스주","sp":"3P","pr":"45,273","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"유영제약","cd":"648201051","nt":""},{"nm":"히알루나주","sp":"2ml / 3SY","pr":"15,299","ig":"sodium hyaluronate20mg/2mL","mk":"일화","cd":"640903331","nt":""},{"nm":"삼성히알루론산주","sp":"2ml / 3SY","pr":"15,299","ig":"sodium hyaluronate20mg/2mL","mk":"일화","cd":"642306991","nt":""},{"nm":"할로본주20mg","sp":"2ml / 3관","pr":"39,012","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"종근당","cd":"643306471","nt":""},{"nm":"히알론주","sp":"2ml / 3관","pr":"45,897","ig":"Sodium Hyaluronate 22mg","mk":"진양제약","cd":"650302981","nt":""},{"nm":"하루닉주3주","sp":"2ml / 3관","pr":"45,897","ig":"Sodium hyaluronate 20㎎/2㎖","mk":"프라임제약","cd":"663605992","nt":""},{"nm":"하루닉주5주","sp":"2ml / 3관","pr":"30,099","ig":"sodium hyaluronate 10㎎/㎖","mk":"프라임제약","cd":"663607061","nt":""},{"nm":"비엠히알주","sp":"2ml / 3syr","pr":"42,591","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"한국비엠아이","cd":"654802201","nt":""},{"nm":"히아름플러스주","sp":"2ml / 3관","pr":"15,299","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"대한뉴팜","cd":"669907351","nt":""},{"nm":"하일론플러스주","sp":"2ml / 3SY","pr":"45,327","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"아주약품공업","cd":"654004381","nt":""},{"nm":"에이론플러스주","sp":"2ml / 3A","pr":"44,451","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"유한양행","cd":"642102911","nt":""},{"nm":"히알조인플러스주","sp":"3관","pr":"45,531","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"팜젠사이언스","cd":"670103621","nt":""},{"nm":"화이트히알플러스주","sp":"2ml / 3관","pr":"45,897","ig":"Sodium Hyaluronate 20mg","mk":"화이트생명과학","cd":"625201681","nt":""},{"nm":"하이히알 주사","sp":"2.5ml / 5EA","pr":"47,655","ig":"sodium hyaluronate 25mg(10mg/mL)","mk":"휴온스","cd":"683100071","nt":""},{"nm":"하이히알플러스 주사","sp":"2ml / 3EA","pr":"45,810","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"휴온스","cd":"683100051","nt":""},{"nm":"히알본플러스주","sp":"2ml / 3SY","pr":"45,879","ig":"sodium hyaluronate 20mg(10mg/mL)","mk":"경동제약","cd":"648103691","nt":"CSO 포함 마진 45~66%"}]},{"i":138,"n":"(성분미상)","c":"관절염 및 류마티스 포함 근골격계약물","p":[{"nm":"레시노원주","sp":"2ml / 1P","pr":"40,100","ig":"4:1 w/w mixed hydrogel of sodium hyaluro","mk":"유영제약","cd":"648204371","nt":""},{"nm":"히알본플러스원스주","sp":"2ml / 1SY","pr":"40,600","ig":"4:1 w/w mixed hydrogel of sodium hyaluro","mk":"경동제약","cd":"648104581","nt":"CSO 포함 마진 50~70%"}]},{"i":139,"n":"azacitidine","c":"대사길항제","p":[{"nm":"비다자주 100mg 1V","sp":"1V","pr":"160,433","ig":"azacitidine 0.1g","mk":"쥴릭파마코리아","cd":"691800031","nt":""}]},{"i":140,"n":"cladribine","c":"대사길항제","p":[{"nm":"류스타틴주 10ml (냉장)","sp":"10ml / 7V","pr":"2,552,221","ig":"cladribine 10mg(1mg/mL)","mk":"쥴릭파마코리아","cd":"057200101","nt":""}]},{"i":141,"n":"gemcitabine hydrochloride","c":"대사길항제","p":[{"nm":"제로암주1G","sp":"1V","pr":"123,309","ig":"gemcitabine hydrochloride (as gemcitabine","mk":"신풍제약","cd":"648503051","nt":""},{"nm":"제로암주200mg","sp":"1V","pr":"24,631","ig":"gemcitabine hydrochloride (as gemcitabine","mk":"신풍제약","cd":"648503041","nt":""},{"nm":"젬시빈주1g","sp":"1V / 10EA","pr":"130,769","ig":"gemcitabine hydrochloride (as gemcitabine)","mk":"유한양행","cd":"642102171","nt":""},{"nm":"젬시빈주200g","sp":"1V / 10EA","pr":"26,127","ig":"gemcitabine hydrochloride (as gemcitabine)","mk":"유한양행","cd":"642102161","nt":""},{"nm":"젬탄액상주200mg 5.26ml","sp":"5.26ml / 1V","pr":"31,998","ig":"gemcitabine hydrochloride","mk":"종근당","cd":"643307181","nt":""},{"nm":"젬탄액상주1g 26.3ml","sp":"26.3ml / 1V","pr":"148,695","ig":"gemcitabine hydrochloride","mk":"종근당","cd":"643307191","nt":""}]},{"i":142,"n":"methotrexate","c":"대사길항제","p":[{"nm":"메토트렉세이트주사(액제) 50mg","sp":"1V","pr":"3,878","ig":"methotrexate 50mg(25mg/mL)","mk":"유한양행","cd":"642101491","nt":""},{"nm":"메토트렉세이트주사500mg","sp":"1V","pr":"31,854","ig":"methotrexate 0.5g(25mg/mL)","mk":"유한양행","cd":"642101501","nt":""}]},{"i":143,"n":"pemetrexed disodium","c":"대사길항제","p":[{"nm":"페메신액상주500mg 20ml","sp":"20ml / 1V","pr":"471,832","ig":"pemetrexed disodium","mk":"종근당","cd":"643307261","nt":""}]},{"i":144,"n":"belotecan(CKD","c":"DNA 회전효소 저해제","p":[{"nm":"캄토벨주2mg","sp":"5V","pr":"1,553,360","ig":"belotecan(CKD-602) 2mg","mk":"종근당","cd":"643303471","nt":""}]},{"i":145,"n":"irinotecan hydrochloride","c":"DNA 회전효소 저해제","p":[{"nm":"크래칸주(10mL/200mg)","sp":"10ml 1V","pr":"136,834","ig":"irinotecan hydrochloride 0.2g(20mg/mL)","mk":"신풍제약","cd":"648503481","nt":""},{"nm":"크래칸주(15mL/300mg)","sp":"15ml / 1V","pr":"164,491","ig":"irinotecan hydrochloride 0.3g(20mg/mL)","mk":"신풍제약","cd":"648503491","nt":""}]},{"i":146,"n":"bevacizumab","c":"단클론항체","p":[{"nm":"(생물)아바스틴주 4ml / 100mg","sp":"4ml / 1V","pr":"216,805","ig":"bevacizumab 0.1g(25mg/mL)","mk":"한국로슈","cd":"645000361","nt":""}]},{"i":147,"n":"docetaxel","c":"미세소관 저해제","p":[{"nm":"베로탁셀 1-바이알주20mg 1ml","sp":"1ml / 1V","pr":"110,684","ig":"docetaxel 20mg(20mg/mL)","mk":"종근당","cd":"643306431","nt":""},{"nm":"베로탁셀 1-바이알주80mg 4ml","sp":"4ml / 1V","pr":"361,751","ig":"docetaxel 80mg(20mg/mL)","mk":"종근당","cd":"643306441","nt":""}]},{"i":148,"n":"paclitaxel","c":"미세소관 저해제","p":[{"nm":"파덱솔주(16.67mL/100mg)","sp":"16.67ml / 1V","pr":"160,261","ig":"paclitaxel 0.1g(6mg/mL)","mk":"신풍제약","cd":"648503861","nt":""},{"nm":"파덱솔주(33.34mL/200mg)","sp":"33.34ml / 1V","pr":"198,415","ig":"paclitaxel 0.2g(6mg/mL)","mk":"신풍제약","cd":"648503871","nt":""},{"nm":"파덱솔주(5mL/30mg)","sp":"5ml / 1V","pr":"73,915","ig":"paclitaxel 30mg(6mg/mL)","mk":"신풍제약","cd":"648503851","nt":""},{"nm":"파덱솔주(50mL/300mg)","sp":"50ml / 1V","pr":"198,744","ig":"paclitaxel 0.3g(6mg/mL)","mk":"신풍제약","cd":"648503881","nt":""}]},{"i":149,"n":"oxaliplatin","c":"알킬화제","p":[{"nm":"오엑스피주 100mg","sp":"1V","pr":"280,046","ig":"oxaliplatin 0.1g(5mg/mL)","mk":"신풍제약","cd":"648502821","nt":""},{"nm":"오엑스피주 150mg","sp":"1V","pr":"317,627","ig":"oxaliplatin 0.15g","mk":"신풍제약","cd":"648504561","nt":""},{"nm":"오엑스피주 50mg","sp":"1V","pr":"210,727","ig":"oxaliplatin 50mg(5mg/mL)","mk":"신풍제약","cd":"648502811","nt":""},{"nm":"옥사플라주 5mg / 10ml","sp":"10ml / 10EA","pr":"188,591","ig":"oxaliplatin 50mg(5mg/mL)","mk":"유한양행","cd":"642102941","nt":""},{"nm":"옥사플라주 5mg / 20ml","sp":"20ml / 10EA","pr":"336,283","ig":"oxaliplatin 0.1g(5mg/mL)","mk":"유한양행","cd":"642102951","nt":""},{"nm":"벨록사액상주50mg","sp":"10ml / 1V","pr":"193,867","ig":"oxaliplatin 50mg(5mg/mL)","mk":"종근당","cd":"643307351","nt":""},{"nm":"벨록사액상주0.1g","sp":"20ml / 1V","pr":"335,911","ig":"oxaliplatin 0.1g(5mg/mL)","mk":"종근당","cd":"643307361","nt":""}]},{"i":150,"n":"bortezomib(PS","c":"표적치료 항암제","p":[{"nm":"테조벨주3.5mg","sp":"1V","pr":"489,779","ig":"bortezomib(PS-341) 3.5mg","mk":"종근당","cd":"643306901","nt":""}]},{"i":151,"n":"goserelin acetate","c":"호르몬성 항암제","p":[{"nm":"졸라덱스데포주사 3.78mg","sp":"1관","pr":"197,366","ig":"goserelin acetate (as goserelin 3.6mg)","mk":"한국아스트라제네카","cd":"650700481","nt":""}]},{"i":152,"n":"leuprolide acetate","c":"호르몬성 항암제","p":[{"nm":"엘리가드주 7.5mg","sp":"7.5mg / 1KIT","pr":"155,329","ig":"leuprolide acetate (as leuprolide 7.5mg)","mk":"한올바이오","cd":"655601441","nt":""},{"nm":"엘리가드주 22.5mg","sp":"2.25mg / 1KIT","pr":"277,205","ig":"leuprolide acetate (as leuprolide 22.5mg)","mk":"한올바이오","cd":"655601451","nt":""},{"nm":"엘리가드주 45mg","sp":"45mg / 1KIT","pr":"481,234","ig":"leuprolide acetate (as leuprolide 45mg)","mk":"한올바이오","cd":"655601471","nt":""}]},{"i":153,"n":"aconitum tinc-D","c":"소염효소제","p":[{"nm":"마로비벤-에이주사","sp":"50A","pr":"44,550","ig":"aconitum tinc-D2 1.32μL(0.6μL/mL)","mk":"삼진제약","cd":"647802890","nt":""}]},{"i":154,"n":"linezolid","c":"감염증 치료제","p":[{"nm":"자이복스주 2mg/300","sp":"1'S","pr":"34,320","ig":"linezolid 0.6g(2mg/mL)","mk":"쥴릭파마코리아","cd":"648900721","nt":""}]},{"i":155,"n":"lincomycin hydrochloride","c":"기타 항생제","p":[{"nm":"동광염산린코마이신주","sp":"2 mL / 50A","pr":"17,000","ig":"lincomycin hydrochloride 0.6g(0.3g/mL)","mk":"동광제약","cd":"645900821","nt":""},{"nm":"휴메딕스 린코마이신염산염주사 600mg","sp":"2ml / 50A","pr":"25,000","ig":"lincomycin hydrochloride 0.6g(0.3g/mL)","mk":"휴온스","cd":"683100481","nt":""}]},{"i":156,"n":"teicoplanin","c":"기타 항생제","p":[{"nm":"타고닌키트주200mg","sp":"10V","pr":"301,420","ig":"teicoplanin 0.2g 영진약품","mk":"대웅제약","cd":"672900210","nt":""},{"nm":"타이코신주200mg","sp":"1V","pr":"22,122","ig":"teicoplanin 0.2g","mk":"대웅제약","cd":"641602401","nt":""},{"nm":"타고신주200mg","sp":"10V","pr":"206,120","ig":"teicoplanin 0.2g","mk":"한올바이오","cd":"655601751","nt":""}]},{"i":157,"n":"vancomycin hydrochloride","c":"기타 항생제","p":[{"nm":"유영반코마이신염산염주500mg","sp":"10V","pr":"102,330","ig":"vancomycin hydrochloride 0.5g","mk":"유영제약","cd":"648201571","nt":""},{"nm":"비씨반코마이신염산염주 1g","sp":"10V","pr":"143,840","ig":"vancomycin hydrochloride 1g","mk":"비씨월드제약","cd":"653100701","nt":""},{"nm":"비씨반코마이신염산염주500mg","sp":"10V","pr":"101,810","ig":"vancomycin hydrochloride 0.5g","mk":"비씨월드제약","cd":"653100721","nt":""},{"nm":"유니온반코마이신주 1g","sp":"10V","pr":"143,440","ig":"vancomycin hydrochloride 1g","mk":"유니온제약","cd":"665505363","nt":""},{"nm":"유니온반코마이신주 500mg","sp":"10V","pr":"72,610","ig":"vancomycin hydrochloride 0.5g","mk":"유니온제약","cd":"665502641","nt":""}]},{"i":158,"n":"amikacin sulfate","c":"아미노글리코사이드계 항생제","p":[{"nm":"동광아미카신주 250mg","sp":"2mL / 50A","pr":"49,000","ig":"amikacin sulfate 0.25g(0.125g/mL)","mk":"동광제약","cd":"645905831","nt":""},{"nm":"신풍아미카신황산염주사액 250mg","sp":"30V","pr":"34,950","ig":"amikacin sulfate 0.25g(0.125g/mL)","mk":"신풍제약","cd":"648502453","nt":""},{"nm":"신풍아미카신황산염주사액 500mg","sp":"30V","pr":"59,100","ig":"amikacin sulfate 0.5g(0.25g/mL)","mk":"신풍제약","cd":"648502473","nt":""},{"nm":"아미카신주 250mg","sp":"10A","pr":"11,530","ig":"amikacin sulfate 0.25g(0.125g/mL)","mk":"아주약품공업","cd":"654001211","nt":""},{"nm":"아스카신주250mg / 2ml","sp":"50A","pr":"67,650","ig":"amikacin sulfate 0.25g(0.125g/mL)","mk":"오스코리아","cd":"629700051","nt":""},{"nm":"유니온아미카신주 250mg","sp":"50A","pr":"39,100","ig":"amikacin sulfate 0.25g(0.125g/mL)","mk":"유니온제약","cd":"665502931","nt":""}]},{"i":159,"n":"gentamicin sulfate","c":"아미노글리코사이드계 항생제","p":[{"nm":"신풍겐타마이신주80mg","sp":"2ml / 50A","pr":"17,400","ig":"gentamicin sulfate 80mg(40mg/mL)","mk":"신풍제약","cd":"648501841","nt":""},{"nm":"겐타프로 주사","sp":"2ml / 50A","pr":"18,600","ig":"gentamicin sulfate 80mg(40mg/mL)","mk":"휴온스","cd":"683100121","nt":""}]},{"i":160,"n":"netilmicin sulfate","c":"아미노글리코사이드계 항생제","p":[{"nm":"동광네틸마이신주 150mg","sp":"1.5ml / 50A","pr":"163,650","ig":"netilmicin sulfate 0.15g(0.1g/mL)","mk":"동광제약","cd":"645900261","nt":""},{"nm":"동광네틸마이신주100mg","sp":"2ml / 50A","pr":"118,650","ig":"netilmicin sulfate 0.1g(50mg/mL)","mk":"동광제약","cd":"645900251","nt":""},{"nm":"네티신100mg","sp":"50A","pr":"24,020","ig":"netilmicin sulfate 0.1g(50mg/mL)","mk":"신풍제약","cd":"648500101","nt":""},{"nm":"네티신150mg","sp":"50A","pr":"139,250","ig":"netilmicin sulfate 0.15g(0.1g/mL)","mk":"신풍제약","cd":"648500111","nt":""}]},{"i":161,"n":"tobramycin","c":"아미노글리코사이드계 항생제","p":[{"nm":"토브라주80mg","sp":"10V","pr":"12,560","ig":"tobramycin 80mg(40mg/mL)","mk":"대웅제약","cd":"641602451","nt":"품절"},{"nm":"토브라주100mg","sp":"10V","pr":"16,440","ig":"tobramycin 0.1g(50mg/mL)","mk":"대웅제약","cd":"641602441","nt":"품절"}]},{"i":162,"n":"amphotericin B (liposomal","c":"항진균제","p":[{"nm":"암비솜주사50mg","sp":"1V","pr":"129,392","ig":"amphotericin B (liposomal) 50mg","mk":"유한양행","cd":"625900031","nt":""}]},{"i":163,"n":"fluconazole","c":"항진균제","p":[{"nm":"푸루나졸주 100mg","sp":"50ml / 10V","pr":"94,390","ig":"fluconazole 0.1g(2mg/mL)","mk":"대웅제약","cd":"641606461","nt":"품절"},{"nm":"디푸루칸정맥주사 100/50","sp":"1'S","pr":"8,951","ig":"fluconazole 0.1g(2mg/mL)","mk":"쥴릭파마코리아","cd":"648900191","nt":""}]},{"i":164,"n":"voriconazole","c":"항진균제","p":[{"nm":"브이펜드주사 200mg","sp":"1'S","pr":"64,794","ig":"voriconazole 0.2g","mk":"쥴릭파마코리아","cd":"648900371","nt":""}]},{"i":165,"n":"liposomal doxorubicin","c":"세포독성 항암제","p":[{"nm":"케릭스주2mg","sp":"10ml / 1V","pr":"285,208","ig":"liposomal doxorubicin hydrochloride (as doxapram hydrochlori)","mk":"종근당","cd":"646601761","nt":""}]},{"i":166,"n":"1세대 세팔로스포린계 (2) cefazolin sodium","c":"세포독성 항암제","p":[{"nm":"종근당세파졸린주1g","sp":"10V","pr":"9,600","ig":"cefazolin sodium 1g","mk":"종근당","cd":"643302781","nt":""},{"nm":"세포졸주 1G","sp":"10V","pr":"10,260","ig":"cefazolin sodium 1g","mk":"한국코러스제약","cd":"647202461","nt":""}]},{"i":167,"n":"cephazedone sodium","c":"세포독성 항암제","p":[{"nm":"유영세파제돈주1g(세파제돈나트륨)","sp":"1g / 10V","pr":"61,080","ig":"cephazedone sodium 1g","mk":"구주제약","cd":"648201421","nt":""},{"nm":"경보세파제돈나트륨주1g","sp":"10V","pr":"58,870","ig":"cephazedone sodium 1g","mk":"경동제약","cd":"665001841","nt":""},{"nm":"제노세프주1g","sp":"10V","pr":"59,450","ig":"cephazedone sodium 1g","mk":"신풍제약","cd":"648503011","nt":""},{"nm":"제노세프주2g","sp":"10V","pr":"94,690","ig":"cephazedone sodium 2g","mk":"신풍제약","cd":"648503021","nt":""},{"nm":"케포돈주 1g","sp":"10V","pr":"60,470","ig":"cephazedone sodium 1g","mk":"유니온제약","cd":"665504051","nt":""},{"nm":"케포돈주 2g","sp":"10V","pr":"95,750","ig":"cephazedone sodium 2g","mk":"유니온제약","cd":"665508571","nt":""},{"nm":"유영세파제돈주1g","sp":"10V","pr":"61,080","ig":"cephazedone sodium 1g","mk":"유영제약","cd":"648201421","nt":""},{"nm":"한올레포스포렌주 1g","sp":"10EA","pr":"51,840","ig":"cephazedone sodium 1g","mk":"한올바이오","cd":"655602411","nt":""},{"nm":"한올레포스포렌주1g","sp":"50V","pr":"259,200","ig":"cephazedone sodium 1g","mk":"한올바이오","cd":"655602411","nt":""}]},{"i":168,"n":"2세대 세팔로스포린계 (6) cefmetazole sodium","c":"세포독성 항암제","p":[{"nm":"셉타신주1g 10V","sp":"10V","pr":"42,190","ig":"cefmetazole sodium 1g","mk":"신풍제약","cd":"648501721","nt":""}]},{"i":169,"n":"cefminox sodium","c":"세포독성 항암제","p":[{"nm":"메이세린주1g","sp":"10V","pr":"43,250","ig":"cefminox sodium 1g 영진약품","mk":"대웅바이오","cd":"642400341","nt":""}]},{"i":170,"n":"cefotetan disodium","c":"세포독성 항암제","p":[{"nm":"테탄키트주","sp":"1KIT","pr":"7,838","ig":"cefotetan disodium (as cefotetan 1g)","mk":"국제약품","cd":"672900221","nt":""},{"nm":"종근당세포테탄주1g","sp":"10V","pr":"62,910","ig":"cefotetan disodium (as cefotetan 1g)","mk":"종근당","cd":"643304561","nt":""}]},{"i":171,"n":"cefotiam hydrochloride","c":"세포독성 항암제","p":[{"nm":"곰티암주1g","sp":"10V","pr":"55,860","ig":"cefotiam hydrochloride 1g","mk":"대웅바이오","cd":"694001941","nt":""},{"nm":"치암키트주","sp":"10V","pr":"93,560","ig":"cefotiam hydrochloride 1g","mk":"대웅제약","cd":"672900200","nt":""},{"nm":"유니온세포티암주 1g","sp":"10V","pr":"56,290","ig":"cefotiam hydrochloride 1g","mk":"유니온제약","cd":"665502721","nt":""},{"nm":"삼성세포티암주1g","sp":"10V","pr":"55,690","ig":"cefotiamHCl1g","mk":"일화","cd":"642301481","nt":""}]},{"i":172,"n":"cefoxitin sodium","c":"세포독성 항암제","p":[{"nm":"유니온세폭시틴주1g","sp":"10V","pr":"36,240","ig":"cefoxitin sodium 1g","mk":"유니온제약","cd":"665502741","nt":""}]},{"i":173,"n":"cefuroxime sodium","c":"세포독성 항암제","p":[{"nm":"종근당세푸록심나트륨주750mg","sp":"10V","pr":"21,770","ig":"cefuroxime sodium 0.75g","mk":"종근당","cd":"643303001","nt":""}]},{"i":174,"n":"3세대 세팔로스포린계 (5) cefodizime sodium","c":"세포독성 항암제","p":[{"nm":"뉴디짐주1g","sp":"10V","pr":"78,680","ig":"cefodizime sodium 1g","mk":"대웅바이오","cd":"694001951","nt":""}]},{"i":175,"n":"cefoperazone sodium","c":"세포독성 항암제","p":[{"nm":"페라설주","sp":"1KIT","pr":"7,905","ig":"cefoperazone sodium 0.5g","mk":"국제약품","cd":"672900260","nt":""},{"nm":"페라탐주500mg","sp":"10V","pr":"42,550","ig":"cefoperazone sodium 0.5g","mk":"국제약품","cd":"643702430","nt":""},{"nm":"페라탐주2g","sp":"10V","pr":"76,040","ig":"cefoperazone sodium 1g","mk":"국제약품","cd":"643704261","nt":""}]},{"i":176,"n":"cefotaxime sodium","c":"세포독성 항암제","p":[{"nm":"국제세포탁심나트륨주1g","sp":"10V","pr":"31,530","ig":"cefotaxime sodium 1g","mk":"국제약품","cd":"643700321","nt":""},{"nm":"대웅세포탁심나트륨주2g","sp":"10V","pr":"66,850","ig":"cefotaxime sodium 2g","mk":"대웅바이오","cd":"694001931","nt":""},{"nm":"대웅세포탁심나트륨주1g","sp":"10V","pr":"38,940","ig":"cefotaxime sodium 1g","mk":"대웅바이오","cd":"694002001","nt":""},{"nm":"신풍세포탁심나트륨주1g","sp":"10V","pr":"43,170","ig":"cefotaxime sodium 1g","mk":"신풍제약","cd":"648502021","nt":""},{"nm":"아스포타심주 1g","sp":"10V","pr":"43,640","ig":"cefotaxime sodium 1g","mk":"오스코리아","cd":"629700031","nt":""},{"nm":"아스포타심주2g","sp":"10V","pr":"71,500","ig":"cefotaxime sodium 2g","mk":"오스코리아","cd":"629701851","nt":""},{"nm":"유니탁심주 1g","sp":"10V","pr":"31,230","ig":"cefotaxime sodium 1g","mk":"유니온제약","cd":"665503413","nt":""},{"nm":"종근당세포탁심주0.5g","sp":"10V","pr":"21,560","ig":"cefotaxime sodium 0.5g","mk":"종근당","cd":"643302871","nt":""},{"nm":"종근당세포탁심주1g","sp":"10V","pr":"35,730","ig":"cefotaxime sodium 1g","mk":"종근당","cd":"643302881","nt":""},{"nm":"종근당세포탁심주2g","sp":"10V","pr":"59,300","ig":"cefotaxime sodium 2g","mk":"종근당","cd":"643302891","nt":""},{"nm":"팜젠세포탁심나트륨주 1G","sp":"10V","pr":"30,610","ig":"cefotaxime sodium 1g","mk":"팜젠사이언스","cd":"670100803","nt":""}]},{"i":177,"n":"ceftazidime hydrate","c":"세포독성 항암제","p":[{"nm":"타지세프주1g","sp":"10V","pr":"93,300","ig":"ceftazidime hydrate 1g","mk":"신풍제약","cd":"648503631","nt":""},{"nm":"세프타짐주 1g","sp":"10V","pr":"92,120","ig":"ceftazidime hydrate 1g","mk":"유니온제약","cd":"665501521","nt":""},{"nm":"딤세프주1g","sp":"10V","pr":"90,040","ig":"ceftazidime hydrate 1g","mk":"종근당","cd":"643300411","nt":""}]},{"i":178,"n":"ceftriaxone sodium hydrate","c":"세포독성 항암제","p":[{"nm":"뉴락손주1g(세프트리악손나트륨수화물)","sp":"1g / 10V","pr":"78,710","ig":"ceftriaxone sodium hydrate 1g","mk":"구주제약","cd":"669800671","nt":""},{"nm":"뉴락손주2g(세프트리악손나트륨수화물)","sp":"2g / 10V","pr":"135,090","ig":"ceftriaxone sodium hydrate 2g","mk":"구주제약","cd":"669804431","nt":""},{"nm":"국제세프트리악손나트륨수화물주1g","sp":"10V","pr":"76,620","ig":"ceftriaxone sodium hydrate 1g","mk":"국제약품","cd":"643700481","nt":""},{"nm":"국제세프트리악손나트륨수화물주2g","sp":"10V","pr":"129,480","ig":"ceftriaxone sodium hydrate 2g","mk":"국제약품","cd":"643704081","nt":""},{"nm":"국제세프트리악손나트륨수화물주500mg","sp":"10V","pr":"37,420","ig":"ceftriaxone sodium hydrate 0.5g","mk":"국제약품","cd":"643700501","nt":""},{"nm":"트리손키트2g주","sp":"1KIT","pr":"15,187","ig":"ceftriaxone sodium hydrate 2g","mk":"국제약품","cd":"672900250","nt":""},{"nm":"트리손키트주사","sp":"1KIT","pr":"10,495","ig":"ceftriaxone sodium hydrate 1g","mk":"국제약품","cd":"672900240","nt":""},{"nm":"세프세파주1g","sp":"10V","pr":"68,360","ig":"Ceftriaxone Sodium Hydrate 1g","mk":"다산제약","cd":"678601241","nt":""},{"nm":"세프세파주2g","sp":"10V","pr":"114,830","ig":"Ceftriaxone Sodium Hydrate 2g","mk":"다산제약","cd":"678600801","nt":""},{"nm":"대웅곰세핀주2g","sp":"10V","pr":"114,630","ig":"ceftriaxone sodium hydrate 2g","mk":"대웅바이오","cd":"694001921","nt":""},{"nm":"대웅곰세핀주1g","sp":"10V","pr":"68,940","ig":"ceftriaxone sodium hydrate 1g","mk":"대웅바이오","cd":"694001991","nt":""},{"nm":"세트리손주2000mg","sp":"10EA(KIT)","pr":"97,600","ig":"ceftriaxone sodium hydrate 2g","mk":"대웅바이오","cd":"655605081","nt":"품절"},{"nm":"동광세프트리악손주 2g","sp":"10V","pr":"134,260","ig":"ceftriaxone sodium hydrate 2g","mk":"동광제약","cd":"645906091","nt":""},{"nm":"명문세프트리악손나트륨수화물주사1g","sp":"10V","pr":"53,930","ig":"ceftriaxone sodium hydrate 1g","mk":"명문바이오","cd":"649801153","nt":""},{"nm":"세프악손주1g","sp":"10V","pr":"78,220","ig":"ceftriaxone sodium hydrate 1g","mk":"신풍제약","cd":"648501661","nt":""},{"nm":"세프악손주500mg","sp":"10V","pr":"38,780","ig":"ceftriaxone sodium hydrate 0.5g","mk":"신풍제약","cd":"648501651","nt":""},{"nm":"알지트리손주2g","sp":"10V","pr":"104,580","ig":"ceftriaxone sodium hydrate 2g","mk":"씨엠지제약","cd":"648602631","nt":""},{"nm":"알지트리손주1.5g","sp":"10V","pr":"60,710","ig":"ceftriaxone sodium hydrate 1.5g","mk":"씨엠지제약","cd":"648602091","nt":""},{"nm":"알지트리손주1g","sp":"10V","pr":"65,910","ig":"ceftriaxone sodium hydrate 1g","mk":"씨엠지제약","cd":"648602561","nt":""},{"nm":"아스트리악손주1g","sp":"10V","pr":"80,420","ig":"ceftriaxone sodium hydrate 1g","mk":"오스코리아","cd":"629700011","nt":""},{"nm":"아스트리악손주2g","sp":"10V","pr":"135,090","ig":"ceftriaxone sodium hydrate 2g","mk":"오스코리아","cd":"629701691","nt":""},{"nm":"유니티악손주 1g","sp":"10V","pr":"74,410","ig":"ceftriaxone sodium hydrate 1g","mk":"유니온제약","cd":"665503571","nt":""},{"nm":"유니티악손주 2g","sp":"10V","pr":"134,880","ig":"ceftriaxone sodium hydrate 2g","mk":"유니온제약","cd":"665506981","nt":""},{"nm":"유영세프트리악손나트륨주1g","sp":"10V","pr":"75,650","ig":"ceftriaxone sodium hydrate 1g","mk":"유영제약","cd":"648201501","nt":""},{"nm":"세트리악손주1g","sp":"10V","pr":"77,850","ig":"ceftriaxone sodium 1g","mk":"일화","cd":"640903261","nt":""},{"nm":"삼성세프트리악손주1g","sp":"10V","pr":"79,960","ig":"ceftriaxone sodium 1g","mk":"일화","cd":"642301581","nt":""},{"nm":"삼성세프트리악손주2g","sp":"10V","pr":"13,482","ig":"ceftriaxone sodium 2g","mk":"일화","cd":"642307991","nt":""},{"nm":"쎄릭손주0.5g","sp":"10V","pr":"40,210","ig":"ceftriaxone sodium hydrate 0.5g","mk":"종근당","cd":"643301521","nt":""},{"nm":"쎄릭손주1g","sp":"10V","pr":"79,140","ig":"ceftriaxone sodium hydrate 1g","mk":"종근당","cd":"643301531","nt":""},{"nm":"쎄릭손주2g","sp":"10V","pr":"119,660","ig":"ceftriaxone sodium hydrate 2g","mk":"종근당","cd":"643301541","nt":""},{"nm":"팜젠세프트리악손나트륨수화물주 1G","sp":"10V","pr":"76,160","ig":"ceftriaxone sodium hydrate 1g","mk":"팜젠사이언스","cd":"670100861","nt":""},{"nm":"코러스세프트리악손나트륨주1g","sp":"10V","pr":"78,850","ig":"ceftriaxone sodium hydrate 1g","mk":"한국코러스제약","cd":"647202372","nt":""}]},{"i":179,"n":"cilastatin sodium","c":"기타 베타락탐계 항생제","p":[{"nm":"티펨주500mg(위탁)","sp":"10V","pr":"80,040","ig":"cilastatin sodium (as cilastatin 0.5g)","mk":"명문바이오","cd":"649803280","nt":""}]},{"i":180,"n":"meropenem","c":"기타 베타락탐계 항생제","p":[{"nm":"대웅바이오메로페넴주1g","sp":"10V","pr":"139,150","ig":"meropenem 1g","mk":"대웅바이오","cd":"694004201","nt":""},{"nm":"대웅바이오메로페넴주500g","sp":"10V","pr":"92,770","ig":"meropenem 0.5g","mk":"대웅바이오","cd":"694004211","nt":""},{"nm":"동광메로페넴주1g","sp":"10V","pr":"153,040","ig":"meropenem 1g","mk":"동광제약","cd":"645905241","nt":""},{"nm":"동광메로페넴주500mg","sp":"10V","pr":"108,580","ig":"meropenem 0.5g","mk":"동광제약","cd":"645903741","nt":""},{"nm":"뉴로펨주1g","sp":"10V","pr":"163,570","ig":"meropenem 1g","mk":"명문바이오","cd":"698504301","nt":""},{"nm":"뉴로펨주500g","sp":"10V","pr":"108,390","ig":"meropenem 0.5g","mk":"명문바이오","cd":"698504311","nt":""},{"nm":"메로신주 1g","sp":"10V","pr":"133,240","ig":"meropenem 1g","mk":"신풍제약","cd":"648506551","nt":""},{"nm":"메로신주 500mg","sp":"10V","pr":"98,710","ig":"meropenem 0.5g","mk":"신풍제약","cd":"648504731","nt":""},{"nm":"오스페넴주 1g","sp":"10V","pr":"139,150","ig":"meropenem 1g","mk":"오스코리아","cd":"629701741","nt":""},{"nm":"유니큐펨주 500mg","sp":"10V","pr":"105,920","ig":"meropenem 0.5g","mk":"유니온제약","cd":"665507431","nt":""},{"nm":"유니큐펨주 1g","sp":"10V","pr":"158,430","ig":"meropenem 1g","mk":"유니온제약","cd":"665506881","nt":""},{"nm":"유한메로펜주사0.5g","sp":"10V","pr":"90,510","ig":"meropenem 0.5g","mk":"유한양행","cd":"642101461","nt":""},{"nm":"삼성메로페넴주500mg","sp":"10V","pr":"106,260","ig":"meropenem500mg","mk":"일화","cd":"642307371","nt":""},{"nm":"삼성메로페넴주1g","sp":"10V","pr":"157,380","ig":"meropenem 1g","mk":"일화","cd":"642307401","nt":""},{"nm":"메카펨주0.5g","sp":"10V","pr":"105,960","ig":"meropenem 0.5g","mk":"종근당","cd":"643304921","nt":""},{"nm":"메카펨주1g","sp":"10V","pr":"152,600","ig":"meropenem 1g","mk":"종근당","cd":"643305891","nt":""},{"nm":"한올메로페넴주1g","sp":"10V","pr":"158,230","ig":"meropenem 1g","mk":"한올바이오","cd":"655604361","nt":"품절"}]},{"i":181,"n":"vancomycin hydrochloride","c":"기타항생제","p":[{"nm":"반코키트주1g","sp":"10V","pr":"131,100","ig":"vancomycin hydrochloride 1g","mk":"대웅제약","cd":"672900060","nt":"품절"}]},{"i":182,"n":"amoxicillin sodium","c":"페니실린계 항생제","p":[{"nm":"크라목신주 0.6g","sp":"10V","pr":"12,900","ig":"amoxicillin sodium 0.5g","mk":"신풍제약","cd":"648503380","nt":""},{"nm":"크라목신주 1.2g","sp":"10V","pr":"26,710","ig":"amoxicillin sodium 1g","mk":"신풍제약","cd":"648503390","nt":""},{"nm":"크목실린주1.2g","sp":"10V","pr":"24,070","ig":"amoxicillin sodium 1g","mk":"종근당","cd":"643303610","nt":""}]},{"i":183,"n":"ampicillin sodium","c":"페니실린계 항생제","p":[{"nm":"썰바신주 750mg","sp":"10V","pr":"18,270","ig":"ampicillin sodium 0.5g","mk":"동광제약","cd":"645902000","nt":""},{"nm":"박타신주 1.5g","sp":"10V","pr":"23,620","ig":"ampicillin sodium 1g","mk":"신풍제약","cd":"648501200","nt":""},{"nm":"박타신주 750mg","sp":"10V","pr":"17,350","ig":"ampicillin sodium 0.5g","mk":"신풍제약","cd":"648501190","nt":""},{"nm":"유니설암주 750mg","sp":"10V","pr":"18,270","ig":"ampicillin sodium 0.5g","mk":"유니온제약","cd":"665502290","nt":""}]},{"i":184,"n":"piperacillin sodium","c":"페니실린계 항생제","p":[{"nm":"타박탐주4.5g","sp":"10A","pr":"69,230","ig":"piperacillin sodium 4g","mk":"동광제약","cd":"645902890","nt":""},{"nm":"린박탐주 2.25g","sp":"10V","pr":"43,430","ig":".piperacillin sodium 2g","mk":"신풍제약","cd":"648507120","nt":""},{"nm":"린박탐주 4.5g","sp":"10V","pr":"66,310","ig":"piperacillin sodium 4g","mk":"신풍제약","cd":"648507130","nt":""},{"nm":"유니페라탐주 4.5g","sp":"10V","pr":"72,830","ig":"piperacillin sodium 4g","mk":"유니온제약","cd":"665507471","nt":""},{"nm":"유니페라탐주 2.25g","sp":"10V","pr":"50,300","ig":"piperacillin sodium 2g","mk":"유니온제약","cd":"665507461","nt":""},{"nm":"타페라신주2.25g","sp":"10V","pr":"50,440","ig":"piperacillin sodium 2g, tazobactam 0.25g","mk":"일화","cd":"642308001","nt":""},{"nm":"타페라신주4.5g","sp":"10V","pr":"71,180","ig":"piperacillin sodium 4g, tazobactam 0.5g","mk":"일화","cd":"642303641","nt":""},{"nm":"타조페란주2.25g","sp":"10V","pr":"41,210","ig":"piperacillin sodium 2g","mk":"종근당","cd":"643303660","nt":""},{"nm":"타조페란주4.5g","sp":"10V","pr":"60,600","ig":"piperacillin sodium 4g","mk":"종근당","cd":"643303670","nt":""}]},{"i":185,"n":"ciprofloxacin","c":"퀴놀론계 항생제","p":[{"nm":"베아신주200mg","sp":"100L / 40EA","pr":"7,722","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"대웅바이오","cd":"694003581","nt":""},{"nm":"베아신주400mg","sp":"200L / 20EA","pr":"10,333","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"대웅바이오","cd":"694003582","nt":""},{"nm":"씨프러스주 200mg","sp":"100ml / 50팩","pr":"7,722","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"대웅제약","cd":"641601773","nt":""},{"nm":"씨프러스주 400mg","sp":"200ml / 10팩","pr":"10,333","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"대웅제약","cd":"641601783","nt":""},{"nm":"대한시프로플록사신주 / 100ml","sp":"100ml / 40EA(bag)","pr":"8,987","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"대한약품공업","cd":"645100711","nt":""},{"nm":"대한시프로플록사신주 / 200ml","sp":"200ml / 20EA(bag)","pr":"10,102","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"대한약품공업","cd":"645103801","nt":""},{"nm":"명문시프로플록사신주사100ml(Pack).","sp":"100ml / 1PACK","pr":"7,414","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"명문바이오","cd":"649804301","nt":""},{"nm":"명문시프로플록사신주사200mL(Pack)","sp":"200ml / 1PACK","pr":"10,333","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"명문바이오","cd":"649807151","nt":""},{"nm":"제이더블유생명시프로플록사신주 100mL","sp":"100ml / 10EA(bag)","pr":"7,722","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"신풍제약","cd":"678901295","nt":""},{"nm":"제이더블유생명시프로플록사신주 200mL","sp":"200ml / 10EA(bag)","pr":"9,238","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"신풍제약","cd":"678901296","nt":""},{"nm":"시프로플록 200사신주","sp":"10V","pr":"86,620","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"아주약품공업","cd":"654001071","nt":""},{"nm":"시프록스주 200mg","sp":"100ml / 10V","pr":"90,810","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"오스코리아","cd":"629700041","nt":""},{"nm":"시프록스주 400mg","sp":"200ml / 10V","pr":"121,560","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"오스코리아","cd":"629700781","nt":""},{"nm":"유니시프로사신주 200mg","sp":"10V","pr":"90,490","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"유니온제약","cd":"665502381","nt":""},{"nm":"유니시프로사신주 400mg","sp":"200ml / 10V","pr":"121,350","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"유니온제약","cd":"665506771","nt":""},{"nm":"씨프로바이주200mg","sp":"100ml / 40EA(병)","pr":"7,200","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"종근당","cd":"641100141","nt":""},{"nm":"씨프로바이주400mg","sp":"200ml / 20EA(병)","pr":"8,337","ig":"ciprofloxacin 0.4g(2mg/mL)","mk":"종근당","cd":"641100151","nt":""},{"nm":"팜젠시프로플록사신주","sp":"1관","pr":"9,085","ig":"ciprofloxacin 0.2g(2mg/mL)","mk":"팜젠사이언스","cd":"670104241","nt":""}]},{"i":186,"n":"evofloxacin","c":"퀴놀론계 항생제","p":[{"nm":"프로신주(100mL/백)-1BG","sp":"100ml","pr":"14,248","ig":"evofloxacin 0.5g(5mg/mL)","mk":"유니온제약","cd":"665504903","nt":""}]},{"i":187,"n":"levofloxacin hydrate","c":"퀴놀론계 항생제","p":[{"nm":"레보카신주 100ml","sp":"100ml / bag","pr":"13,844","ig":"levofloxacin 0.5g(5mg/mL)","mk":"국제약품","cd":"643702623","nt":""},{"nm":"레보카신주 150ml","sp":"150ml / bag","pr":"17,206","ig":"levofloxacin 0.75g(5mg/mL)","mk":"국제약품","cd":"643703752","nt":""},{"nm":"레프퀸인퓨전주","sp":"100ml / 40EA(bag)","pr":"8,995","ig":"levofloxacin 0.5g(5mg/mL)","mk":"대한약품공업","cd":"645103762","nt":""},{"nm":"레포신주 250mg","sp":"50ml / 1V","pr":"8,737","ig":"levofloxacin 0.25g(5mg/mL)","mk":"신풍제약","cd":"648500471","nt":""},{"nm":"레포신주 500mg","sp":"100ml / 1V","pr":"13,516","ig":"levofloxacin 0.5g(5mg/mL)","mk":"신풍제약","cd":"648504381","nt":""},{"nm":"레포신주 50mg","sp":"150ml / 1V","pr":"17,329","ig":"levofloxacin 0.75g(5mg/mL)","mk":"신풍제약","cd":"648505821","nt":""},{"nm":"레복스주 250mg","sp":"50ml / 10V","pr":"90,380","ig":"levofloxacin 0.25g(5mg/mL)","mk":"오스코리아","cd":"629700101","nt":""},{"nm":"레복스주 500mg","sp":"100ml / 10V","pr":"146,430","ig":"levofloxacin 0.5g(5mg/mL)","mk":"오스코리아","cd":"629700111","nt":""},{"nm":"레복스주 750mg","sp":"150ml / 10V","pr":"184,290","ig":"levofloxacin 0.75g(5mg/mL)","mk":"오스코리아","cd":"629700761","nt":""},{"nm":"프로신주 250mg","sp":"50ml / 10V","pr":"88,580","ig":"levofloxacin 0.25g(5mg/mL)","mk":"유니온제약","cd":"665504891","nt":""},{"nm":"프로신주 500mg","sp":"100ml / 10V","pr":"142,480","ig":"levofloxacin 0.5g(5mg/mL)","mk":"유니온제약","cd":"665504901","nt":""},{"nm":"프로신주 750mg","sp":"150ml / 10V","pr":"184,290","ig":"levofloxacin 0.75g(5mg/mL)","mk":"유니온제약","cd":"665506751","nt":""},{"nm":"프로신주(150ml/백)-1BG","sp":"150ml","pr":"18,429","ig":"levofloxacin 0.75g(5mg/mL)","mk":"유니온제약","cd":"665506752","nt":""},{"nm":"삼성레보플록사신주","sp":"100ml","pr":"14,470","ig":"levofloxacin hydrate 5.1246㎎/mL","mk":"일화","cd":"642306671","nt":""}]},{"i":188,"n":"moxifloxacin hydrochloride","c":"퀴놀론계 항생제","p":[{"nm":"아벨록스주400mg","sp":"250ml / 20EA(병)","pr":"23,053","ig":"moxifloxacin hydrochloride (as moxifloxa)","mk":"종근당","cd":"641100251","nt":""}]},{"i":189,"n":"acyclovir","c":"항바이러스제","p":[{"nm":"에크로바주250mg","sp":"5V","pr":"30,015","ig":"acyclovir 0.25g(25mg/mL)","mk":"경동제약","cd":"648101541","nt":"CSO 포함 마진 15~28%"},{"nm":"아시클린주250mg","sp":"10ml / 10V","pr":"58,000","ig":"acyclovir 0.25g(25mg/mL)","mk":"대웅바이오","cd":"694004242","nt":""},{"nm":"바크락스주 250ml","sp":"10V","pr":"31,700","ig":"acyclovir 0.25g(25mg/mL)","mk":"슈넬생명과학","cd":"645204451","nt":""}]},{"i":190,"n":"ganciclovir","c":"항바이러스제","p":[{"nm":"싸이메빈정주500mg","sp":"1V","pr":"55,591","ig":"ganciclovir 0.5g","mk":"종근당","cd":"643308281","nt":""}]},{"i":191,"n":"remdesivir","c":"항바이러스제","p":[{"nm":"베클루리주정맥주사용용액(렘데시비르)","sp":"100ml / 1V","pr":"520,000","ig":"remdesivir 0.1g","mk":"유한양행","cd":"625900141","nt":""}]},{"i":192,"n":"human anti-tetanus","c":"면역글로불린제","p":[{"nm":"(생물)하이퍼테트주 250IU*10V","sp":"250IU / 10V","pr":"215,230","ig":"human anti-tetanus immunoglobulin 250I.U","mk":"녹십자","cd":"643601841","nt":""},{"nm":"(생물)테타불린에스앤주프리필드시린지 250IU","sp":"10PEN","pr":"215,630","ig":"human anti-tetanus immunoglobulin 250I.U","mk":"에스케이플라즈마(주)","cd":"050800361","nt":""}]},{"i":193,"n":"peginterferon β","c":"-","p":[{"nm":"플레그리디펜주(냉장,생물학) 125mcg","sp":"2'S","pr":"589,274","ig":"peginterferon β-1a 0.125mg(0.25mg/mL)","mk":"쥴릭파마코리아","cd":"621100211","nt":""}]},{"i":194,"n":"Sodium Polynucleotide","c":"-","p":[{"nm":"피엔쥬주","sp":"-","pr":"53,950","ig":"Sodium Polynucleotide 20mg/ml Lidocaine 0.3mg","mk":"진양제약","cd":"M2094163","nt":""}]},{"i":195,"n":"interferon β","c":"면역증강제","p":[{"nm":"아보넥스펜주(냉장,생물학)","sp":"0.5ml / 4'S","pr":"860,600","ig":"interferon β-1a 30μg(60μg/mL)","mk":"쥴릭파마코리아","cd":"621100191","nt":""}]},{"i":196,"n":"metronidazole","c":"항염기성균 & 항원충제","p":[{"nm":"후라질주100mL","sp":"100ml / 20EA(병 PP)","pr":"1,089","ig":"metronidazole 0.5g(5mg/mL)","mk":"근화제약","cd":"652601573","nt":""},{"nm":"메트리날주","sp":"100ml / 20EA 병(PP)","pr":"1,216","ig":"metronidazole 0.5g(5mg/mL)","mk":"대한약품공업","cd":"645101422","nt":""}]},{"i":197,"n":"water for injection","c":"기타 수액제","p":[{"nm":"대한멸균증류수(주사용수) / 20ml","sp":"20ml / 50A(PP)","pr":"10,550","ig":"water for inj. 0","mk":"대한약품공업","cd":"645100643","nt":""},{"nm":"대한멸균증류수(주사용수) / 1000ml","sp":"1000ml / 10EA(병)","pr":"1,461","ig":"water for injection","mk":"대한약품공업","cd":"645100631","nt":""},{"nm":"대한멸균증류수(주사용수) / 1000ml","sp":"1000ml / 10EA(bag)","pr":"1,461","ig":"water for injection","mk":"대한약품공업","cd":"645100632","nt":""},{"nm":"제일멸균주사용수 20ml","sp":"20ml / 50A","pr":"10,550","ig":"water for inj. 0","mk":"제일제약","cd":"650500813","nt":""},{"nm":"(HP)주사용수-1000ML","sp":"1000ml / 10EA(BAG)","pr":"1,365","ig":"water for injection","mk":"중외제약","cd":"644903382","nt":""},{"nm":"주사용수(PP)-20ML","sp":"20ml / 50A","pr":"10,550","ig":"Water for injection 1ml","mk":"중외제약","cd":"644903371","nt":""},{"nm":"주사용수(주사용수)","sp":"20ml / 50Btl","pr":"7,800","ig":"water for inj. 0","mk":"휴온스","cd":"670603711","nt":""},{"nm":"비브라운멸균(주사용증류수) 500mL","sp":"500ml / 10EA(병 PP)","pr":"712","ig":"water for injection","mk":"비브라운코리아","cd":"667400371","nt":""}]},{"i":198,"n":"fluorescein sodium","c":"진단시약","p":[{"nm":"후루오레사이트주사10%","sp":"5ml / 12V","pr":"68,292","ig":"fluorescein sodium (as fluorescein 0.5g(0.1)","mk":"한국알콘","cd":"652400731","nt":""}]},{"i":199,"n":"glucose","c":"진단시약","p":[{"nm":"디아솔에스액100g","sp":"200ml / 50EA","pr":"4,000","ig":"glucose 100g(0.5g/mL)","mk":"태준제약","cd":"650100143","nt":""}]},{"i":200,"n":"indigocarmine","c":"진단시약","p":[{"nm":"카르민주0.8%","sp":"5ml / 10A","pr":"42,780","ig":"indigocarmine 40mg(8mg/mL)","mk":"한국유나이티드제약","cd":"644303851","nt":""}]},{"i":201,"n":"iohexol","c":"진단시약","p":[{"nm":"아스헥솔주300 / 30ml","sp":"30ml / 1V","pr":"15,030","ig":"iohexol 19.41g(0.647g/mL)","mk":"오스코리아","cd":"629700638","nt":""},{"nm":"아스헥솔주300 / 100ml","sp":"100ml / 1V","pr":"50,100","ig":"iohexol 64.7g(0.647g/mL)","mk":"오스코리아","cd":"629700633","nt":""},{"nm":"아스헥솔주300 / 150ml","sp":"150ml / 1V","pr":"75,150","ig":"iohexol 97.05g(0.647g/mL)","mk":"오스코리아","cd":"629700634","nt":""},{"nm":"아스헥솔주350 / 100ml","sp":"100ml / 1V","pr":"54,570","ig":"iohexol 75.5g(0.755g/mL)","mk":"오스코리아","cd":"629700793","nt":""},{"nm":"아스헥솔주350 / 150ml","sp":"150ml / 1V","pr":"81,876","ig":"iohexol 113.25g(0.755g/mL)","mk":"오스코리아","cd":"629700794","nt":""},{"nm":"아스헥솔주350 / 500ml","sp":"500ml / 1V","pr":"272,692","ig":"iohexol 377.5g(0.755g/mL)","mk":"오스코리아","cd":"629700797","nt":""},{"nm":"옴니파큐300주","sp":"10ml / 20EA","pr":"5,082","ig":"iohexol 6.47g(0.647g/mL)","mk":"지이헬스케어 에이에스 한국지점","cd":"646300114","nt":""}]},{"i":202,"n":"iopamidol","c":"진단시약","p":[{"nm":"파미레이300주사액 100mL","sp":"100mL / 10EA(병)","pr":"41,000","ig":"iopamidol 61.24g(0.6124g/mL)","mk":"동국제약","cd":"073600042","nt":""},{"nm":"파미레이300주사액 130mL","sp":"130mL / 10EA(병)","pr":"53,300","ig":"iopamidol 79.612g(0.6124g/mL)","mk":"동국제약","cd":"073600046","nt":""},{"nm":"파미레이300주사액 150mL","sp":"150mL / 10EA(병)","pr":"61,500","ig":"iopamidol 91.86g(0.6124g/mL)","mk":"동국제약","cd":"073600048","nt":""},{"nm":"파미레이300주사액 30mL","sp":"30mL / 10EA(병)","pr":"12,300","ig":"iopamidol 18.372g(0.6124g/mL)","mk":"동국제약","cd":"073600033","nt":""},{"nm":"파미레이300주사액 50mL","sp":"50mL / 10EA(병)","pr":"20,500","ig":"iopamidol 30.62g(0.6124g/mL)","mk":"동국제약","cd":"073600035","nt":""},{"nm":"파미레이370주사액 100mL","sp":"100mL / 10EA(병)","pr":"45,900","ig":"iopamidol 75.53g(0.7553g/mL)","mk":"동국제약","cd":"073600069","nt":""},{"nm":"*파미레이370주사액 125mL","sp":"125mL / 10EA(병)","pr":"57,375","ig":"iopamidol 94.4125g(0.7553g/mL)","mk":"동국제약","cd":"073600073","nt":""}]}];
 
 const list = document.getElementById('list');
@@ -189,27 +583,104 @@ const catbar = document.getElementById('catbar');
 const topBtn = document.getElementById('top');
 let activeCat = null;
 
-// unique categories in order
+// unique categories in order + counts
 const cats = [];
-DATA.forEach(s => { if(!cats.includes(s.c)) cats.push(s.c); });
+const catCounts = {};
+DATA.forEach(s => {
+  if(!cats.includes(s.c)) cats.push(s.c);
+  catCounts[s.c] = (catCounts[s.c] || 0) + 1;
+});
+
+// 좌측 sticky "전체 목록" 버튼 (모달 여는 버튼)
+const catAllBtn = document.createElement('button');
+catAllBtn.className = 'catall-btn';
+catAllBtn.type = 'button';
+catAllBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>'
+                    + '전체 목록<span class="n">' + cats.length + '</span>';
+catAllBtn.onclick = openCatModal;
+catbar.appendChild(catAllBtn);
 
 // build category chips
 const allChip = mkChip('전체', null);
 catbar.appendChild(allChip);
 cats.forEach(c => catbar.appendChild(mkChip(c, c)));
+
 function mkChip(label, val){
   const b = document.createElement('button');
   b.className = 'catchip' + (val===activeCat?' on':'');
   b.textContent = label;
-  b.onclick = () => {
-    activeCat = val;
-    [...catbar.children].forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');
-    render();
-    window.scrollTo({top:0});
-  };
+  b.dataset.val = val || '';
+  b.onclick = () => selectCat(val);
   return b;
 }
+
+function selectCat(val){
+  activeCat = val;
+  [...catbar.children].forEach(x=>{
+    if(x.classList.contains('catchip')){
+      x.classList.toggle('on', (x.dataset.val || null) === (val || null));
+    }
+  });
+  render();
+  window.scrollTo({top:0});
+  // 선택된 chip이 뷰포트 안에 오도록 스크롤
+  const activeChip = [...catbar.querySelectorAll('.catchip')].find(x => x.classList.contains('on'));
+  if(activeChip && typeof activeChip.scrollIntoView === 'function'){
+    activeChip.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+  }
+}
+
+/* ---- 약효분류 전체 선택 모달 ---- */
+const catmodalBg = document.getElementById('catmodalBg');
+const catlist = document.getElementById('catlist');
+const catq = document.getElementById('catq');
+document.getElementById('catmodalClose').onclick = closeCatModal;
+catmodalBg.addEventListener('click', e => { if(e.target === catmodalBg) closeCatModal(); });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && catmodalBg.classList.contains('show')) closeCatModal();
+});
+
+function openCatModal(){
+  catq.value = '';
+  renderCatList('');
+  catmodalBg.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  setTimeout(()=>catq.focus(), 100);
+}
+function closeCatModal(){
+  catmodalBg.classList.remove('show');
+  if(!modalBg.classList.contains('show')) document.body.style.overflow = '';
+}
+function renderCatList(filter){
+  const f = (filter||'').trim().toLowerCase();
+  const items = [{name:'전체', val:null, count:DATA.length}]
+    .concat(cats.map(c => ({name:c, val:c, count:catCounts[c]})));
+  const shown = f ? items.filter(it => (it.name||'').toLowerCase().includes(f)) : items;
+  if(!shown.length){
+    catlist.innerHTML = '<div class="catmodal-empty">검색 결과가 없습니다</div>';
+    return;
+  }
+  catlist.innerHTML = shown.map(it => {
+    const isOn = (it.val || null) === (activeCat || null);
+    return '<div class="cat-item'+(isOn?' on':'')+'" data-val="'+escAttr(it.val||'')+'">'
+      + '<div class="cat-name">'+esc(it.name)+'</div>'
+      + '<div class="cat-num">'+it.count+'</div>'
+      + '<svg class="cat-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
+      + '</div>';
+  }).join('');
+}
+catlist.addEventListener('click', e => {
+  const el = e.target.closest('.cat-item');
+  if(!el) return;
+  const val = el.dataset.val || null;
+  selectCat(val);
+  closeCatModal();
+});
+let catqT;
+catq.addEventListener('input', ()=>{
+  clearTimeout(catqT);
+  catqT = setTimeout(()=>renderCatList(catq.value), 100);
+});
 
 function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 function escAttr(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -234,6 +705,7 @@ function render(){
   const terms = raw.split(/\s+/).filter(Boolean);
   clearBtn.classList.toggle('show', !!raw);
   list.innerHTML = '';
+  PROD_REG.length = 0;
 
   let secShown = 0, prodShown = 0;
   let lastCat = null;
@@ -280,6 +752,7 @@ function render(){
     const total = sec.p.length;
     card.innerHTML =
       '<div class="ing-head">'+
+        '<div class="ing-icon">'+esc((sec.n||'?').trim().charAt(0).toUpperCase())+'</div>'+
         '<div class="ing-main">'+
           '<div class="ing-name">'+hl(sec.n,terms)+'</div>'+
           '<div class="ing-meta">'+esc(sec.c)+'</div>'+
@@ -287,7 +760,7 @@ function render(){
         '<span class="ing-count">'+prodList.length+(prodList.length<total?'/'+total:'')+'</span>'+
         '<svg class="chev" viewBox="0 0 24 24"><path d="M8.6 5.4 15.2 12l-6.6 6.6L10 20l8-8-8-8z"/></svg>'+
       '</div>'+
-      '<div class="prods">'+ prodList.map(p=>prodHTML(p,terms)).join('') +'</div>';
+      '<div class="prods">'+ prodList.map(p=>prodHTML(p,terms,sec)).join('') +'</div>';
 
     const head = card.querySelector('.ing-head');
     head.onclick = () => card.classList.toggle('open');
@@ -324,16 +797,7 @@ function handleImageError(img){
   const code = img.dataset.code || '';
   const tried = parseInt(img.dataset.imgTry || '0', 10) + 1;
 
-  // 외부 이미지가 차단되거나 실패하면 local images/보험코드.jpg부터 다시 시도
-  if(IMAGE_MAP[code] && code && !img.dataset.localFallback){
-    img.dataset.localFallback = '1';
-    img.dataset.imgTry = '0';
-    img.src = IMAGE_BASE + code + '.' + IMAGE_EXTS[0];
-    return;
-  }
-
-  // local 이미지 확장자 순서대로 jpg → jpeg → png → webp 시도
-  if(code && tried < IMAGE_EXTS.length){
+  if(!IMAGE_MAP[code] && code && tried < IMAGE_EXTS.length){
     img.dataset.imgTry = String(tried);
     img.src = IMAGE_BASE + code + '.' + IMAGE_EXTS[tried];
     return;
@@ -341,9 +805,12 @@ function handleImageError(img){
 
   const box = img.closest('.prod-thumb');
   if(box) box.classList.add('noimg');
+  else img.classList.add('noimg'); // 모달 큰 이미지
 }
 
-function prodHTML(p, terms){
+const PROD_REG = []; // 렌더된 제품 클릭용 레지스트리
+
+function prodHTML(p, terms, sec){
   let tags = '';
 
   if(p.mk) tags += '<span class="tag maker">'+hl(p.mk,terms)+'</span>';
@@ -354,7 +821,10 @@ function prodHTML(p, terms){
     else tags += '<span class="tag note">'+hl(p.nt,terms)+'</span>';
   }
 
-  return '<div class="prod">'+
+  const pid = PROD_REG.length;
+  PROD_REG.push({p:p, sec:sec});
+
+  return '<div class="prod" data-pid="'+pid+'">'+
     prodImgHTML(p)+
     '<div class="prod-body">'+
       '<div class="prod-top">'+
@@ -367,6 +837,96 @@ function prodHTML(p, terms){
     '</div>'+
   '</div>';
 }
+
+/* ---- 제품 상세 팝업 ---- */
+const modalBg = document.getElementById('modalBg');
+const mTitle = document.getElementById('mTitle');
+const mBody = document.getElementById('mBody');
+document.getElementById('mClose').onclick = closeModal;
+modalBg.addEventListener('click', e => { if(e.target === modalBg) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+function cleanProductName(nm){
+  // 식약처 검색이 잘 되도록 제품명을 최대한 정리
+  let q = nm || '';
+  q = q.replace(/\([^)]*\)/g, ' ');           // 괄호와 내부 (향정), (냉장,생물학) 등 제거
+  q = q.replace(/\[[^\]]*\]/g, ' ');          // 대괄호도
+  q = q.split('/')[0];                        // 슬래시 뒤 규격 제거
+  // 규격 단위 제거: 100mg, 1.5ml, 5% 등 (한글 앞 % 매치 위해 \b 사용 안 함)
+  q = q.replace(/\d+\.?\d*\s*(?:mg|㎎|㎍|mcg|μg|㏄|㎖|ml|mL|g|kg|iu|IU|I\.U|MIU|KI\.U|%)/gi, ' ');
+  // 하이픈이 있으면 마지막 부분(브랜드명) 우선 선택
+  if(q.includes('-')){
+    const parts = q.split('-').map(s => s.trim()).filter(Boolean);
+    if(parts.length >= 2) q = parts[parts.length - 1];
+  }
+  q = q.replace(/\s+/g, ' ').trim();
+  // 뒤쪽에 숫자로 시작하는 토큰(용량) 정리
+  const toks = q.split(/\s+/);
+  while(toks.length > 1 && /^\d/.test(toks[toks.length-1])) toks.pop();
+  q = toks.join(' ').trim();
+  return q || (nm || '').trim();
+}
+
+function getMfdsProductUrl(nm){
+  return 'https://nedrug.mfds.go.kr/searchDrug?searchYn=true&itemName=' + encodeURIComponent(cleanProductName(nm));
+}
+
+function getMfdsIngrUrl(ingrName){
+  // 성분명(영문/한글 모두 가능) 조회
+  return 'https://nedrug.mfds.go.kr/searchDrug?searchYn=true&itemIngrName=' + encodeURIComponent((ingrName || '').trim());
+}
+
+function openModal(entry){
+  const p = entry.p, sec = entry.sec;
+  const code = (p.cd||'').trim();
+  const src = imageUrlByCode(p);
+  const prodUrl = getMfdsProductUrl(p.nm);
+  const ingrUrl = getMfdsIngrUrl(sec.n);
+  const gUrl = 'https://www.google.com/search?q=' + encodeURIComponent(cleanProductName(p.nm) + ' 효능효과');
+
+  mTitle.textContent = p.nm;
+
+  let html = '';
+  if(src){
+    html += '<img class="modal-img" src="'+escAttr(src)+'" alt="'+escAttr(p.nm)+'" data-code="'+escAttr(code)+'" data-img-try="0" onerror="handleImageError(this)">';
+  }
+  html += '<div class="m-row"><span class="k">성분</span><span class="v">'+esc(sec.n)+(p.ig?' · '+esc(p.ig):'')+'</span></div>';
+  html += '<div class="m-row"><span class="k">약효분류</span><span class="v">'+esc(sec.c)+'</span></div>';
+  if(p.sp) html += '<div class="m-row"><span class="k">규격</span><span class="v">'+esc(p.sp)+'</span></div>';
+  if(p.pr) html += '<div class="m-row"><span class="k">가격</span><span class="v price">'+esc(p.pr)+' 원</span></div>';
+  if(p.mk) html += '<div class="m-row"><span class="k">제약사</span><span class="v">'+esc(p.mk)+'</span></div>';
+  if(code) html += '<div class="m-row"><span class="k">보험코드</span><span class="v">'+esc(code)+'</span></div>';
+  if(p.nt) html += '<div class="m-row"><span class="k">비고</span><span class="v">'+esc(p.nt)+'</span></div>';
+
+  html += '<div class="m-info-box">' +
+    '<div class="m-info-t">효능·효과 실시간 조회</div>' +
+    '<div class="m-info-d">최신 정확한 허가사항(효능·효과, 용법·용량, 주의사항 등)은 식품의약품안전처 의약품안전나라에서 확인하실 수 있습니다.</div>' +
+  '</div>';
+
+  html += '<div class="m-links">'+
+    '<a href="'+escAttr(prodUrl)+'" target="_blank" rel="noopener noreferrer">🔍 식약처 허가사항 조회</a>'+
+    '<a class="ghost" href="'+escAttr(gUrl)+'" target="_blank" rel="noopener noreferrer">웹 검색</a>'+
+  '</div>';
+
+  html += '<div class="m-note">※ 게시된 정보는 참고용이며, 실제 처방·조제 시에는 최신 허가사항을 확인하시기 바랍니다.</div>';
+
+  mBody.innerHTML = html;
+  modalBg.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  modalBg.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// 제품 클릭 → 팝업 (이벤트 위임)
+list.addEventListener('click', e => {
+  const el = e.target.closest('.prod');
+  if(!el) return;
+  const entry = PROD_REG[parseInt(el.dataset.pid,10)];
+  if(entry) openModal(entry);
+});
 // search debounce
 let t;
 q.addEventListener('input', ()=>{clearTimeout(t); t=setTimeout(render,120);});
@@ -377,6 +937,24 @@ window.addEventListener('scroll', ()=>{ topBtn.classList.toggle('show', window.s
 topBtn.onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
 
 render();
+
+// 첫 방문 시 전문가용 안내 (한 번 확인하면 다시 안 뜸)
+(function(){
+  const noticeBg = document.getElementById('noticeBg');
+  const noticeAck = document.getElementById('noticeAck');
+  const KEY = 'jj_notice_ack_v1';
+  try {
+    if(!localStorage.getItem(KEY)){
+      noticeBg.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+  } catch(e){ /* 시크릿모드 등 localStorage 불가 시 그냥 안 띄움 */ }
+  noticeAck.onclick = () => {
+    try { localStorage.setItem(KEY, '1'); } catch(e){}
+    noticeBg.classList.remove('show');
+    if(!modalBg.classList.contains('show')) document.body.style.overflow = '';
+  };
+})();
 </script>
 </body>
 </html>
