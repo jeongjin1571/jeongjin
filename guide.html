@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원내 주문 용어 가이드 · 정진약품</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root {
+  --primary: #0F6E56;
+  --primary-mid: #1D9E75;
+  --dark: #04342C;
+  --light: #E1F5EE;
+  --lighter: #F4FBF8;
+  --accent: #9FE1CB;
+  --text: #212121;
+  --text-secondary: #4A4A48;
+  --text-muted: #7A7A75;
+  --border: #E5E4DE;
+  --border-strong: #D3D1C7;
+  --white: #FFFFFF;
+  --offwhite: #FAFAF7;
+  --warn-bg: #FEF6E4;
+  --warn-border: #EFB94A;
+  --warn-text: #7A4B00;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; overflow-x: hidden; }
+body {
+  margin: 0;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif;
+  background: var(--offwhite);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  max-width: 1240px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 32px 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  font-size: 14px;
+}
+.sidebar-brand {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-brand-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.sidebar-brand-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.3;
+}
+.sidebar-brand-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.sidebar-heading {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin: 20px 0 10px;
+  text-transform: uppercase;
+}
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav li {
+  margin: 2px 0;
+}
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.nav a:hover {
+  background: var(--lighter);
+  color: var(--primary);
+}
+.nav a.active {
+  background: var(--light);
+  color: var(--dark);
+  font-weight: 500;
+}
+.nav-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--lighter);
+  color: var(--primary);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.nav a.active .nav-num {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Main content */
+.main {
+  padding: 48px 56px 80px;
+  max-width: 900px;
+  min-width: 0;
+}
+
+/* Page actions */
+.page-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.page-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  background: var(--white);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 0;
+  transition: all 0.15s;
+}
+.page-action:hover {
+  border-color: var(--primary-mid);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.page-action.primary {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--white);
+}
+.page-action.primary:hover {
+  background: var(--dark);
+  color: var(--white);
+}
+
+/* Cover */
+.cover {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 56px 48px;
+  border-radius: 16px;
+  margin-bottom: 56px;
+}
+.cover-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+.cover h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+.cover-sub {
+  font-size: 16px;
+  color: var(--accent);
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+.cover-note {
+  font-size: 13px;
+  color: var(--light);
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  line-height: 1.6;
+}
+
+/* Quick lookup */
+.quick-lookup {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 48px;
+}
+.quick-lookup h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 0 0 6px;
+}
+.quick-lookup-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+.lookup-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.lookup-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--offwhite);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.lookup-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.lookup-table tr:last-child td { border-bottom: none; }
+.lookup-table a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+.lookup-table a:hover { text-decoration: underline; }
+.lookup-term {
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Section */
+.section {
+  margin-bottom: 56px;
+  scroll-margin-top: 24px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--light);
+}
+.section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0;
+  line-height: 1.3;
+}
+.section h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 32px 0 12px;
+}
+.section h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 20px 0 8px;
+}
+.section p {
+  margin: 0 0 14px;
+  color: var(--text-secondary);
+}
+.section p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.section ul {
+  margin: 0 0 16px;
+  padding-left: 0;
+  list-style: none;
+}
+.section ul li {
+  position: relative;
+  padding: 6px 0 6px 22px;
+  color: var(--text-secondary);
+}
+.section ul li::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 15px;
+  width: 6px;
+  height: 6px;
+  background: var(--primary-mid);
+  border-radius: 50%;
+}
+
+/* Callout box */
+.callout {
+  background: var(--lighter);
+  border-left: 4px solid var(--primary);
+  padding: 16px 20px;
+  border-radius: 4px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.callout strong { color: var(--dark); }
+
+.callout-warn {
+  background: var(--warn-bg);
+  border-left-color: var(--warn-border);
+  color: var(--warn-text);
+}
+.callout-warn strong { color: var(--warn-text); }
+
+/* Info grid (2 columns) */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.info-card {
+  background: var(--lighter);
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.info-card-label {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.info-card-value {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Data table (IV vs IM etc.) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.data-table th {
+  background: var(--primary);
+  color: var(--white);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 13px;
+}
+.data-table th:first-child { background: var(--dark); }
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-secondary);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr td:first-child {
+  font-weight: 500;
+  color: var(--text);
+  background: var(--offwhite);
+  width: 22%;
+}
+
+/* Level indicator (vitamin D 등급) */
+.level-bar {
+  display: flex;
+  gap: 4px;
+  margin: 16px 0;
+}
+.level-bar > div {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 12px;
+}
+.level-1 { background: #FDECEA; color: #8B2119; }
+.level-2 { background: #FEF6E4; color: #7A4B00; }
+.level-3 { background: var(--light); color: var(--dark); }
+.level-bar div .lvl-name { font-weight: 600; margin-bottom: 2px; }
+.level-bar div .lvl-range { font-size: 11px; opacity: 0.8; }
+
+/* Back to top */
+.back-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--dark);
+  color: var(--white);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(4, 52, 44, 0.25);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 100;
+}
+.back-top.visible { opacity: 1; }
+
+/* Footer */
+.footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.footer-brand {
+  color: var(--primary);
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); width: 100%; min-width: 0; }
+  .sidebar { display: none; }
+  .main { width: 100%; max-width: 100%; min-width: 0; padding: 24px 24px 60px; margin: 0 auto; }
+  .page-actions { justify-content: space-between; }
+  .cover { padding: 40px 28px; }
+  .cover h1 { font-size: 28px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .level-bar { flex-direction: column; }
+}
+
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .main { padding: 16px 14px 48px; }
+  .page-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; overflow: hidden; }
+  .page-action { width: 100%; padding: 8px 4px; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cover { width: 100%; max-width: 100%; overflow: hidden; padding: 34px 24px; border-radius: 14px; margin-bottom: 32px; }
+  .cover-label { letter-spacing: 1.6px; }
+  .quick-lookup { width: 100%; max-width: 100%; min-width: 0; padding: 22px 18px; overflow-x: auto; }
+  .lookup-table { min-width: 520px; }
+  .section { width: 100%; max-width: 100%; overflow: hidden; padding: 24px 20px; }
+  .data-table { display: block; width: 100%; max-width: 100%; overflow-x: auto; }
+  .section-header { align-items: flex-start; }
+}
+
+/* Print */
+@media print {
+  body { background: white; font-size: 11pt; }
+  .sidebar, .back-top, .page-actions { display: none; }
+  .layout { display: block; max-width: 100%; }
+  .main { padding: 0; max-width: 100%; }
+  .cover {
+    background: var(--dark) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    page-break-after: always;
+  }
+  .quick-lookup { page-break-after: always; }
+  .section { page-break-inside: avoid; page-break-before: auto; }
+  .section-header { break-after: avoid; }
+  a { color: var(--text); text-decoration: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-label">JEONGJIN PHARMA</div>
+      <div class="sidebar-brand-title">원내 주문 용어 가이드</div>
+      <div class="sidebar-brand-sub">수액 · 주사 경로 · 영양주사</div>
+    </div>
+
+    <div class="sidebar-heading">빠른 이동</div>
+    <ul class="nav">
+      <li><a href="#lookup"><span class="nav-num">★</span>빠른 찾아보기</a></li>
+    </ul>
+
+    <div class="sidebar-heading">기본 용어</div>
+    <ul class="nav">
+      <li><a href="#s01"><span class="nav-num">01</span>생리식염수 (NS)</a></li>
+      <li><a href="#s02"><span class="nav-num">02</span>주사 경로 IV·IM</a></li>
+      <li><a href="#s03"><span class="nav-num">03</span>아미노산 수액</a></li>
+      <li><a href="#s04"><span class="nav-num">04</span>포도당 수액 (DW)</a></li>
+    </ul>
+
+    <div class="sidebar-heading">영양·TPN</div>
+    <ul class="nav">
+      <li><a href="#s05"><span class="nav-num">05</span>정맥영양요법 (IVNT)</a></li>
+      <li><a href="#s06"><span class="nav-num">06</span>3챔버 수액 (TPN)</a></li>
+      <li><a href="#s07"><span class="nav-num">07</span>싸이모신 알파 1</a></li>
+    </ul>
+
+    <div class="sidebar-heading">비타민 주사</div>
+    <ul class="nav">
+      <li><a href="#s08"><span class="nav-num">08</span>비타민 D 주사</a></li>
+      <li><a href="#s09"><span class="nav-num">09</span>비타민 C 주사</a></li>
+      <li><a href="#s10"><span class="nav-num">10</span>비타민 B 주사</a></li>
+    </ul>
+
+    <div class="sidebar-heading">미용·에스테틱 주사</div>
+    <ul class="nav">
+      <li><a href="#s11"><span class="nav-num">11</span>백옥주사 (글루타치온)</a></li>
+      <li><a href="#s12"><span class="nav-num">12</span>신데렐라주사 (치옥트산)</a></li>
+      <li><a href="#s13"><span class="nav-num">13</span>태반주사</a></li>
+      <li><a href="#s14"><span class="nav-num">14</span>마늘주사 (푸르설티아민)</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <div class="page-actions" aria-label="페이지 바로가기">
+      <a class="page-action" href="./">← 주사제 품목 리스트</a>
+      <a class="page-action primary" href="./inhouse-order-terms-guide.pdf" download>PDF 내려받기</a>
+    </div>
+
+    <!-- Cover -->
+    <div class="cover">
+      <div class="cover-label">JEONGJIN PHARMA · 원내 실무자를 위한 빠른 안내서</div>
+      <h1>원내 주문 용어 가이드</h1>
+      <p class="cover-sub">수액 · 주사 투여 경로 · 영양주사 핵심 정리</p>
+      <p class="cover-note">
+        업무 중 자주 접하는 약어와 통칭을 정리한 참고 자료입니다.<br>
+        실제 처방·투여 경로·용량·급여 여부는 환자 상태와 최신 기준에 따라 의료진이 판단합니다.
+      </p>
+    </div>
+
+    <!-- Quick lookup table -->
+    <div class="quick-lookup" id="lookup">
+      <h2>빠른 찾아보기</h2>
+      <p class="quick-lookup-sub">약어·통칭을 클릭하면 해당 주제로 바로 이동합니다.</p>
+      <table class="lookup-table">
+        <thead>
+          <tr><th style="width: 45%">찾는 용어</th><th>수록 주제</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="lookup-term">NS · Normal Saline</td><td><a href="#s01">01 생리식염수</a></td></tr>
+          <tr><td class="lookup-term">IV · IM</td><td><a href="#s02">02 주사 투여 경로</a></td></tr>
+          <tr><td class="lookup-term">아미노산 · TPN</td><td><a href="#s03">03 아미노산 수액</a></td></tr>
+          <tr><td class="lookup-term">DW · 5DW · 10DW</td><td><a href="#s04">04 포도당 수액</a></td></tr>
+          <tr><td class="lookup-term">IVNT</td><td><a href="#s05">05 정맥영양주사요법</a></td></tr>
+          <tr><td class="lookup-term">3-Chamber · 3챔버</td><td><a href="#s06">06 3챔버 영양수액</a></td></tr>
+          <tr><td class="lookup-term">Thymosin Alpha 1 · 자닥신</td><td><a href="#s07">07 싸이모신 알파 1</a></td></tr>
+          <tr><td class="lookup-term">비타민 D</td><td><a href="#s08">08 비타민 D 주사</a></td></tr>
+          <tr><td class="lookup-term">비타민 C</td><td><a href="#s09">09 비타민 C 주사</a></td></tr>
+          <tr><td class="lookup-term">비타민 B</td><td><a href="#s10">10 비타민 B 주사</a></td></tr>
+          <tr><td class="lookup-term">글루타치온 · 백옥주사</td><td><a href="#s11">11 백옥주사</a></td></tr>
+          <tr><td class="lookup-term">치옥트산 · 알파리포산</td><td><a href="#s12">12 신데렐라주사</a></td></tr>
+          <tr><td class="lookup-term">Placenta · 라이넥 · 멜스몬</td><td><a href="#s13">13 태반주사</a></td></tr>
+          <tr><td class="lookup-term">푸르설티아민 · 마늘주사</td><td><a href="#s14">14 마늘주사</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 01 NS -->
+    <section class="section" id="s01">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">생리식염수 (NS)</h2>
+      </div>
+      <p><strong>NS</strong>는 Normal Saline(0.9% 생리식염수)를 뜻하며, 우리 몸의 체액과 염분 농도가 같아 주입해도 세포 변형을 일으키지 않는 가장 기본적인 수액입니다.</p>
+
+      <h3>NS 100ml — 주사제 섞는 용도</h3>
+      <p>100ml 짜리 작은 수액은 환자에게 수분을 대량 공급하는 목적이 아닙니다.</p>
+      <ul>
+        <li><strong>물 희석 및 투여</strong> — 항생제·소화제·진통제 등 정맥주사(IV)로 천천히 주입할 약물을 섞는 '매개체' 역할</li>
+        <li><strong>투여 시간</strong> — 약물 종류에 따라 다르지만 보통 15~30분 이내로 빠르게 투여</li>
+        <li><strong>수분 제한 환자</strong> — 심장·신장 기능이 떨어져 잘 붓는 환자에게 최소한의 수액에만 약을 섞어 투여</li>
+      </ul>
+
+      <h3>NS 200ml~250ml — 소량 수분 보충 + 약물 투여</h3>
+      <p>100ml보다 용량이 2배 이상 많아 목적이 확장됩니다.</p>
+      <ul>
+        <li><strong>완만한 약물 투여</strong> — 자극성이 강하거나 속도 조절이 필요한 약물(일부 항암제, 전해질 교정제 등)을 1시간 이상 천천히 투여</li>
+        <li><strong>가벼운 탈수 교정</strong> — 금식 중이거나 약간의 탈수가 있으나 대량 수액이 부담스러울 때 기초 수분·염분 공급</li>
+      </ul>
+
+      <div class="callout">
+        <strong>한 줄 요약</strong><br>
+        NS 100ml — "주사약 섞어서 빨리 맞고 끝내는 용도"<br>
+        NS 200/250ml — "약을 안전하게 천천히 주거나, 약간의 수분을 함께 보충"
+      </div>
+
+      <h3>급여 여부</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-label">NS 100ml</div>
+          <div class="info-card-value">급여</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">NS 200~250ml</div>
+          <div class="info-card-value">비급여</div>
+        </div>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted);">※ 환자의 나이·체중·심장·신장 기능, 그리고 무엇보다 '어떤 주사약을 섞을 것인가'에 따라 의사가 용량을 결정합니다.</p>
+    </section>
+
+    <!-- 02 IV IM -->
+    <section class="section" id="s02">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">주사 투여 경로 · IV와 IM</h2>
+      </div>
+      <p>흔히 사용하는 IV와 IM은 주사를 놓는 부위와 방법(투여 경로)을 뜻하는 의학 용어입니다. 가장 큰 차이는 <strong>약물이 들어가는 속도와 위치</strong>입니다.</p>
+
+      <h3>IV (Intravenous Injection) · 정맥 주사</h3>
+      <ul>
+        <li><strong>의미</strong> — 정맥(핏줄)에 바늘을 찔러 약물을 혈관 속으로 직접 주입</li>
+        <li><strong>특징</strong> — 약물이 혈액을 타고 온몸으로 바로 퍼져 효과가 가장 빠름</li>
+        <li><strong>용도</strong> — 응급 상황의 빠른 효과, 지속적 수액·다량 약물 투여, 수혈</li>
+        <li><strong>예시</strong> — 손등이나 팔에 맞는 링거, 응급실 진통제 주사</li>
+      </ul>
+
+      <h3>IM (Intramuscular Injection) · 근육 주사</h3>
+      <ul>
+        <li><strong>의미</strong> — 피부 아래 깊은 근육 조직(엉덩이·팔뚝)에 약물을 주입</li>
+        <li><strong>특징</strong> — 혈관이 풍부해 비교적 빠르게 흡수되지만 IV보다는 느리고 지속적. 주입 시 근육이 뻐근할 수 있음</li>
+        <li><strong>용도</strong> — 약물의 양이 적고 IV 시 부작용 위험이 있는 약물, 몸속에서 서서히 오래 흡수되어야 할 때</li>
+        <li><strong>예시</strong> — 엉덩이 진통제·소염제 주사, 독감 예방접종(어깨 삼각근)</li>
+      </ul>
+
+      <h3>한눈에 비교하기</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>구분</th><th>IV · 정맥 주사</th><th>IM · 근육 주사</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>주사 부위</td><td>팔꿈치 안쪽, 손등, 발등의 정맥</td><td>엉덩이(둔부) 또는 위팔(삼각근)</td></tr>
+          <tr><td>흡수 속도</td><td>가장 빠름 (주입 즉시 효과)</td><td>빠름 (정맥보다는 느림)</td></tr>
+          <tr><td>투여 양</td><td>대용량 가능 (수액 등)</td><td>소량만 가능 (보통 1~5cc 이내)</td></tr>
+          <tr><td>주사 후 관리</td><td>멍이 들지 않게 문지르지 말고 꾹 눌러줌</td><td>약물이 잘 퍼지도록 문질러 주는 것이 좋음</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 03 아미노산 -->
+    <section class="section" id="s03">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">아미노산 수액</h2>
+      </div>
+      <p>병원에서 처방·투여하는 아미노산은 주로 수액(정맥주사) 형태로 공급됩니다. 환자의 상태·투여 목적·질환에 따라 아미노산 수액의 종류와 성분 배합이 완전히 달라집니다.</p>
+
+      <h3>1. 영양 공급용 기본 아미노산 수액</h3>
+      <p>스스로 음식 섭취가 어렵거나 수술 전후로 영양 보충이 필요한 환자에게 사용하는 가장 일반적인 수액입니다.</p>
+      <ul>
+        <li><strong>성분 구성</strong> — 체내에서 합성되지 않는 필수 아미노산 8종을 중심으로 비필수 아미노산이 골고루 포함</li>
+        <li><strong>주요 목적</strong> — 신체 조직 회복, 단백질 합성 유도, 영양 불량 상태 개선</li>
+        <li><strong>단독 아미노산 주사</strong> — 영양 결핍 환자에게 아미노산만 공급</li>
+        <li><strong>TPN(총정맥영양) 수액</strong> — 하나의 팩에 [아미노산 + 포도당 + 지질 + 비타민/전해질]이 모두 담긴 3-Chamber(3구획) 종합 영양 수액</li>
+      </ul>
+
+      <h3>2. 특정 질환 치료용 특수 아미노산</h3>
+      <p>특정 장기의 기능이 떨어진 환자에게 일반 아미노산을 고용량으로 투여하면 오히려 독이 될 수 있어, 특정 질환 전용으로 배합된 특수 수액을 사용합니다.</p>
+
+      <h4>① 간 질환 전용 (간부전·간경변)</h4>
+      <ul>
+        <li><strong>특징</strong> — 간 기능이 떨어지면 체내 암모니아가 쌓여 간성혼수가 올 수 있음. 이를 막기 위해 BCAA(분지쇄 아미노산: 로이신·이소로이신·발린)의 함량을 높이고, 간에 부담을 주는 아미노산(메티오닌·페닐알라닌 등)은 줄인 배합을 사용</li>
+        <li><strong>효과</strong> — 간성 뇌증(혼수)의 예방·치료, 간 대사 개선</li>
+      </ul>
+
+      <h4>② 신장(콩팥) 질환 전용 (신부전 환자)</h4>
+      <ul>
+        <li><strong>특징</strong> — 신장 기능이 망가지면 단백질 대사 노폐물(요소 질소)을 배출하지 못함. 따라서 노폐물 발생을 최소화하기 위해 필수 아미노산 위주로만 구성하거나 투석 환자 특성에 맞춘 비율로 조절</li>
+      </ul>
+
+      <h3>3. 기능의학·미용·피로 회복용 (외래 처방)</h3>
+      <p>'영양 주사'나 '태반 주사' 등으로 불리며, 외래 환자가 피로 회복이나 면역력 증진을 위해 맞습니다.</p>
+      <ul>
+        <li><strong>글루타치온(Glutathione) 주사</strong> — 글루타메이트·시스테인·글리신 3가지 아미노산 결합체. 강력한 항산화, 간 해독, 피부 미백(백옥주사) 목적</li>
+        <li><strong>아르기닌(Arginine) 주사</strong> — 혈관 확장 물질(NO) 생성으로 혈액 순환·피로 물질 배출·체지방 분해 대사 촉진</li>
+        <li><strong>마늘주사·태반주사 등</strong> — 아미노산과 비타민 B군·미네랄을 배합해 만성 피로 환자의 활력 충전용</li>
+      </ul>
+
+      <div class="callout">
+        <strong>병원 아미노산 처방의 핵심</strong><br>
+        입원 환자 — '단백질 소모 방지와 장기 기능 유지'가 목적<br>
+        외래 환자 — '대사 촉진과 피로 물질 해독'에 초점
+      </div>
+    </section>
+
+    <!-- 04 DW -->
+    <section class="section" id="s04">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">포도당 수액 (DW)</h2>
+      </div>
+      <p>병원에서 <strong>DW</strong>는 <strong>Dextrose in Water(포도당 수액)</strong>를 의미합니다. 앞에 숫자가 붙어 농도를 나타내는 경우가 많습니다.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-label">5% DW (5DW)</div>
+          <div class="info-card-value">5% 포도당 수액</div>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 0;">가장 일반적. 탈수 예방이나 약물을 섞어 주사할 때(믹스용) 기본 수액으로 사용</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">10% DW (10DW)</div>
+          <div class="info-card-value">10% 포도당 수액</div>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 0;">당뇨 저혈당 쇼크 환자에게 급하게 당을 올리거나, 고칼륨혈증 치료 등 특수 목적</p>
+        </div>
+      </div>
+
+      <p>수분 공급과 함께 <strong>칼로리(에너지)를 공급</strong>하는 역할을 합니다.</p>
+    </section>
+
+    <!-- 05 IVNT -->
+    <section class="section" id="s05">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">정맥영양주사요법 (IVNT)</h2>
+      </div>
+      <p><strong>IVNT</strong>는 Intravenous Nutrient Therapy의 약자로, 우리말로 '정맥 영양 주사 요법'이라고 합니다. 몸에 필요한 비타민·미네랄·항산화제·아미노산 등의 영양소를 먹는 약 대신 정맥주사(링거)를 통해 혈관으로 직접 투여하는 치료입니다.</p>
+
+      <h3>왜 먹지 않고 주사로 맞나?</h3>
+      <p>영양제를 입으로 먹으면 위장관을 거쳐 소화·흡수되는 과정에서 상당량이 손실되고 시간이 걸립니다. 반면 IVNT는 혈관으로 세포에 직접 공급하기 때문에 <strong>흡수율이 100%에 가깝고 효과가 빠르게</strong> 나타납니다.</p>
+
+      <h3>주요 대상</h3>
+      <ul>
+        <li><strong>만성 피로</strong> — 아무리 쉬어도 피로가 풀리지 않고 기력이 없을 때</li>
+        <li><strong>면역력 저하</strong> — 감기에 자주 걸리거나 대상포진 등 면역 질환 예방·회복</li>
+        <li><strong>피부 개선·노화 방지</strong> — 피부 탄력, 미백, 항산화 효과가 필요할 때</li>
+        <li><strong>영양 불균형</strong> — 수술 후 또는 위장 기능 저하로 음식·알약 섭취가 어려울 때</li>
+        <li><strong>숙취 해소·디톡스</strong> — 빠른 체내 독소 배출과 수분 공급이 필요할 때</li>
+      </ul>
+
+      <h3>대표적인 IVNT 주사 종류</h3>
+      <ul>
+        <li><strong>마이어스 칵테일</strong> — IVNT의 시초. 비타민 C·B군·마그네슘 등을 섞어 만성 피로·근육통에 효과</li>
+        <li><strong>신데렐라 주사(치옥트산)</strong> — 강력한 항산화 작용, 체지방 감소·피부 노화 방지</li>
+        <li><strong>백옥 주사(글루타치온)</strong> — 간 해독을 돕고 멜라닌 색소 억제로 피부 톤 개선</li>
+        <li><strong>마늘 주사(푸르설티아민)</strong> — 비타민 B1으로 젖산을 분해해 빠른 피로 회복. 주사 시 마늘 냄새가 나서 붙은 이름</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <strong>참고</strong><br>
+        IVNT는 개인의 건강 상태나 혈액 검사 결과에 따라 필요한 성분을 조합하여 맞춤형으로 진행되는 경우가 많습니다. 지병(신장·심장 질환 등)이 있거나 특이 체질이라면 반드시 의사와 충분히 상담 후 본인에게 맞는 성분·용량으로 안전하게 진행해야 합니다.
+      </div>
+    </section>
+
+    <!-- 06 3챔버 TPN -->
+    <section class="section" id="s06">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-title">3챔버 영양수액 (TPN)</h2>
+      </div>
+      <p>병원에서 사용하는 <strong>3챔버스(3-Chamber)</strong>는 환자에게 수분과 영양을 공급하기 위해 사용하는 3구획 영양 수액(총정맥영양, TPN)입니다. 하나의 수액 백(Bag)이 세 개의 방(Chamber)으로 나뉘어 있어 핵심 영양소가 따로 분리되어 담겨 있는 것이 특징입니다.</p>
+
+      <h3>왜 3개로 나눠 놓았을까?</h3>
+      <p>가장 큰 이유는 <strong>'보관 안정성'</strong> 때문입니다. 포도당·아미노산·지방 유제를 미리 섞어놓으면 시간이 지나면서 침전물이 생기거나 성분이 변질될 위험이 큽니다. 따라서 평소에는 분리해 두었다가, 환자에게 투여하기 직전에 구획 사이 개방선을 터뜨려 주입선 안에서 혼합되도록 설계되어 있습니다.</p>
+
+      <h3>주요 구성 성분</h3>
+      <div class="info-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="info-card">
+          <div class="info-card-label">첫 번째 방</div>
+          <div class="info-card-value">포도당</div>
+          <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0;">에너지 공급</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">두 번째 방</div>
+          <div class="info-card-value">아미노산 · 전해질</div>
+          <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0;">단백질 합성 · 신체 기능 유지</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">세 번째 방</div>
+          <div class="info-card-value">지방 유제</div>
+          <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0;">고농도 에너지 · 필수 지방산</p>
+        </div>
+      </div>
+
+      <h3>주요 특징 및 장점</h3>
+      <ul>
+        <li><strong>감염 위험 감소</strong> — 밀폐 상태로 바로 터뜨려 쓰기 때문에 원내 감염 위험이 획기적으로 감소</li>
+        <li><strong>편의성</strong> — 의료진이 간편하고 빠르게 균형 잡힌 영양 수액을 준비 가능</li>
+        <li><strong>맞춤형 투여</strong> — 환자 상태(중심정맥용·말초정맥용)에 따라 농도가 다르게 출시</li>
+      </ul>
+    </section>
+
+    <!-- 07 싸이모신 알파 1 -->
+    <section class="section" id="s07">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title">싸이모신 알파 1 주사</h2>
+      </div>
+      <p><strong>싸이모신 알파 1(Thymosin Alpha 1)</strong>은 면역 기능이 저하된 환자의 면역력 회복 및 항암 보조 요법으로 널리 사용되는 주사제입니다. 대표적인 오리지널 제품으로 <strong>자닥신(Zadaxin)</strong>이 있으며, 여러 제약사에서 제네릭이 출시되어 있습니다.</p>
+
+      <h3>주요 효능·효과</h3>
+      <ul>
+        <li><strong>면역 조절 작용</strong> — T세포, NK세포(자연살해세포) 등 면역계 거대세포를 활성화하여 저하된 면역 기능 강화</li>
+        <li><strong>항암 치료 보조</strong> — 화학요법(항암제)·방사선 치료 시 면역 결핍 개선 및 치료 부작용 경감 목적으로 병용 투여</li>
+        <li><strong>바이러스성 질환 보조</strong> — 만성 B형·C형 간염 치료의 보조제로 사용</li>
+      </ul>
+
+      <h3>작용 기전</h3>
+      <p>우리 몸의 면역 기관인 <strong>흉선(Thymus)</strong>에서 분비되는 면역 조절 물질을 인공적으로 합성한 물질입니다. 체내에 본래 존재하는 성분이므로 인위적인 면역 과다 자극 없이, 저하된 면역 밸런스를 정상화하는 유기적인 역할을 합니다.</p>
+
+      <h3>용법 및 용량</h3>
+      <ul>
+        <li><strong>투여 방법</strong> — 주로 피하 주사(SC)로 투여</li>
+        <li><strong>투여 주기</strong> — 환자의 상태·치료 목적에 따라 주 2~3회 등 처방이 달라지며, 전문의의 진단에 따라 결정</li>
+      </ul>
+
+      <h3>주요 장점 및 부작용</h3>
+      <ul>
+        <li><strong>높은 안전성</strong> — 체내 성분과 유사하여 오심·구토·탈모 같은 전신적 부작용이 거의 없음</li>
+        <li><strong>부작용</strong> — 주사 부위의 일시적인 발적·통증·부종 등이 나타날 수 있으나 대개 자연스럽게 소실</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <strong>주의사항</strong><br>
+        면역증강제이므로 자가면역질환 환자나 장기 이식 후 면역억제제를 복용 중인 환자는 투여 시 주의가 필요하며, 반드시 담당 의사와 상의해야 합니다.
+      </div>
+    </section>
+
+    <!-- 08 비타민 D -->
+    <section class="section" id="s08">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2 class="section-title">비타민 D 주사</h2>
+      </div>
+      <p>현대인들에게 가장 흔한 결핍 영양소 중 하나인 비타민 D를 고용량으로 한 번에 체내에 보충해 주는 주사 치료입니다. 주로 <strong>엉덩이 근육 주사(IM)</strong> 형태로 투여됩니다.</p>
+
+      <h3>주요 특징 및 장점</h3>
+      <ul>
+        <li><strong>성분·용량</strong> — 대부분 비타민 D3(콜레칼시페롤) 성분이며, 보통 10만 IU~30만 IU 사이의 고용량</li>
+        <li><strong>지속 기간</strong> — 한 번 맞으면 체내 지방 조직에 저장되어 약 <strong>3개월(2~4개월)</strong> 동안 서서히 방출되며 혈중 농도를 유지</li>
+        <li><strong>편의성</strong> — 매일 챙겨 먹기 번거롭거나 알약 삼키기 힘든 분, 위장 장애로 경구 흡수율이 떨어지는 분에게 효과적</li>
+      </ul>
+
+      <h3>권장 대상</h3>
+      <ul>
+        <li>혈액 검사에서 비타민 D 결핍(20 ng/mL 미만) 또는 심한 결핍(10 ng/mL 미만)으로 나온 분</li>
+        <li>골다공증 예방·치료가 필요한 중장년층 및 갱년기 여성</li>
+        <li>실내 활동이 많아 햇빛 받을 기회가 거의 없는 직장인·학생</li>
+        <li>면역력이 쉽게 떨어지거나 만성 피로감을 느끼는 분</li>
+      </ul>
+
+      <h3>혈중 비타민 D 수치 등급</h3>
+      <div class="level-bar">
+        <div class="level-1">
+          <div class="lvl-name">1단계 · 결핍</div>
+          <div class="lvl-range">0~20 ng/mL 미만</div>
+        </div>
+        <div class="level-2">
+          <div class="lvl-name">2단계 · 부족</div>
+          <div class="lvl-range">20~30 ng/mL 미만</div>
+        </div>
+        <div class="level-3">
+          <div class="lvl-name">3단계 · 충분</div>
+          <div class="lvl-range">30~100 ng/mL 이상</div>
+        </div>
+      </div>
+
+      <h3>주의사항 및 부작용</h3>
+      <ul>
+        <li><strong>과다 투여 주의</strong> — 비타민 D는 지용성이라 몸에 축적됨. 과다 투여 시 고칼슘혈증(구토·설사·신장 결석) 발생 가능</li>
+        <li><strong>사전 검사 필수</strong> — 반드시 혈액 검사로 현재 혈중 비타민 D 수치를 확인하고 의사 진단에 따라 주기·용량 결정</li>
+      </ul>
+    </section>
+
+    <!-- 09 비타민 C -->
+    <section class="section" id="s09">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2 class="section-title">비타민 C 주사</h2>
+      </div>
+      <p><strong>비타민 C 주사(고용량 비타민 C 정맥 주사, IVNT)</strong>는 구강 섭취 대비 혈중 농도를 빠르게 높일 수 있어 피로 회복이나 면역력 강화 목적으로 자주 활용되는 영양 주사요법입니다.</p>
+
+      <h3>주요 기대 효과</h3>
+      <ul>
+        <li><strong>강력한 항산화·피로 회복</strong> — 만성 피로를 유발하는 활성산소를 제거하고 에너지 대사를 도와 지친 몸을 빠르게 회복</li>
+        <li><strong>면역 기능 강화</strong> — 면역 세포(백혈구 등)의 활성을 도와 감기 예방·면역력 저하 개선</li>
+        <li><strong>피부 개선·콜라겐 합성</strong> — 멜라닌 색소 생성을 억제해 잡티·기미 완화, 콜라겐 합성 촉진으로 피부 탄력 개선</li>
+      </ul>
+
+      <h3>고용량 주사 시 반드시 알아야 할 점</h3>
+      <p>비타민 C는 수용성이라 대개 안전하게 배출되지만, 주사(정맥 투여)로 고용량을 맞을 때는 다음을 주의해야 합니다.</p>
+      <ul>
+        <li><strong>혈관통(통증)</strong> — 고농도 수액이 들어갈 때 혈관 삼투압 차이나 pH 때문에 찌릿하거나 뻐근한 통증 발생 가능. 투여 속도 조절로 대부분 완화</li>
+        <li><strong>수분 섭취 필수</strong> — 이뇨 작용 자극. 주사 전후로 물을 충분히 마셔 탈수·어지러움 예방</li>
+        <li><strong>G6PD 결핍증 확인</strong> — 유전 질환인 'G6PD 결핍증' 환자가 고용량 비타민 C를 맞으면 급성 용혈성 빈혈 같은 심각한 부작용 가능. 사전 확인 필수</li>
+        <li><strong>신장 결석 내력</strong> — 비타민 C 대사 과정에서 수산(Oxalate) 생성. 신장 결석 병력이 있는 분은 용량 설정 시 의료진과 상의 필수</li>
+      </ul>
+
+      <div class="callout">
+        <strong>요약</strong><br>
+        피로도가 높거나 면역력이 떨어졌을 때 빠른 컨디션 회복을 돕는 유용한 요법. 다만 개인의 신장 기능·체질에 따라 적정 용량·속도를 맞춰야 하므로 반드시 전문 의료진의 진료·처방을 통해 진행해야 합니다.
+      </div>
+    </section>
+
+    <!-- 10 비타민 B -->
+    <section class="section" id="s10">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2 class="section-title">비타민 B 주사</h2>
+      </div>
+      <p><strong>비타민 B 주사(마늘주사·활력주사)</strong>는 피로 회복과 체력 증진을 위해 병의원에서 자주 찾는 대표적인 정맥주사(IV) 요법입니다. 주로 비타민 B1(티아민)·B6(피리독신)·B12(코발라민) 등 세포 대사와 신경 기능에 필수적인 성분들이 고용량으로 포함되어 있습니다.</p>
+
+      <h3>주요 성분 및 기대 효과</h3>
+      <ul>
+        <li><strong>비타민 B1(티아민·활성형)</strong> — 탄수화물을 에너지로 전환. 체내 젖산 등 피로 물질이 쌓이는 것을 막아 육체 피로·근육통·관절통 완화 (주사 시 특유의 마늘 냄새로 마늘주사라는 별명)</li>
+        <li><strong>비타민 B6 & B12</strong> — 신경 세포 보호와 적혈구 생성을 도와 신경통·손발 저림·만성 무기력증·빈혈 증상 완화</li>
+        <li><strong>만성 피로 회복</strong> — 정맥을 통해 고농도의 영양소를 직접 공급하여 흡수 속도가 빠르고 효과를 신속하게 체감</li>
+      </ul>
+
+      <h3>권장 대상</h3>
+      <ul>
+        <li>과도한 업무·스트레스로 만성 피로에 시달리는 분</li>
+        <li>부족한 수면으로 집중력이 떨어지고 무기력한 분</li>
+        <li>격렬한 운동·활동 후 근육통·신체 피로가 심한 분</li>
+        <li>구내염이 자주 발생하거나 피부 거칠어짐이 고민인 분</li>
+      </ul>
+
+      <h3>주의사항 및 부작용</h3>
+      <p>대부분 수용성 비타민이라 필요 이상의 양은 소변으로 안전하게 배출되지만, 몇 가지 주의점이 있습니다.</p>
+      <ul>
+        <li><strong>혈관통 및 일시적 증상</strong> — 투여 속도가 빠르면 혈관 통증·메스꺼움·홍조·어지러움이 일시적으로 나타날 수 있으므로 천천히 맞는 것이 좋음</li>
+        <li><strong>기저질환자 주의</strong> — 신장 기능 저하, 특정 성분 알레르기, 당뇨·고혈압 등 만성 질환자는 투여 전 의료진과 상세 상담 필요</li>
+      </ul>
+    </section>
+
+    <!-- 11 백옥주사 -->
+    <section class="section" id="s11">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2 class="section-title">백옥주사 (글루타치온)</h2>
+      </div>
+      <p>피부 미백과 피로 회복 목적으로 많이 찾는 영양 주사입니다.</p>
+
+      <h3>주요 성분 및 원리</h3>
+      <ul>
+        <li><strong>주성분</strong> — 글루타치온(Glutathione)</li>
+        <li><strong>원리</strong> — 체내에서 생성되는 강력한 항산화 물질. 피부를 어둡게 만드는 유멜라닌 활성을 억제하고 피부를 밝게 만드는 페오멜라닌 생성을 유도하여 피부톤을 맑게 개선</li>
+      </ul>
+
+      <h3>기대 효과</h3>
+      <ul>
+        <li><strong>피부 미백·톤 개선</strong> — 잡티 완화, 전반적 안색 개선</li>
+        <li><strong>항산화·노화 방지</strong> — 유해한 활성산소 제거로 세포 노화 억제</li>
+        <li><strong>간 기능 개선·피로 회복</strong> — 간의 해독 작용을 도와 만성 피로 완화</li>
+        <li><strong>면역력 강화</strong> — 면역 세포 활성화 도움</li>
+      </ul>
+
+      <h3>시술 주기 및 주의사항</h3>
+      <ul>
+        <li><strong>일반적 주기</strong> — 보통 주 1~2회씩, 최소 5회~10회 이상 꾸준히 투여했을 때 눈에 띄는 효과 기대 (개인차 있음)</li>
+        <li><strong>부작용·유의점</strong> — 드물게 식욕부진·구토·발진 등이 나타날 수 있음. 유황 성분 알레르기가 있는 경우 시술이 제한될 수 있으므로 사전 상담 필요</li>
+      </ul>
+
+      <div class="callout">
+        본래 백옥주사는 <strong>간 기능 개선 치료제</strong>로 허가된 의약품이며, 미백 목적으로는 비급여(미용) 시술로 분류됩니다.
+      </div>
+    </section>
+
+    <!-- 12 신데렐라 -->
+    <section class="section" id="s12">
+      <div class="section-header">
+        <span class="section-num">12</span>
+        <h2 class="section-title">신데렐라주사 (치옥트산 / 알파리포산)</h2>
+      </div>
+      <p>백옥주사와 함께 대표적인 항산화·미용 영양 주사로 꼽히는 시술입니다.</p>
+
+      <h3>주요 성분 및 원리</h3>
+      <ul>
+        <li><strong>주성분</strong> — 치옥트산(Thioctic acid) 또는 알파리포산(α-Lipoic acid)</li>
+        <li><strong>원리</strong> — 체내에서 생성되는 강력한 항산화 물질로 비타민 C·E의 수십 배에 달하는 항산화력을 가짐. 세포 내 에너지 대사를 촉진하여 체지방 증가 억제·노화 방지</li>
+      </ul>
+
+      <h3>기대 효과</h3>
+      <ul>
+        <li><strong>체지방 감소·다이어트 보조</strong> — 당질 대사 및 에너지 소비를 촉진하여 체지방 축적 방지, 식욕 억제 도움</li>
+        <li><strong>피로 회복·활력 증진</strong> — 만성 피로와 몸이 무거운 증상을 완화하고 활력 회복</li>
+        <li><strong>피부 탄력·노화 방지</strong> — 강한 항산화 작용으로 활성산소 제거, 피부 탄력 개선 및 톤 개선</li>
+        <li><strong>냉한 체질 개선</strong> — 혈액 순환을 도와 체온 상승·부종 완화</li>
+      </ul>
+
+      <h3>시술 주기 및 주의사항</h3>
+      <ul>
+        <li><strong>일반적 주기</strong> — 보통 주 1~2회, 총 10회 내외로 진행하며 개인의 피로도·목적에 따라 조절 (백옥주사·감초주사와 병행 가능)</li>
+        <li><strong>부작용·유의점</strong> — 드물게 발진·가려움·구토·어지러움 등이 나타날 수 있음</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <strong>당뇨 환자 주의</strong><br>
+        혈당을 낮추는 경향이 있어 당뇨 약을 복용 중이거나 저혈당 증세가 있는 분들은 시술 전 반드시 의료진과 상담해야 합니다.
+      </div>
+
+      <div class="callout">
+        본래 이 주사는 <strong>심한 피로·독성 물질 해독·당뇨병성 다발성 신경염 치료</strong>로 허가된 의약품이며, 미용 목적으로는 비급여 시술입니다.
+      </div>
+
+      <p style="font-size: 13px; color: var(--text-muted); font-style: italic;">※ 백옥주사와 신데렐라주사는 서로 보완적인 효과가 있어 병의원에서 연계 마케팅이나 패키지로 많이 활용됩니다.</p>
+    </section>
+
+    <!-- 13 태반주사 -->
+    <section class="section" id="s13">
+      <div class="section-header">
+        <span class="section-num">13</span>
+        <h2 class="section-title">태반주사</h2>
+      </div>
+      <p><strong>태반주사(Placenta Injection)</strong>는 사람의 태반에서 추출한 영양 성분(아미노산·비타민·미네랄·효소 등)을 정제하여 만든 주사제입니다. 주로 항노화·피로 해소·피부 개선 등을 목적으로 사용됩니다.</p>
+
+      <h3>주요 효능·기대 효과</h3>
+      <ul>
+        <li><strong>갱년기 증상 완화</strong> — 안면홍조·불면증·우울증 등 여성 갱년기 증상 개선 <em>(식약처 허가 효능)</em></li>
+        <li><strong>만성 간 기능 개선</strong> — 간 세포 재생 도움, 독소 해독 <em>(식약처 허가 효능)</em></li>
+        <li><strong>피로 해소·활력 증진</strong> — 풍부한 아미노산·비타민이 체내 대사 촉진, 만성 피로 감소</li>
+        <li><strong>피부 개선·항노화</strong> — 멜라닌 색소 형성 억제로 기미 완화, 콜라겐 합성 촉진으로 피부 탄력 향상</li>
+        <li><strong>통증·염증 완화</strong> — 항염증 작용으로 만성 통증·관절염 증상 완화 목적으로 병행</li>
+      </ul>
+
+      <h3>태반주사의 종류</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>구분</th><th>라이넥 (Laennec)</th><th>멜스몬 (Melsmon)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>주요 성분</td><td>태반 가수분해물 (영양 성분 중심)</td><td>태반 추출물 (자궁내막 증식 성분 등 포함)</td></tr>
+          <tr><td>주요 목적</td><td>간 기능 개선, 만성 피로 해소, 항염증</td><td>갱년기 증상 개선, 피부 미용</td></tr>
+          <tr><td>투여 방법</td><td>피하 또는 근육 주사</td><td>주로 피하 주사</td></tr>
+        </tbody>
+      </table>
+
+      <h3>부작용 및 주의사항</h3>
+      <p>안전한 주사제이지만 개인 체질에 따라 부작용이 나타날 수 있으므로 전문의 상담이 필수입니다.</p>
+      <ul>
+        <li><strong>일시적 반응</strong> — 주사 부위 통증·발적·부종·멍 등이 나타날 수 있으나 보통 수일 내 소실</li>
+        <li><strong>알레르기 반응</strong> — 체질에 따라 발진·가려움증·두드러기 발생 가능</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <strong>주의해야 할 분</strong><br>
+        암 환자(특히 유방암·자궁암 등 호르몬성 질환), 임산부·수유부는 투여 전 반드시 의사와 상의해야 합니다.
+      </div>
+
+      <div class="callout">
+        <strong>안전성 참고</strong><br>
+        국내에서 사용되는 태반주사는 엄격한 감염병 검사(HIV·간염 등)와 고온 고압 멸균 공정을 거쳐 생산되므로 바이러스·감염병 감염 우려가 매우 낮습니다. 전문 의료기관에서 정품을 투여받는 것이 가장 중요합니다.
+      </div>
+    </section>
+
+    <!-- 14 마늘주사 -->
+    <section class="section" id="s14">
+      <div class="section-header">
+        <span class="section-num">14</span>
+        <h2 class="section-title">마늘주사 (푸르설티아민)</h2>
+      </div>
+      <p><strong>마늘주사(Alinamin Injection)</strong>는 마늘 성분이 직접 들어있는 것이 아니라, 비타민 B1(티아민) 유도체인 <strong>'푸르설티아민(Fursultiamine)'</strong>이 주성분인 영양 주사입니다. 주사를 맞을 때 목구멍과 코끝에서 마늘 냄새가 은은하게 올라온다고 해서 '마늘주사'라는 별명이 붙었습니다.</p>
+      <p>피로 해소와 활력 충전을 위해 직장인·운동선수들이 자주 찾는 대표적인 정맥주사 요법입니다.</p>
+
+      <h3>주요 효능·효과</h3>
+      <ul>
+        <li><strong>만성 피로 해소</strong> — 비타민 B1은 체내 탄수화물 대사를 도와 에너지를 생성하는 핵심 역할. 젖산 등 피로 물질이 쌓이는 것을 막아 체력 회복</li>
+        <li><strong>신경통·근육통 완화</strong> — 근육과 신경에 쌓인 피로를 풀어주어 근육통·관절통·신경통 증상 완화</li>
+        <li><strong>면역력·대사 증진</strong> — 신진대사 촉진으로 면역력 향상, 병후 회복기·체력 저하 시 빠른 영양 공급</li>
+      </ul>
+
+      <h3>일반 비타민 B1과의 차이</h3>
+      <p>일반 비타민 B1은 수용성이라 몸에 잘 흡수되지 않고 쉽게 배출되는 경향이 있습니다. 반면 마늘주사의 성분인 <strong>'푸르설티아민'은 지용성 유도체</strong>로 변형되어 있어 체내 흡수율이 매우 높고 조직에 오래 머무르며 효과를 발휘합니다. <strong>뇌장벽(BBB)을 통과해 뇌의 피로를 풀어주는 데도 탁월</strong>합니다.</p>
+
+      <h3>부작용 및 주의사항</h3>
+      <p>대체로 안전한 주사제이지만, 개인 체질에 따라 주의가 필요합니다.</p>
+      <ul>
+        <li><strong>마늘 냄새</strong> — 주사 중 마늘 향이 나며, 보통 주사가 끝난 후 얼마 지나지 않아 자연스럽게 사라짐 (본인만 느끼는 경우가 많음)</li>
+        <li><strong>혈관통</strong> — 약물 주입 시 주사 부위가 뻐근하거나 통증이 느껴질 수 있으므로 투여 속도를 천천히 조절</li>
+        <li><strong>알레르기 반응</strong> — 드물게 발진·가려움증·구역질·오한 등의 과민 반응 가능</li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer">
+      본 자료는 원내 실무자의 용어 이해를 돕기 위한 참고용 안내서입니다.<br>
+      실제 처방·투여 경로·용량 및 급여 여부는 환자 상태와 최신 기준에 따라 의료진이 판단합니다.
+      <div class="footer-brand">JEONGJIN PHARMA · 주사제 전문 도매</div>
+    </div>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" aria-label="맨 위로">↑</button>
+
+<script>
+// Back to top button
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 400);
+});
+backTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Active nav highlighting
+const sections = document.querySelectorAll('.section, #lookup');
+const navLinks = document.querySelectorAll('.nav a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

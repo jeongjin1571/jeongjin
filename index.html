@@ -729,6 +729,30 @@
   .focus-products .prods{display:block;background:transparent;border:0;padding:0;}
   .focus-products .prod{margin:7px 0;}
 
+
+  /* ---- 원내 주문 용어 가이드 바로가기 ---- */
+  .guide-page-btn{
+    display:flex;align-items:center;gap:11px;width:100%;
+    margin:0 0 16px;padding:12px 14px;border-radius:15px;
+    background:linear-gradient(135deg,#ffffff 0%,#eef5fc 100%);
+    border:1.5px solid var(--accent-soft);color:var(--ink);
+    text-decoration:none;box-shadow:0 5px 16px rgba(15,66,133,.13);
+    transition:transform .16s,box-shadow .16s,border-color .16s;
+  }
+  .guide-page-btn:hover{transform:translateY(-2px);border-color:var(--accent-l);box-shadow:0 8px 22px rgba(15,66,133,.2)}
+  .guide-page-btn:active{transform:scale(.985)}
+  .guide-page-icon{flex:0 0 auto;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--accent);font-size:20px;box-shadow:0 4px 10px rgba(15,66,133,.25)}
+  .guide-page-copy{display:flex;flex:1;min-width:0;flex-direction:column;line-height:1.25}
+  .guide-page-copy b{font-size:13.5px;color:var(--accent-d);letter-spacing:-.02em}
+  .guide-page-copy small{margin-top:3px;font-size:10.5px;color:var(--ink2);font-weight:600}
+  .guide-page-open{flex:0 0 auto;font-size:11px;font-weight:800;color:#fff;background:var(--accent);padding:6px 9px;border-radius:10px}
+  @media(max-width:420px){
+    .guide-page-btn{max-width:100%;padding:10px 12px;overflow:hidden}
+    .guide-page-copy b{font-size:13px}
+    .guide-page-copy small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .guide-page-open{display:none}
+  }
+
 </style>
 </head>
 <body>
@@ -747,6 +771,11 @@
       <span class="pro-badge">의약 전문가용</span>
       <button class="focus-btn" id="focusBtn" type="button"><span class="focus-main">📌 이달의 주력품목</span><span class="focus-sub">- 골다공증 주사</span></button>
     </div>
+    <a class="guide-page-btn" href="./guide.html" aria-label="원내 주문 용어 가이드 열기">
+      <span class="guide-page-icon" aria-hidden="true">📘</span>
+      <span class="guide-page-copy"><b>원내 주문 용어 가이드</b><small>수액·주사 용어 설명 · 빠른 찾아보기</small></span>
+      <span class="guide-page-open">바로보기 →</span>
+    </a>
     <h1>성분별 <span class="accent">주사제 · 의료기기</span></h1>
     <div class="hero-sub">동일성분 주사제를 성분·약효분류별로 정리한 참고자료</div>
     <div class="hero-info">
