@@ -730,27 +730,51 @@
   .focus-products .prod{margin:7px 0;}
 
 
-  /* ---- 원내 주문 용어 가이드 바로가기 ---- */
+  /* ---- 원내 주문 가이드 바로가기 ---- */
+  .guide-shortcuts{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+    width:100%;margin:0 0 18px;
+  }
   .guide-page-btn{
-    display:flex;align-items:center;gap:11px;width:100%;
-    margin:0 0 16px;padding:12px 14px;border-radius:15px;
-    background:linear-gradient(135deg,#ffffff 0%,#eef5fc 100%);
-    border:1.5px solid var(--accent-soft);color:var(--ink);
-    text-decoration:none;box-shadow:0 5px 16px rgba(15,66,133,.13);
+    display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:10px;
+    min-width:0;padding:12px;border-radius:16px;
+    background:linear-gradient(145deg,#ffffff 0%,#f4f8fd 100%);
+    border:1.5px solid #d7e4f3;color:var(--ink);
+    text-decoration:none;box-shadow:0 5px 16px rgba(15,66,133,.10);
     transition:transform .16s,box-shadow .16s,border-color .16s;
   }
-  .guide-page-btn:hover{transform:translateY(-2px);border-color:var(--accent-l);box-shadow:0 8px 22px rgba(15,66,133,.2)}
+  .guide-page-btn:hover{transform:translateY(-2px);border-color:var(--accent-l);box-shadow:0 9px 24px rgba(15,66,133,.18)}
   .guide-page-btn:active{transform:scale(.985)}
-  .guide-page-icon{flex:0 0 auto;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--accent);font-size:20px;box-shadow:0 4px 10px rgba(15,66,133,.25)}
-  .guide-page-copy{display:flex;flex:1;min-width:0;flex-direction:column;line-height:1.25}
-  .guide-page-copy b{font-size:13.5px;color:var(--accent-d);letter-spacing:-.02em}
-  .guide-page-copy small{margin-top:3px;font-size:10.5px;color:var(--ink2);font-weight:600}
-  .guide-page-open{flex:0 0 auto;font-size:11px;font-weight:800;color:#fff;background:var(--accent);padding:6px 9px;border-radius:10px}
-  @media(max-width:420px){
-    .guide-page-btn{max-width:100%;padding:10px 12px;overflow:hidden}
-    .guide-page-copy b{font-size:13px}
-    .guide-page-copy small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .guide-page-open{display:none}
+  .guide-page-icon{
+    flex:0 0 auto;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:#e8f0fc;color:#1856a6;font-size:21px;box-shadow:inset 0 0 0 1px rgba(24,86,166,.05);
+  }
+  .guide-page-copy{display:flex;min-width:0;flex-direction:column;line-height:1.22}
+  .guide-page-copy b{font-size:16px;color:#17324d;letter-spacing:-.035em;word-break:keep-all}
+  .guide-page-copy small{margin-top:5px;font-size:10.5px;color:var(--ink2);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .guide-page-open{
+    flex:0 0 auto;font-size:10.5px;font-weight:900;color:#fff;background:#2458a6;
+    padding:7px 9px;border-radius:9px;white-space:nowrap;box-shadow:0 3px 8px rgba(24,86,166,.2);
+  }
+  .guide-page-btn.order-items{
+    background:linear-gradient(145deg,#fffdf8 0%,#fff7e7 100%);
+    border-color:#f2d6a5;box-shadow:0 7px 20px rgba(194,112,0,.16);
+  }
+  .guide-page-btn.order-items:hover{border-color:#d68a17;box-shadow:0 10px 26px rgba(194,112,0,.24)}
+  .guide-page-btn.order-items .guide-page-icon{background:#fff0d5;color:#c87600}
+  .guide-page-btn.order-items .guide-page-copy b{color:#744100}
+  .guide-page-btn.order-items .guide-page-open{background:#ca7900;box-shadow:0 3px 8px rgba(194,112,0,.24)}
+  @media(max-width:520px){
+    .guide-shortcuts{gap:8px;margin-bottom:16px}
+    .guide-page-btn{grid-template-columns:36px minmax(0,1fr);gap:8px;padding:10px 9px;align-content:start}
+    .guide-page-icon{width:36px;height:36px;border-radius:10px;font-size:18px}
+    .guide-page-copy b{font-size:14.5px;line-height:1.18}
+    .guide-page-copy small{font-size:9.5px;white-space:normal;line-height:1.35}
+    .guide-page-open{grid-column:1/-1;width:100%;padding:7px 5px;text-align:center;font-size:10.5px}
+  }
+  @media(max-width:350px){
+    .guide-page-copy b{font-size:13.5px}
+    .guide-page-copy small{display:none}
   }
 
 </style>
@@ -771,11 +795,18 @@
       <span class="pro-badge">의약 전문가용</span>
       <button class="focus-btn" id="focusBtn" type="button"><span class="focus-main">📌 이달의 주력품목</span><span class="focus-sub">- 골다공증 주사</span></button>
     </div>
-    <a class="guide-page-btn" href="./guide.html" aria-label="원내 주문 용어 가이드 열기">
-      <span class="guide-page-icon" aria-hidden="true">📘</span>
-      <span class="guide-page-copy"><b>원내 주문 용어 가이드</b><small>수액·주사 용어 설명 · 빠른 찾아보기</small></span>
-      <span class="guide-page-open">바로보기 →</span>
-    </a>
+    <div class="guide-shortcuts" aria-label="원내 주문 가이드 바로가기">
+      <a class="guide-page-btn order-terms" href="./guide.html" aria-label="원내 주문 용어 가이드 열기">
+        <span class="guide-page-icon" aria-hidden="true">📘</span>
+        <span class="guide-page-copy"><b>원내 주문 용어 가이드</b><small>수액·주사 용어 설명</small></span>
+        <span class="guide-page-open">바로보기 →</span>
+      </a>
+      <a class="guide-page-btn order-items" href="./inhouse-order-guide/index.html" aria-label="원내 주문 품목 가이드 열기">
+        <span class="guide-page-icon" aria-hidden="true">📋</span>
+        <span class="guide-page-copy"><b>원내 주문 품목 가이드</b><small>주요 품목 · 성분 · 구분 안내</small></span>
+        <span class="guide-page-open">바로보기 →</span>
+      </a>
+    </div>
     <h1>성분별 <span class="accent">주사제 · 의료기기</span></h1>
     <div class="hero-sub">동일성분 주사제를 성분·약효분류별로 정리한 참고자료</div>
     <div class="hero-info">
