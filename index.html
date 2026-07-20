@@ -107,6 +107,46 @@
     padding:4px 10px;background:#fff;border-radius:14px;border:1px solid var(--accent-soft);
     box-shadow:0 2px 5px rgba(30,90,168,.08);
   }
+  .rate-quick-link{
+    position:absolute;z-index:3;top:calc(env(safe-area-inset-top) + 22px);left:24px;
+    display:flex;align-items:center;gap:10px;width:205px;
+    padding:11px 12px;border-radius:16px;
+    background:linear-gradient(135deg,#f7ae14 0%,#e88900 52%,#cf7100 100%);
+    color:#fff;text-decoration:none;border:1px solid rgba(176,91,0,.25);
+    box-shadow:0 9px 24px rgba(204,116,0,.32),inset 0 1px 0 rgba(255,255,255,.35);
+    transition:transform .15s,box-shadow .15s;
+  }
+  .rate-quick-link:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(204,116,0,.4),inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .rate-quick-link:active{transform:scale(.985)}
+  .rate-quick-icon{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    width:40px;height:40px;border-radius:12px;background:#fff;color:#cc7000;
+    font-size:20px;box-shadow:0 3px 10px rgba(112,55,0,.16);
+  }
+  .rate-quick-copy{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+  .rate-quick-copy b{
+    font-size:15.5px;font-weight:900;letter-spacing:-.035em;white-space:nowrap;
+  }
+  .rate-quick-copy small{
+    margin-top:5px;font-size:11.5px;font-weight:850;color:#fff7e6;letter-spacing:-.015em;
+  }
+  @media(max-width:1099px){
+    .rate-quick-link{
+      position:relative;top:auto;left:auto;width:calc(100% - 40px);max-width:640px;
+      margin:0 auto 13px;padding:10px 12px;justify-content:center;
+    }
+    .rate-quick-copy{flex-direction:row;align-items:center;gap:8px}
+    .rate-quick-copy small{margin:0;font-size:12px}
+  }
+  @media(max-width:520px){
+    .rate-quick-link{width:100%;margin-bottom:12px;border-radius:14px}
+    .rate-quick-icon{width:36px;height:36px;border-radius:10px;font-size:18px}
+    .rate-quick-copy b{font-size:15px}
+    .rate-quick-copy small{font-size:11.5px}
+  }
   @media(min-width:560px){
     .hero{padding-top:calc(env(safe-area-inset-top) + 28px);padding-bottom:32px}
     .hero h1{font-size:32px}
@@ -425,36 +465,109 @@
   }
   /* ---- 전문가용 안내(첫 방문) ---- */
   .notice-bg{
-    position:fixed;inset:0;background:rgba(10,25,35,.75);z-index:60;
+    position:fixed;inset:0;background:rgba(13,39,68,.72);z-index:60;
     display:none;align-items:center;justify-content:center;padding:20px;
-    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
   }
   .notice-bg.show{display:flex;animation:fadeIn .2s}
   .notice{
-    background:#fff;max-width:440px;width:100%;border-radius:20px;
-    padding:26px 24px 20px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+    background:#fff;max-width:420px;width:100%;border-radius:22px;
+    padding:0;overflow:hidden;max-height:calc(100vh - 32px);overflow-y:auto;
+    border:1px solid #c8dced;box-shadow:0 24px 70px rgba(6,41,79,.38);
     animation:slideUp .3s cubic-bezier(.22,.9,.26,1);
   }
+  .notice-hero{
+    position:relative;overflow:hidden;padding:23px 22px 22px;
+    background:linear-gradient(155deg,#eef7ff 0%,#dcecf9 55%,#cfe3f5 100%);
+    color:#0f2540;border-bottom:1px solid #c5daec;
+  }
+  .notice-hero::before,.notice-hero::after{
+    content:"";position:absolute;border-radius:50%;pointer-events:none;
+  }
+  .notice-hero::before{
+    width:520px;height:150px;right:-250px;top:-65px;
+    background:transparent;border:3px solid rgba(74,133,197,.16);
+    transform:rotate(10deg);
+  }
+  .notice-hero::after{
+    width:420px;height:120px;left:-235px;bottom:-92px;
+    background:transparent;border:3px solid rgba(74,133,197,.13);
+    transform:rotate(8deg);
+  }
+  .notice-hero-top{
+    position:relative;z-index:1;display:flex;align-items:center;
+    justify-content:space-between;margin-bottom:14px;
+  }
+  .notice-badge{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:5px 10px;border-radius:999px;
+    background:#fff;border:1px solid #c8dcef;
+    color:#1856a6;font-size:11px;font-weight:900;letter-spacing:.02em;
+    box-shadow:0 3px 10px rgba(24,86,166,.1);
+  }
   .notice-icon{
-    width:48px;height:48px;border-radius:14px;
-    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-d) 100%);
-    color:#fff;display:flex;align-items:center;justify-content:center;
-    font-size:24px;margin-bottom:14px;box-shadow:0 6px 16px rgba(15,118,110,.3);
+    width:50px;height:50px;border-radius:16px;
+    background:linear-gradient(145deg,#ffffff 0%,#e8f2fc 100%);
+    color:#1856a6;display:flex;align-items:center;justify-content:center;
+    font-size:25px;border:1px solid #c8dcef;
+    box-shadow:0 7px 17px rgba(24,86,166,.16);
   }
-  .notice-title{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px;letter-spacing:-.02em}
-  .notice-body{
-    font-size:13.5px;line-height:1.7;color:#3d5259;margin-bottom:18px;letter-spacing:-.01em;
+  .notice-title{
+    position:relative;z-index:1;font-size:26px;line-height:1.18;font-weight:900;
+    color:#0f4285;margin-bottom:7px;letter-spacing:-.045em;
   }
-  .notice-body b{color:var(--accent-d);font-weight:800}
+  .notice-hero-desc{
+    position:relative;z-index:1;margin:0;color:#496986;
+    font-size:13.5px;font-weight:700;line-height:1.5;letter-spacing:-.015em;
+  }
+  .notice-content{padding:20px 20px 17px;background:#fff}
+  .notice-rate-link{
+    display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+    padding:17px 14px;border-radius:15px;
+    background:linear-gradient(135deg,#f6a800 0%,#e17d00 55%,#c96d00 100%);
+    color:#fff;text-decoration:none;font-size:18px;font-weight:900;
+    letter-spacing:-.035em;border:1px solid #c96d00;
+    text-shadow:0 1px 1px rgba(109,55,0,.18);
+    box-shadow:0 9px 22px rgba(202,121,0,.34),inset 0 1px 0 rgba(255,255,255,.35);
+    transition:transform .12s,box-shadow .12s;
+  }
+  .notice-rate-link .arrow{
+    display:flex;align-items:center;justify-content:center;width:27px;height:27px;
+    border-radius:50%;background:rgba(255,255,255,.24);font-size:17px;
+  }
+  .notice-rate-link:hover{transform:translateY(-2px);box-shadow:0 10px 23px rgba(202,121,0,.36)}
+  .notice-rate-link:active{transform:scale(.985)}
+  .notice-rate-contact{
+    display:flex;align-items:center;gap:10px;margin:14px 0 15px;padding:13px 14px;
+    border-radius:13px;background:#f1f7fd;border:1px solid #cfe0f0;
+    color:#2c4e70;font-size:12.5px;font-weight:750;line-height:1.5;
+  }
+  .notice-rate-contact .lock{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:10px;background:#fff;
+    border:1px solid #d7e5f2;box-shadow:0 2px 7px rgba(24,86,166,.1);font-size:17px;
+  }
+  .notice-rate-contact b{color:#0f4285;font-weight:900}
+  .notice-legal{
+    margin:0 0 14px;padding-top:13px;border-top:1px solid #e2eaf3;
+    color:#74869a;font-size:11px;line-height:1.6;letter-spacing:-.005em;
+  }
+  .notice-legal b{color:#516981;font-weight:850}
   .notice-btn{
-    width:100%;border:0;background:linear-gradient(180deg,var(--accent) 0%,var(--accent-d) 100%);
-    color:#fff;font-size:14.5px;font-weight:800;
-    padding:14px;border-radius:12px;cursor:pointer;font-family:inherit;letter-spacing:-.01em;
-    box-shadow:0 4px 12px rgba(15,118,110,.3);
-    transition:transform .12s;
+    width:100%;border:1px solid #bdd3e8;background:#eaf3fc;
+    color:#174e8c;font-size:14px;font-weight:850;
+    padding:12px;border-radius:12px;cursor:pointer;font-family:inherit;letter-spacing:-.01em;
+    transition:transform .12s,background .12s;
   }
-  .notice-btn:hover{transform:translateY(-1px)}
+  .notice-btn:hover{transform:translateY(-1px);background:#eaf2fb}
   .notice-btn:active{transform:translateY(0)}
+  @media(max-width:390px){
+    .notice-bg{padding:14px}
+    .notice-hero{padding:20px 18px}
+    .notice-title{font-size:24px}
+    .notice-content{padding:16px}
+    .notice-rate-link{padding:16px 10px;font-size:17px}
+  }
   /* ---- 헤더 전문가용 배지 ---- */
   .pro-badge{
     display:inline-flex;align-items:center;gap:3px;
@@ -785,6 +898,13 @@
     <path d="M0,20 C300,4 600,32 900,16 C1050,8 1150,20 1200,14 L1200,36 L0,36 Z" fill="#ffffff" opacity="0.6"/>
     <path d="M0,24 C300,12 600,36 900,22 C1050,16 1150,26 1200,22 L1200,36 L0,36 Z" fill="#ffffff"/>
   </svg>
+  <a class="rate-quick-link" href="https://sscompare-m.ssart.co.kr/" target="_blank" rel="noopener noreferrer" aria-label="주사제 요율 확인 사이트 바로가기">
+    <span class="rate-quick-icon" aria-hidden="true">📊</span>
+    <span class="rate-quick-copy">
+      <b>주사제 요율 확인</b>
+      <small>사이트 바로가기 →</small>
+    </span>
+  </a>
   <div class="hero-inner">
     <div class="hero-top">
       <div class="brand-mini">
@@ -939,17 +1059,31 @@
   </div>
 </div>
 <div class="notice-bg" id="noticeBg">
-  <div class="notice">
-    <div class="notice-icon">⚕</div>
-    <div class="notice-title">의약 전문가용 참고자료</div>
-    <div class="notice-body">
-      본 사이트는 약국·의료기관 종사자를 위한 <b>주사제 · 의료기기 참고자료</b>입니다.
-      전문의약품에 관한 정보를 포함하고 있으며 일반 소비자를 대상으로 한
-      광고가 아닙니다.<br><br>
-      게시된 정보는 참고용이며, 정확한 허가사항은 식품의약품안전처
-      <b>의약품안전나라</b>에서 확인하시기 바랍니다.
+  <div class="notice" role="dialog" aria-modal="true" aria-labelledby="noticeTitle">
+    <div class="notice-hero">
+      <div class="notice-hero-top">
+        <span class="notice-badge">주사제 업무 바로가기</span>
+        <div class="notice-icon" aria-hidden="true">📊</div>
+      </div>
+      <div class="notice-title" id="noticeTitle">주사제 요율 확인</div>
+      <p class="notice-hero-desc">전용 사이트에서 필요한 요율을 빠르고 간편하게 확인하세요.</p>
     </div>
-    <button class="notice-btn" id="noticeAck">확인하고 계속</button>
+    <div class="notice-content">
+      <a class="notice-rate-link" href="https://sscompare-m.ssart.co.kr/" target="_blank" rel="noopener noreferrer">
+        <span>요율 확인 사이트 바로가기</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <div class="notice-rate-contact">
+        <span class="lock" aria-hidden="true">🔐</span>
+        <span>아이디와 비밀번호는 <b>정진약품 담당 휴대전화</b>로 문의해 주세요.</span>
+      </div>
+      <div class="notice-legal">
+        <b>의약 전문가용 참고자료</b><br>
+        본 사이트는 약국·의료기관 종사자를 위한 자료이며 일반 소비자 대상 광고가 아닙니다.
+        정확한 허가사항은 의약품안전나라에서 확인해 주세요.
+      </div>
+      <button class="notice-btn" id="noticeAck">확인하고 계속</button>
+    </div>
   </div>
 </div>
 <div class="foot">
@@ -1805,7 +1939,7 @@ render();
 (function(){
   const noticeBg = document.getElementById('noticeBg');
   const noticeAck = document.getElementById('noticeAck');
-  const KEY = 'jj_notice_ack_v1';
+  const KEY = 'jj_notice_ack_v4';
   try {
     if(!localStorage.getItem(KEY)){
       noticeBg.classList.add('show');
